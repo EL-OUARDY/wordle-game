@@ -19,6 +19,7 @@ function Keyboard({ className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
+  const lettersState = useStore((s) => s.lettersState);
   const solution = useStore((s) => s.solution);
 
   // Handle device keyboard typing
@@ -92,18 +93,29 @@ function Keyboard({ className }: Props) {
     <div
       className={clsx(
         className,
-        "keyboard w-full flex-col items-center flex justify-center px-[8px] gap-[8px] h-[200px] "
+        "keyboard  w-full flex-col items-center flex justify-center px-[8px] gap-[8px] h-[200px] "
       )}
       aria-label="Keyboard"
     >
       {/* First row */}
-      <div className="row w-full [touch-action:manipulation] flex gap-1 uppercase font-bold">
+      <div className="row w-full [touch-action:manipulation] flex gap-1 font-bold">
         {englishKeys.row1.map((key, i) => {
+          let keyClasses = "";
+          if (lettersState.correct.includes(key))
+            keyClasses = "bg-correct text-tile-foreground";
+          else if (lettersState.absent.includes(key))
+            keyClasses = "bg-absent text-tile-foreground";
+          else if (lettersState.present.includes(key))
+            keyClasses = "bg-present text-tile-foreground";
+          else keyClasses = "bg-key-background";
           return (
             <button
               key={i}
               type="button"
-              className="cursor-pointer flex-1 h-[58px] text-xl rounded-sm bg-key-background flex items-center justify-center "
+              className={clsx(
+                keyClasses,
+                "cursor-pointer uppercase flex-1 h-[58px] text-xl rounded-sm flex items-center justify-center "
+              )}
               aria-label={`add ${key}`}
               aria-disabled="true"
             >
@@ -114,14 +126,25 @@ function Keyboard({ className }: Props) {
       </div>
 
       {/* Second row */}
-      <div className="row w-full [touch-action:manipulation] flex gap-1 uppercase font-bold">
+      <div className="row w-full [touch-action:manipulation] flex gap-1 font-bold">
         <div className="flex-[0.5]"></div>
         {englishKeys.row2.map((key, i) => {
+          let keyClasses = "";
+          if (lettersState.correct.includes(key))
+            keyClasses = "bg-correct text-tile-foreground";
+          else if (lettersState.absent.includes(key))
+            keyClasses = "bg-absent text-tile-foreground";
+          else if (lettersState.present.includes(key))
+            keyClasses = "bg-present text-tile-foreground";
+          else keyClasses = "bg-key-background";
           return (
             <button
               key={i}
               type="button"
-              className="cursor-pointer flex-1  h-[58px] text-xl rounded-sm bg-key-background flex items-center justify-center "
+              className={clsx(
+                keyClasses,
+                "cursor-pointer flex-1 uppercase h-[58px] text-xl rounded-sm flex items-center justify-center"
+              )}
               aria-label={`add ${key}`}
               aria-disabled="true"
             >
@@ -132,21 +155,32 @@ function Keyboard({ className }: Props) {
         <div className="flex-[0.5]"></div>
       </div>
       {/* Third row */}
-      <div className="row w-full [touch-action:manipulation] flex gap-1 uppercase font-bold">
+      <div className="row w-full [touch-action:manipulation] flex gap-1 font-bold">
         <button
           type="button"
-          className="cursor-pointer flex-[1.5] h-[58px] text-xs rounded-sm bg-key-background flex items-center justify-center "
+          className="cursor-pointer font-semibold flex-[1.5] h-[58px] text-xs rounded-sm bg-key-background flex items-center justify-center "
           aria-label={englishKeys.controls.enter}
           aria-disabled="true"
         >
           {englishKeys.controls.enter}
         </button>
         {englishKeys.row3.map((key, i) => {
+          let keyClasses = "";
+          if (lettersState.correct.includes(key))
+            keyClasses = "bg-correct text-tile-foreground";
+          else if (lettersState.absent.includes(key))
+            keyClasses = "bg-absent text-tile-foreground";
+          else if (lettersState.present.includes(key))
+            keyClasses = "bg-present text-tile-foreground";
+          else keyClasses = "bg-key-background";
           return (
             <button
               key={i}
               type="button"
-              className="cursor-pointer flex-1  h-[58px] text-xl rounded-sm bg-key-background flex items-center justify-center "
+              className={clsx(
+                keyClasses,
+                "cursor-pointer uppercase flex-1  h-[58px] text-xl rounded-sm flex items-center justify-center "
+              )}
               aria-label={`add ${key}`}
               aria-disabled="true"
             >

@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --tile-background: #ffffff;
   --tile-foreground: #ffffff;
   --present: #c9b458;
   --correct: #6aaa64;
@@ -14,6 +15,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-tile-background: var(--tile-background);
   --color-tile-foreground: var(--tile-foreground);
   --color-present: var(--present);
   --color-correct: var(--correct);

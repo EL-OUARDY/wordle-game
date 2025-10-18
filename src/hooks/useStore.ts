@@ -14,7 +14,9 @@ interface IState {
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
   lettersState: LettersState;
-  setLettersState: (lettersState: LettersState) => void;
+  setLettersState: (
+    updater: LettersState | ((prev: LettersState) => LettersState)
+  ) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -29,7 +31,15 @@ const useStore = create<IState>((set) => ({
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
   lettersState: { correct: [], present: [], absent: [] },
-  setLettersState: (lettersState) => set({ lettersState: lettersState }),
+  setLettersState: (updater) =>
+    set((state) => ({
+      lettersState:
+        typeof updater === "function"
+          ? (updater as (prev: LettersState) => LettersState)(
+              state.lettersState
+            )
+          : updater,
+    })),
 }));
 
 export default useStore;

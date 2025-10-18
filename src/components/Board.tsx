@@ -4,6 +4,7 @@ import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import Line from "@/components/Line";
 import { WORD_LENGTH } from "@/lib/contstants";
+import { json } from "stream/consumers";
 
 interface Props {
   className?: string;

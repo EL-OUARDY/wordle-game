@@ -14,26 +14,44 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
   const [status, setStatus] = useState<LetterStatus | null>(null);
-  const lettersState = useStore((s) => s.lettersState);
   const setLettersState = useStore((s) => s.setLettersState);
 
   useEffect(() => {
     if (lineIndex >= currentGuessIndex) return;
     if (solution[charIndex] === char) {
       setStatus("correct");
+      setLettersState((prev) => ({
+        ...prev,
+        correct: [...prev.correct, char],
+      }));
     } else if (!solution.includes(char)) {
       setStatus("absent");
+      setLettersState((prev) => ({
+        ...prev,
+        absent: [...prev.absent, char],
+      }));
     } else if (solution.includes(char)) {
       setStatus("present");
+      setLettersState((prev) => ({
+        ...prev,
+        present: [...prev.present, char],
+      }));
     }
-  }, [char, charIndex, currentGuessIndex, lineIndex, solution]);
+  }, [
+    char,
+    charIndex,
+    currentGuessIndex,
+    lineIndex,
+    setLettersState,
+    solution,
+  ]);
 
   return (
     <div
       className={clsx(
         className,
         lineIndex < currentGuessIndex && "text-tile-foreground !border-0",
-        status && `bg-${status}`,
+        status ? `bg-${status}` : "bg-tile-background",
         "tile border-2 border-muted-foreground flex items-center justify-center text-[1.7rem] uppercase font-black"
       )}
     >
