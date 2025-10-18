@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
-import { englishKeys } from "@/components/keyboard/keyboardKeys";
+import React, { useCallback, useEffect } from "react";
+import { englishKeys } from "@/components/keyboard/keys";
 import BackspaceIcon from "@/components/ui/icons/backspace";
 import useStore from "@/hooks/useStore";
 import { WORD_LENGTH } from "@/lib/contstants";
@@ -22,6 +22,42 @@ function Keyboard({ className }: Props) {
   const lettersState = useStore((s) => s.lettersState);
   const solution = useStore((s) => s.solution);
 
+  const submiGuess = useCallback(() => {
+    // Check if current guess is less than 5 letters
+    if (currentGuess.length < WORD_LENGTH) {
+      return;
+      // animate
+    }
+
+    // Verify if the word exists in the dictionary
+    // if (!isValidWord(currentGuess)) {
+    //   return;
+    //   // animate
+    // }
+
+    const newGuesses = guesses.map((guess, index) =>
+      currentGuessIndex === index ? currentGuess : guess
+    );
+    setGuesses(newGuesses);
+    setCurrentGuess("");
+    setCurrentGuessIndex(currentGuessIndex + 1);
+
+    // Check if correct word
+    if (currentGuess === solution) {
+      setIsGameOver(true);
+      // animate
+    }
+  }, [
+    currentGuess,
+    currentGuessIndex,
+    guesses,
+    setCurrentGuess,
+    setCurrentGuessIndex,
+    setGuesses,
+    setIsGameOver,
+    solution,
+  ]);
+
   // Handle device keyboard typing
   useEffect(() => {
     const handleTyping = (e: KeyboardEvent) => {
@@ -31,32 +67,7 @@ function Keyboard({ className }: Props) {
       if (isGameOver) return;
 
       // Check if Enter key is pressed
-      if (char === "Enter") {
-        // Check if current guess is less than 5 letters
-        if (currentGuess.length < WORD_LENGTH) {
-          return;
-          // animate
-        }
-
-        // Verify if the word exists in the dictionary
-        // if (!isValidWord(currentGuess)) {
-        //   return;
-        //   // animate
-        // }
-
-        const newGuesses = guesses.map((guess, index) =>
-          currentGuessIndex === index ? currentGuess : guess
-        );
-        setGuesses(newGuesses);
-        setCurrentGuess("");
-        setCurrentGuessIndex(currentGuessIndex + 1);
-
-        // Check if correct word
-        if (currentGuess === solution) {
-          setIsGameOver(true);
-          // animate
-        }
-      }
+      if (char === "Enter") submiGuess();
 
       // Check if backspace key is pressed
       if (char === "Backspace") {
@@ -77,17 +88,7 @@ function Keyboard({ className }: Props) {
     window.addEventListener("keydown", handleTyping);
 
     return () => window.removeEventListener("keydown", handleTyping);
-  }, [
-    currentGuess,
-    currentGuessIndex,
-    guesses,
-    isGameOver,
-    setCurrentGuess,
-    setCurrentGuessIndex,
-    setGuesses,
-    setIsGameOver,
-    solution,
-  ]);
+  }, [currentGuess, isGameOver, setCurrentGuess, submiGuess]);
 
   return (
     <div
@@ -112,6 +113,11 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              onClick={() => {
+                if (isGameOver) return;
+                if (currentGuess.length >= WORD_LENGTH) return;
+                setCurrentGuess(currentGuess + key.toLowerCase());
+              }}
               className={clsx(
                 keyClasses,
                 "cursor-pointer uppercase flex-1 h-[58px] text-xl rounded-sm flex items-center justify-center "
@@ -141,6 +147,11 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              onClick={() => {
+                if (isGameOver) return;
+                if (currentGuess.length >= WORD_LENGTH) return;
+                setCurrentGuess(currentGuess + key.toLowerCase());
+              }}
               className={clsx(
                 keyClasses,
                 "cursor-pointer flex-1 uppercase h-[58px] text-xl rounded-sm flex items-center justify-center"
@@ -158,6 +169,7 @@ function Keyboard({ className }: Props) {
       <div className="row w-full [touch-action:manipulation] flex gap-1 font-bold">
         <button
           type="button"
+          onClick={submiGuess}
           className="cursor-pointer font-semibold flex-[1.5] h-[58px] text-xs rounded-sm bg-key-background flex items-center justify-center "
           aria-label={englishKeys.controls.enter}
           aria-disabled="true"
@@ -177,6 +189,11 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              onClick={() => {
+                if (isGameOver) return;
+                if (currentGuess.length >= WORD_LENGTH) return;
+                setCurrentGuess(currentGuess + key.toLowerCase());
+              }}
               className={clsx(
                 keyClasses,
                 "cursor-pointer uppercase flex-1  h-[58px] text-xl rounded-sm flex items-center justify-center "
@@ -190,6 +207,9 @@ function Keyboard({ className }: Props) {
         })}
         <button
           type="button"
+          onClick={() => {
+            setCurrentGuess(currentGuess.slice(0, -1));
+          }}
           className="cursor-pointer flex-[1.5] text-xs font-normal h-[58px] rounded-sm bg-key-background flex items-center justify-center "
           aria-label={englishKeys.controls.delete}
           aria-disabled="true"
