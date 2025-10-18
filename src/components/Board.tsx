@@ -24,7 +24,7 @@ function Board({ className }: Props) {
         return (
           <Line
             key={i}
-            index={i}
+            lineIndex={i}
             guess={
               currentGuessIndex === i
                 ? currentGuess.padEnd(WORD_LENGTH, " ")

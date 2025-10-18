@@ -1,4 +1,5 @@
 import { NUMBER_OF_GUESSES } from "@/lib/contstants";
+import { LettersState } from "@/types";
 import { create } from "zustand";
 
 interface IState {
@@ -12,6 +13,8 @@ interface IState {
   setSolution: (solution: string) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
+  lettersState: LettersState;
+  setLettersState: (lettersState: LettersState) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -25,6 +28,8 @@ const useStore = create<IState>((set) => ({
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
+  lettersState: { correct: [], present: [], absent: [] },
+  setLettersState: (lettersState) => set({ lettersState: lettersState }),
 }));
 
 export default useStore;
