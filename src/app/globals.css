@@ -3,11 +3,22 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --tile-foreground: #ffffff;
+  --present: #c9b458;
+  --correct: #6aaa64;
+  --absent: #787c7e;
+  --border: #d3d6da --key-background: #d3d6da
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-tile-foreground: var(--tile-foreground);
+  --color-present: var(--present);
+  --color-correct: var(--correct);
+  --color-absent: var(--absent);
+  --color-border: var(--border);
+  --color-key-background: var(--key-background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

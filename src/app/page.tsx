@@ -1,7 +1,13 @@
+import Board from "@/components/Board";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+
 export default function Home() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="text-3xl uppercase font-extrabold">Hello Wordle</div>
+    <div className="min-h-screen flex flex-col font-sans">
+      <Header />
+      <Board className="flex-1" />
+      <Footer />
     </div>
   );
 }
