@@ -11,7 +11,7 @@ function Tile({ char, className }: Props) {
     <div
       className={clsx(
         className,
-        "tile border-2 border-muted-foreground flex items-center justify-center"
+        "tile border-2 border-muted-foreground flex items-center justify-center text-[1.7rem] uppercase font-black"
       )}
     >
       {char}

@@ -1,17 +1,26 @@
+import { NUMBER_OF_GUESSES } from "@/lib/contstants";
 import { create } from "zustand";
 
 interface IState {
   guesses: string[];
   setGuesses: (guesses: string[]) => void;
+  currentGuess: string;
+  setCurrentGuess: (guess: string) => void;
   solution: string;
   setSolution: (solution: string) => void;
+  isGameOver: boolean;
+  setIsGameOver: (state: boolean) => void;
 }
 
 const useStore = create<IState>((set) => ({
-  guesses: Array(6).fill(null),
+  guesses: Array(NUMBER_OF_GUESSES).fill(null),
   setGuesses: (guesses) => set({ guesses: guesses }),
-  solution: "",
+  currentGuess: "",
+  setCurrentGuess: (guess) => set({ currentGuess: guess }),
+  solution: "haven",
   setSolution: (solution) => set({ solution: solution }),
+  isGameOver: false,
+  setIsGameOver: (state) => set({ isGameOver: state }),
 }));
 
 export default useStore;
