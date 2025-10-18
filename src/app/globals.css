@@ -7,7 +7,8 @@
   --present: #c9b458;
   --correct: #6aaa64;
   --absent: #787c7e;
-  --border: #d3d6da --key-background: #d3d6da
+  --muted-foreground: #d3d6da;
+  --key-background: #d3d6da
 }
 
 @theme inline {
@@ -17,7 +18,7 @@
   --color-present: var(--present);
   --color-correct: var(--correct);
   --color-absent: var(--absent);
-  --color-border: var(--border);
+  --color-muted-foreground: var(--muted-foreground);
   --color-key-background: var(--key-background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

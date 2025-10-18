@@ -6,7 +6,10 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <Header />
-      <Board className="flex-1" />
+      <main className="flex-1 flex flex-col items-center justify-center">
+        <Board />
+        {/* keyboard */}
+      </main>
       <Footer />
     </div>
   );
