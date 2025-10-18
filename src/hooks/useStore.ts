@@ -6,6 +6,8 @@ interface IState {
   setGuesses: (guesses: string[]) => void;
   currentGuess: string;
   setCurrentGuess: (guess: string) => void;
+  currentGuessIndex: number;
+  setCurrentGuessIndex: (index: number) => void;
   solution: string;
   setSolution: (solution: string) => void;
   isGameOver: boolean;
@@ -17,6 +19,8 @@ const useStore = create<IState>((set) => ({
   setGuesses: (guesses) => set({ guesses: guesses }),
   currentGuess: "",
   setCurrentGuess: (guess) => set({ currentGuess: guess }),
+  currentGuessIndex: 0,
+  setCurrentGuessIndex: (index) => set({ currentGuessIndex: index }),
   solution: "haven",
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,

@@ -9,10 +9,15 @@ interface Props {
 }
 
 function Keyboard({ className }: Props) {
+  const guesses = useStore((s) => s.guesses);
   const setGuesses = useStore((s) => s.setGuesses);
   const currentGuess = useStore((s) => s.currentGuess);
+  const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
   const isGameOver = useStore((s) => s.isGameOver);
+  const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
+  const solution = useStore((s) => s.solution);
 
   useEffect(() => {
     const handleTyping = (e: KeyboardEvent) => {
@@ -23,6 +28,30 @@ function Keyboard({ className }: Props) {
 
       // Check if Enter key is pressed
       if (char === "Enter") {
+        // Check if current guess is less than 5 letters
+        if (currentGuess.length < WORD_LENGTH) {
+          return;
+          // animate
+        }
+
+        // Verify if the word exists in the dictionary
+        // if (!isValidWord(currentGuess)) {
+        //   return;
+        //   // animate
+        // }
+
+        const newGuesses = guesses.map((guess, index) =>
+          currentGuessIndex === index ? currentGuess : guess
+        );
+        setGuesses(newGuesses);
+        setCurrentGuess("");
+        setCurrentGuessIndex(currentGuessIndex + 1);
+
+        // Check if correct word
+        if (currentGuess === solution) {
+          setIsGameOver(true);
+          // animate
+        }
       }
 
       // Check if backspace key is pressed
@@ -44,7 +73,17 @@ function Keyboard({ className }: Props) {
     window.addEventListener("keydown", handleTyping);
 
     return () => window.removeEventListener("keydown", handleTyping);
-  }, [currentGuess, isGameOver, setCurrentGuess, setGuesses]);
+  }, [
+    currentGuess,
+    currentGuessIndex,
+    guesses,
+    isGameOver,
+    setCurrentGuess,
+    setCurrentGuessIndex,
+    setGuesses,
+    setIsGameOver,
+    solution,
+  ]);
 
   return (
     <div
@@ -52,6 +91,7 @@ function Keyboard({ className }: Props) {
         className,
         "h-20 bg-key-background w-full flex items-center justify-center"
       )}
+      aria-label="Keyboard"
     >
       Keyboard
     </div>

@@ -12,6 +12,7 @@ interface Props {
 function Board({ className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
+  const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   return (
     <div
       className={clsx(
@@ -20,13 +21,13 @@ function Board({ className }: Props) {
       )}
     >
       {guesses.map((guess, i) => {
-        const isCurrent = i === guesses.findIndex((guess) => guess === null);
         return (
           <Line
             key={i}
+            index={i}
             guess={
-              isCurrent
-                ? currentGuess.padEnd(5, " ")
+              currentGuessIndex === i
+                ? currentGuess.padEnd(WORD_LENGTH, " ")
                 : guess ?? " ".repeat(WORD_LENGTH)
             }
           />
