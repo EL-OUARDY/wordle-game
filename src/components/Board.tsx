@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import Line from "@/components/Line";
-import { WORD_LENGTH } from "@/lib/contstants";
+import { WORD_LENGTH } from "@/lib/constants";
 import { json } from "stream/consumers";
 
 interface Props {

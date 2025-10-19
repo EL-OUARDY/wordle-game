@@ -3,8 +3,9 @@ import React, { useCallback, useEffect } from "react";
 import { englishKeys } from "@/components/keyboard/keys";
 import BackspaceIcon from "@/components/ui/icons/backspace";
 import useStore from "@/hooks/useStore";
-import { WORD_LENGTH } from "@/lib/contstants";
+import { WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
+import WordService from "@/services/word";
 
 interface Props {
   className?: string;
@@ -21,19 +22,21 @@ function Keyboard({ className }: Props) {
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
   const lettersState = useStore((s) => s.lettersState);
   const solution = useStore((s) => s.solution);
+  const language = useStore((s) => s.language);
 
-  const submiGuess = useCallback(() => {
+  const submiGuess = useCallback(async () => {
     // Check if current guess is less than 5 letters
     if (currentGuess.length < WORD_LENGTH) {
       return;
-      // animate
+      // animate - shake
     }
 
     // Verify if the word exists in the dictionary
-    // if (!isValidWord(currentGuess)) {
-    //   return;
-    //   // animate
-    // }
+    const isValid = await WordService.isValidWord(currentGuess, language);
+    if (!isValid) {
+      return;
+      // animate - shake
+    }
 
     const newGuesses = guesses.map((guess, index) =>
       currentGuessIndex === index ? currentGuess : guess
@@ -45,12 +48,13 @@ function Keyboard({ className }: Props) {
     // Check if correct word
     if (currentGuess === solution) {
       setIsGameOver(true);
-      // animate
+      // animate - dance
     }
   }, [
     currentGuess,
     currentGuessIndex,
     guesses,
+    language,
     setCurrentGuess,
     setCurrentGuessIndex,
     setGuesses,
@@ -60,7 +64,7 @@ function Keyboard({ className }: Props) {
 
   // Handle device keyboard typing
   useEffect(() => {
-    const handleTyping = (e: KeyboardEvent) => {
+    const handleTyping = async (e: KeyboardEvent) => {
       const char = e.key;
 
       // Ignore if key is being held down
@@ -70,7 +74,7 @@ function Keyboard({ className }: Props) {
       if (isGameOver) return;
 
       // Check if Enter key is pressed
-      if (char === "Enter") submiGuess();
+      if (char === "Enter") await submiGuess();
 
       // Check if backspace key is pressed
       if (char === "Backspace") {

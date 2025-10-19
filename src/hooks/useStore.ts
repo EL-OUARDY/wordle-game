@@ -1,5 +1,5 @@
-import { NUMBER_OF_GUESSES } from "@/lib/contstants";
-import { LettersState } from "@/types";
+import { NUMBER_OF_GUESSES } from "@/lib/constants";
+import { Language, LettersState } from "@/types";
 import { create } from "zustand";
 
 interface IState {
@@ -17,6 +17,8 @@ interface IState {
   setLettersState: (
     updater: LettersState | ((prev: LettersState) => LettersState)
   ) => void;
+  language: Language;
+  setLanguage: (language: Language) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -26,7 +28,7 @@ const useStore = create<IState>((set) => ({
   setCurrentGuess: (guess) => set({ currentGuess: guess }),
   currentGuessIndex: 0,
   setCurrentGuessIndex: (index) => set({ currentGuessIndex: index }),
-  solution: "haven",
+  solution: "ideal",
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
@@ -40,6 +42,8 @@ const useStore = create<IState>((set) => ({
             )
           : updater,
     })),
+  language: "English",
+  setLanguage: (language) => set({ language: language }),
 }));
 
 export default useStore;
