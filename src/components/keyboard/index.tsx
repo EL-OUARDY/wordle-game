@@ -63,6 +63,9 @@ function Keyboard({ className }: Props) {
     const handleTyping = (e: KeyboardEvent) => {
       const char = e.key;
 
+      // Ignore if key is being held down
+      if (e.repeat) return;
+
       // Check if game is over
       if (isGameOver) return;
 
