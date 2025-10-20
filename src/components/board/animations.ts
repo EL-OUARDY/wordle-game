@@ -1,3 +1,4 @@
+import { anim } from "@/lib/utils";
 import { Variants } from "motion/react";
 
 const ANIMATION_ORIGIN = [0, 0];

@@ -12,15 +12,20 @@ interface Props {
   className?: string;
 }
 
+type AnimationVariant = "new_game" | null;
+
 function Tile({ char, charIndex, lineIndex, className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
   const [status, setStatus] = useState<LetterStatus | null>(null);
   const setLettersState = useStore((s) => s.setLettersState);
 
+  const [animVariant, setAnimVariant] = useState<AnimationVariant>(null);
+
   // Reset status when game restarts
   useEffect(() => {
     setStatus(null);
+    setAnimVariant("new_game");
   }, [solution]);
 
   // Set status
@@ -55,10 +60,9 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
     solution,
   ]);
 
-  console.log(char);
-
   return (
     <motion.div
+      key={solution}
       className={clsx(
         className,
         char && char !== " " ? "border-foreground" : "border-muted-foreground",
@@ -66,6 +70,9 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         status ? `bg-${status}` : "bg-tile-background",
         "tile flex items-center justify-center border-2 font-black uppercase",
       )}
+      {...(animVariant
+        ? anim(animVariant, tileVariants, { row: lineIndex, col: charIndex })
+        : {})}
     >
       {char}
     </motion.div>
