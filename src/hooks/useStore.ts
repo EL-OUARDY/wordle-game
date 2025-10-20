@@ -9,13 +9,13 @@ interface IState {
   setCurrentGuess: (guess: string) => void;
   currentGuessIndex: number;
   setCurrentGuessIndex: (index: number) => void;
-  solution: string;
+  solution: string | null;
   setSolution: (solution: string) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
   lettersState: LettersState;
   setLettersState: (
-    updater: LettersState | ((prev: LettersState) => LettersState)
+    updater: LettersState | ((prev: LettersState) => LettersState),
   ) => void;
   language: Language;
   setLanguage: (language: Language) => void;
@@ -28,7 +28,7 @@ const useStore = create<IState>((set) => ({
   setCurrentGuess: (guess) => set({ currentGuess: guess }),
   currentGuessIndex: 0,
   setCurrentGuessIndex: (index) => set({ currentGuessIndex: index }),
-  solution: "ideal",
+  solution: null,
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
@@ -38,7 +38,7 @@ const useStore = create<IState>((set) => ({
       lettersState:
         typeof updater === "function"
           ? (updater as (prev: LettersState) => LettersState)(
-              state.lettersState
+              state.lettersState,
             )
           : updater,
     })),

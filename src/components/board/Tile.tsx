@@ -17,6 +17,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const setLettersState = useStore((s) => s.setLettersState);
 
   useEffect(() => {
+    if (!solution) return;
     if (lineIndex >= currentGuessIndex) return;
     if (solution[charIndex] === char) {
       setStatus("correct");
@@ -52,7 +53,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         className,
         lineIndex < currentGuessIndex && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
-        "tile border-2 border-muted-foreground flex items-center justify-center text-[1.7rem] uppercase font-black"
+        "tile border-muted-foreground flex items-center justify-center border-2 text-[1.7rem] font-black uppercase",
       )}
     >
       {char}

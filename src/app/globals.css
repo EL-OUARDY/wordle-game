@@ -9,7 +9,7 @@
   --correct: #6aaa64;
   --absent: #787c7e;
   --muted-foreground: #d3d6da;
-  --key-background: #d3d6da
+  --key-background: #d3d6da;
 }
 
 @theme inline {
@@ -33,7 +33,7 @@ body {
 }
 
 button {
-  outline: 0
+  outline: 0;
 }
 
 button:focus-visible {

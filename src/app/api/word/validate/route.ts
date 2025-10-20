@@ -1,7 +1,7 @@
+import { NextRequest, NextResponse } from "next/server";
 import { WORD_LENGTH } from "@/lib/constants";
 import { isLanguage } from "@/lib/utils";
 import GeminiService from "@/services/gemini";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
