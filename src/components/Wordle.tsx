@@ -5,9 +5,10 @@ import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
-import { Loader2Icon } from "lucide-react";
+import { Gamepad2Icon, Loader2Icon } from "lucide-react";
 import GameOver from "@/components/GameOver";
 import Keyboard from "@/components/keyboard";
+import Button from "@/components/ui/button";
 
 interface Props {
   language?: Language;
@@ -68,8 +69,7 @@ function Wordle({ language = "English", className }: Props) {
 
       {/* Fails to load word */}
       {!isLoading && !solution && (
-        <button
-          type="button"
+        <Button
           onClick={async () => {
             setIsLoading(true);
             const word = await WordService.getNewWord(language);
@@ -78,10 +78,13 @@ function Wordle({ language = "English", className }: Props) {
             }
             setIsLoading(false);
           }}
-          className="bg-key-background flex cursor-pointer items-center justify-center rounded-sm px-4 py-1"
+          variant="default"
+          className="flex items-center gap-2"
+          aria-label="New game"
         >
+          <Gamepad2Icon className="size-4" />
           Play
-        </button>
+        </Button>
       )}
     </div>
   );
