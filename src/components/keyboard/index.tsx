@@ -6,6 +6,9 @@ import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
 import WordService from "@/services/word";
+import { motion } from "motion/react";
+import { anim } from "@/lib/utils";
+import { keyboardVariants } from "@/components/keyboard/animations";
 
 interface Props {
   className?: string;
@@ -131,12 +134,13 @@ function Keyboard({ className }: Props) {
   };
 
   return (
-    <div
+    <motion.div
       className={clsx(
         className,
         "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px]",
       )}
       aria-label="Keyboard"
+      {...anim("intro", keyboardVariants)}
     >
       {/* First row */}
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
@@ -259,7 +263,7 @@ function Keyboard({ className }: Props) {
           <BackspaceIcon className="size-[1.4rem]" />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

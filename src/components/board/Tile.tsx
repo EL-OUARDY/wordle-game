@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import { LetterStatus } from "@/types";
-
+import { motion } from "motion/react";
+import { anim } from "@/lib/utils";
+import { tileVariants } from "@/components/board/animations";
 interface Props {
   char: string;
   charIndex: number;
@@ -53,17 +55,20 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
     solution,
   ]);
 
+  console.log(char);
+
   return (
-    <div
+    <motion.div
       className={clsx(
         className,
+        char && char !== " " ? "border-foreground" : "border-muted-foreground",
         lineIndex < currentGuessIndex && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
-        "tile border-muted-foreground flex items-center justify-center border-2 font-black uppercase",
+        "tile flex items-center justify-center border-2 font-black uppercase",
       )}
     >
       {char}
-    </div>
+    </motion.div>
   );
 }
 

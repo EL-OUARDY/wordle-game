@@ -1,5 +1,6 @@
 import { LANGUAGES } from "@/lib/constants";
 import { Language } from "@/types";
+import { Variants } from "motion";
 
 export function isLanguage(str: string): str is Language {
   return LANGUAGES.includes(str as Language);
@@ -18,4 +19,15 @@ export async function copyToClipboard(text: string) {
   } catch (err) {
     console.error("Failed to copy:", err);
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function anim(animate: string, variants: Variants, custom: any = null) {
+  return {
+    initial: "initial",
+    animate,
+    exit: "exit",
+    variants,
+    custom,
+  };
 }

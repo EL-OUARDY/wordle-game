@@ -2,8 +2,8 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --tile-background: #ffffff;
+  --foreground: #181818;
+  --tile-background: #fafafa;
   --tile-foreground: #ffffff;
   --present: #c9b458;
   --correct: #6aaa64;
@@ -11,7 +11,7 @@
   --muted-background: #fafafa;
   --muted-foreground: #d3d6da;
   --key-background: #d3d6da;
-  --button-background: #171717;
+  --button-background: #181818;
   --button-foreground: #ffffff;
 }
 
