@@ -5,10 +5,11 @@ import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
-import { Gamepad2Icon, Loader2Icon } from "lucide-react";
+import { Gamepad2Icon } from "lucide-react";
 import GameOver from "@/components/GameOver";
 import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
+import LoaderIcon from "@/components/ui/icons/loader";
 
 interface Props {
   language?: Language;
@@ -59,11 +60,8 @@ function Wordle({ language = "English", className }: Props) {
 
       {/* Loading solution word */}
       {isLoading && !solution && (
-        <div
-          aria-label="Loading"
-          className="flex animate-spin items-center justify-center"
-        >
-          <Loader2Icon className="text-key-background size-8" />
+        <div aria-label="Loading" className="flex items-center justify-center">
+          <LoaderIcon className="text-key-background size-8" />
         </div>
       )}
 

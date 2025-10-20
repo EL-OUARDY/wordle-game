@@ -1,18 +1,23 @@
 import Line from "@/components/board/Line";
 import Button from "@/components/ui/button";
+import LoaderIcon from "@/components/ui/icons/loader";
 import useStore from "@/hooks/useStore";
 import { copyToClipboard } from "@/lib/utils";
+import clsx from "clsx";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
+import { useState } from "react";
 
 function GameOver() {
   const solution = useStore((s) => s.solution);
   const guesses = useStore((s) => s.guesses);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
 
   const newGame = () => {
-    alert("NEW GAME");
+    if (isLoading) setIsLoading(false);
+    else setIsLoading(true);
   };
 
   const share = async () => {
@@ -45,10 +50,10 @@ function GameOver() {
 
           <p className="max-w-sm text-center text-xl">
             Awesome! Your wordle took <br />
-            <span className="font-bold">2 minutes 15 seconds</span>.
+            <span className="font-lg font-bold">2 minutes 15 seconds</span>.
           </p>
 
-          <div className="controls flex gap-3">
+          <div className="controls flex gap-3 text-sm">
             <Button
               onClick={share}
               variant="outline"
@@ -61,11 +66,18 @@ function GameOver() {
             <Button
               onClick={newGame}
               variant="default"
-              className="flex items-center gap-2"
+              className={clsx(
+                isLoading && "text-muted-foreground",
+                "flex items-center gap-2",
+              )}
               aria-label="New game"
             >
-              <Gamepad2Icon className="size-4" />
-              New Game
+              {isLoading ? (
+                <LoaderIcon className="size-4" />
+              ) : (
+                <Gamepad2Icon className="size-4" />
+              )}
+              {isLoading ? "Loading .." : "New Game"}
             </Button>
           </div>
         </>
@@ -83,7 +95,7 @@ function GameOver() {
             {"No worries, you’ll get it next time."} <br />
           </p>
 
-          <div className="controls flex gap-3">
+          <div className="controls flex gap-3 text-sm">
             <Button
               onClick={share}
               variant="outline"
@@ -96,11 +108,18 @@ function GameOver() {
             <Button
               onClick={newGame}
               variant="default"
-              className="flex items-center gap-2"
+              className={clsx(
+                isLoading && "text-muted-foreground",
+                "flex items-center gap-2",
+              )}
               aria-label="New game"
             >
-              <Gamepad2Icon className="size-4" />
-              New Game
+              {isLoading ? (
+                <LoaderIcon className="size-4" />
+              ) : (
+                <Gamepad2Icon className="size-4" />
+              )}
+              {isLoading ? "Loading .." : "New Game"}
             </Button>
           </div>
         </>
