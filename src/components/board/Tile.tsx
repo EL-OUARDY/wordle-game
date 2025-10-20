@@ -53,7 +53,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         className,
         lineIndex < currentGuessIndex && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
-        "tile border-muted-foreground flex items-center justify-center border-2 text-[1.7rem] font-black uppercase",
+        "tile border-muted-foreground flex items-center justify-center border-2 font-black uppercase",
       )}
     >
       {char}

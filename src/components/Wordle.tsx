@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Board from "@/components/board";
-import Keyboard from "@/components/keyboard";
 import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
 import { Loader2Icon } from "lucide-react";
+import GameOver from "@/components/GameOver";
+import Keyboard from "@/components/keyboard";
 
 interface Props {
   language?: Language;
@@ -42,15 +43,16 @@ function Wordle({ language = "English", className }: Props) {
     <div
       className={clsx(
         className,
-        "flex size-full flex-1 flex-col items-center justify-center",
+        "flex size-full flex-1 flex-col items-center justify-center gap-[10px]",
       )}
     >
       {/* Game is loaded */}
       {!isLoading && solution && (
         <>
-          {isGameOver && "GAME OVER"}
           <Board />
-          <Keyboard />
+          <div className="flex w-full items-center justify-center">
+            {isGameOver ? <GameOver /> : <Keyboard />}
+          </div>
         </>
       )}
 

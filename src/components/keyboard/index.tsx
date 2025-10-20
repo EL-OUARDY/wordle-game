@@ -35,6 +35,20 @@ function Keyboard({ className }: Props) {
       return;
     }
 
+    // Check if correct word
+    if (currentGuess === solution) {
+      const newGuesses = guesses.map((guess, index) =>
+        currentGuessIndex === index ? currentGuess : guess,
+      );
+      setGuesses(newGuesses);
+      setCurrentGuess("");
+      setCurrentGuessIndex(currentGuessIndex + 1);
+      // Animate - reveal
+      setIsGameOver(true);
+      // animate - dance
+      return;
+    }
+
     // Verify if the word exists in the dictionary
     setIsSubmitting(true);
     const isValid = await WordService.isValidWord(currentGuess, language);
@@ -51,14 +65,8 @@ function Keyboard({ className }: Props) {
       setCurrentGuessIndex(currentGuessIndex + 1);
       // Animate - reveal
 
-      // Check if correct word
-      if (currentGuess === solution) {
-        setIsGameOver(true);
-        // animate - dance
-      }
-
       // Check if out of guesses
-      if (currentGuessIndex >= NUMBER_OF_GUESSES) {
+      if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
         setIsGameOver(true);
       }
 

@@ -8,8 +8,11 @@
   --present: #c9b458;
   --correct: #6aaa64;
   --absent: #787c7e;
+  --muted-background: #fafafa;
   --muted-foreground: #d3d6da;
   --key-background: #d3d6da;
+  --button-background: #171717;
+  --button-foreground: #ffffff;
 }
 
 @theme inline {
@@ -20,8 +23,11 @@
   --color-present: var(--present);
   --color-correct: var(--correct);
   --color-absent: var(--absent);
+  --color-muted-background: var(--muted-background);
   --color-muted-foreground: var(--muted-foreground);
   --color-key-background: var(--key-background);
+  --color-button-background: var(--button-background);
+  --color-button-foreground: var(--button-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
