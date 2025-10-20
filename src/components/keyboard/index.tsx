@@ -145,6 +145,7 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              tabIndex={-1}
               onClick={() => {
                 onKeyClick(key);
               }}
@@ -177,6 +178,7 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              tabIndex={-1}
               onClick={() => {
                 onKeyClick(key);
               }}
@@ -197,6 +199,7 @@ function Keyboard({ className }: Props) {
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
         <button
           type="button"
+          tabIndex={-1}
           onClick={submiGuess}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-semibold"
           aria-label={englishKeys.controls.enter}
@@ -217,6 +220,7 @@ function Keyboard({ className }: Props) {
             <button
               key={i}
               type="button"
+              tabIndex={-1}
               onClick={() => {
                 onKeyClick(key);
               }}
@@ -233,6 +237,7 @@ function Keyboard({ className }: Props) {
         })}
         <button
           type="button"
+          tabIndex={-1}
           onClick={() => {
             if (isSubmitting) return;
             setCurrentGuess(currentGuess.slice(0, -1));
