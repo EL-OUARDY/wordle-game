@@ -1,3 +1,4 @@
+"use client";
 import Line from "@/components/board/Line";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
@@ -7,9 +8,11 @@ import { copyToClipboard } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function GameOver() {
+  const language = useStore((s) => s.language);
+
   const solution = useStore((s) => s.solution);
   const setSolution = useStore((s) => s.setSolution);
   const guesses = useStore((s) => s.guesses);
@@ -24,10 +27,11 @@ function GameOver() {
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
 
-  const newGame = async () => {
+  const newGame = useCallback(async () => {
+    if (isLoading) return;
     setIsLoading(true);
 
-    const word = await WordService.getNewWord();
+    const word = await WordService.getNewWord(language);
     if (word) {
       setSolution(word);
       // Reset state
@@ -38,7 +42,28 @@ function GameOver() {
       setLettersState({ correct: [], present: [], absent: [] });
     }
     setIsLoading(false);
-  };
+  }, [
+    isLoading,
+    language,
+    setCurrentGuess,
+    setCurrentGuessIndex,
+    setGuesses,
+    setIsGameOver,
+    setLettersState,
+    setSolution,
+  ]);
+
+  useEffect(() => {
+    const handleTyping = (e: KeyboardEvent) => {
+      const char = e.key;
+
+      if (char === "Enter") newGame();
+    };
+
+    window.addEventListener("keydown", handleTyping);
+
+    return () => window.removeEventListener("keydown", handleTyping);
+  }, [newGame]);
 
   const share = async () => {
     const title = document.title;
@@ -63,7 +88,7 @@ function GameOver() {
   };
 
   return (
-    <div className="game-over bg-muted-background border-muted-foreground flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
+    <div className="game-over bg-muted-background border-muted-foreground mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
           <h3 className="text-center text-xl">Congratulations</h3>
