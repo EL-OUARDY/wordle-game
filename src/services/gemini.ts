@@ -5,7 +5,7 @@ interface ValidateWordResponse {
   isValid: boolean;
 }
 
-const model = "gemini-flash-latest";
+const model = "gemini-2.0-flash"; // gemini-flash-latest
 
 const GeminiService = {
   generateWord: async (
@@ -42,7 +42,8 @@ Rules:
 2. The word must be exactly ${length} letters long.
 3. The word must exist in the standard dictionary of the specified language.
 4. The word must contain only the letters of the language. Do not include any diacritics, accents, or special marks.
-5. Never include explanations, suggestions, or any text outside the JSON object.
+5. The word must be singular (not plural).
+6. Never include explanations, suggestions, or any text outside the JSON object.
 Example response:
 { "word": "apple" }
 `,
