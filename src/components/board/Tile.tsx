@@ -16,6 +16,12 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const [status, setStatus] = useState<LetterStatus | null>(null);
   const setLettersState = useStore((s) => s.setLettersState);
 
+  // Reset status when game restarts
+  useEffect(() => {
+    setStatus(null);
+  }, [solution]);
+
+  // Set status
   useEffect(() => {
     if (!solution) return;
     if (lineIndex >= currentGuessIndex) return;

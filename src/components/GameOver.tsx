@@ -2,22 +2,42 @@ import Line from "@/components/board/Line";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import useStore from "@/hooks/useStore";
+import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { copyToClipboard } from "@/lib/utils";
+import WordService from "@/services/word";
 import clsx from "clsx";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
 import { useState } from "react";
 
 function GameOver() {
   const solution = useStore((s) => s.solution);
+  const setSolution = useStore((s) => s.setSolution);
   const guesses = useStore((s) => s.guesses);
+  const setGuesses = useStore((s) => s.setGuesses);
+  const setCurrentGuess = useStore((s) => s.setCurrentGuess);
+  const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
+  const setIsGameOver = useStore((s) => s.setIsGameOver);
+  const setLettersState = useStore((s) => s.setLettersState);
+
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
 
-  const newGame = () => {
-    if (isLoading) setIsLoading(false);
-    else setIsLoading(true);
+  const newGame = async () => {
+    setIsLoading(true);
+
+    const word = await WordService.getNewWord();
+    if (word) {
+      setSolution(word);
+      // Reset state
+      setIsGameOver(false);
+      setGuesses(Array(NUMBER_OF_GUESSES).fill(null));
+      setCurrentGuess("");
+      setCurrentGuessIndex(0);
+      setLettersState({ correct: [], present: [], absent: [] });
+    }
+    setIsLoading(false);
   };
 
   const share = async () => {
@@ -46,14 +66,14 @@ function GameOver() {
     <div className="game-over bg-muted-background border-muted-foreground flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
-          <h3 className="text-center text-2xl">Congratulations</h3>
+          <h3 className="text-center text-xl">Congratulations</h3>
 
           <p className="max-w-sm text-center text-xl">
             Awesome! Your wordle took <br />
             <span className="font-lg font-bold">2 minutes 15 seconds</span>.
           </p>
 
-          <div className="controls flex gap-3 text-sm">
+          <div className="controls flex gap-3">
             <Button
               onClick={share}
               variant="outline"
@@ -83,7 +103,7 @@ function GameOver() {
         </>
       ) : (
         <>
-          <h3 className="text-center text-2xl">Not this time!</h3>
+          <h3 className="text-center text-xl">Not this time!</h3>
 
           <Line
             lineIndex={currentGuessIndex - 1}
@@ -95,7 +115,7 @@ function GameOver() {
             {"No worries, you’ll get it next time."} <br />
           </p>
 
-          <div className="controls flex gap-3 text-sm">
+          <div className="controls flex gap-3">
             <Button
               onClick={share}
               variant="outline"

@@ -1,7 +1,7 @@
 import { Language } from "@/types";
 
 const WordService = {
-  getNewWord: async (language: Language) => {
+  getNewWord: async (language: Language = "English") => {
     const res = await fetch(`/api/word?language${language}`);
 
     const data = await res.json();
