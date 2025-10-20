@@ -1,6 +1,7 @@
 import Line from "@/components/board/Line";
 import Button from "@/components/ui/button";
 import useStore from "@/hooks/useStore";
+import { copyToClipboard } from "@/lib/utils";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
 
 function GameOver() {
@@ -14,8 +15,26 @@ function GameOver() {
     alert("NEW GAME");
   };
 
-  const share = () => {
-    alert("SHARE");
+  const share = async () => {
+    const title = document.title;
+    const url = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch (err: unknown) {
+        if (err instanceof DOMException && err.name !== "AbortError") {
+          console.error("Error sharing:", err);
+          await copyToClipboard(url);
+          alert("Link copied to clipboard!");
+        } else if (!(err instanceof DOMException)) {
+          console.error("Unexpected error:", err);
+        }
+      }
+    } else {
+      await copyToClipboard(url);
+      alert("Link copied to clipboard!");
+    }
   };
 
   return (
@@ -34,6 +53,7 @@ function GameOver() {
               onClick={share}
               variant="outline"
               className="flex items-center gap-2"
+              aria-label="Share"
             >
               <Share2Icon className="size-4" />
               Share
@@ -42,6 +62,7 @@ function GameOver() {
               onClick={newGame}
               variant="default"
               className="flex items-center gap-2"
+              aria-label="New game"
             >
               <Gamepad2Icon className="size-4" />
               New Game
@@ -67,6 +88,7 @@ function GameOver() {
               onClick={share}
               variant="outline"
               className="flex items-center gap-2"
+              aria-label="Share"
             >
               <Share2Icon className="size-4" />
               Share
@@ -75,6 +97,7 @@ function GameOver() {
               onClick={newGame}
               variant="default"
               className="flex items-center gap-2"
+              aria-label="New game"
             >
               <Gamepad2Icon className="size-4" />
               New Game
