@@ -19,6 +19,8 @@ interface IState {
   ) => void;
   language: Language;
   setLanguage: (language: Language) => void;
+  startTime: Date;
+  setStartTime: (date: Date) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -44,6 +46,8 @@ const useStore = create<IState>((set) => ({
     })),
   language: "English",
   setLanguage: (language) => set({ language: language }),
+  startTime: new Date(),
+  setStartTime: (date) => set({ startTime: date }),
 }));
 
 export default useStore;

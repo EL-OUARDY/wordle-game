@@ -4,7 +4,7 @@ import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
-import { copyToClipboard } from "@/lib/utils";
+import { copyToClipboard, getTimeDifference } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
@@ -18,12 +18,15 @@ function GameOver() {
   const guesses = useStore((s) => s.guesses);
   const setGuesses = useStore((s) => s.setGuesses);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
+  const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
+  const isGameOver = useStore((s) => s.isGameOver);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setLettersState = useStore((s) => s.setLettersState);
-
-  const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const startTime = useStore((s) => s.startTime);
+  const setStartTime = useStore((s) => s.setStartTime);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [endTime, setEndTime] = useState<string>("");
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
 
@@ -40,6 +43,7 @@ function GameOver() {
       setCurrentGuess("");
       setCurrentGuessIndex(0);
       setLettersState({ correct: [], present: [], absent: [] });
+      setStartTime(new Date());
     }
     setIsLoading(false);
   }, [
@@ -51,8 +55,10 @@ function GameOver() {
     setIsGameOver,
     setLettersState,
     setSolution,
+    setStartTime,
   ]);
 
+  // Start new game when hitting enter
   useEffect(() => {
     const handleTyping = (e: KeyboardEvent) => {
       const char = e.key;
@@ -64,6 +70,11 @@ function GameOver() {
 
     return () => window.removeEventListener("keydown", handleTyping);
   }, [newGame]);
+
+  // Compute time taken to complete the puzzle
+  useEffect(() => {
+    if (isGameOver) setEndTime(getTimeDifference(startTime, new Date()));
+  }, [isGameOver, startTime]);
 
   const share = async () => {
     const title = document.title;
@@ -91,11 +102,11 @@ function GameOver() {
     <div className="game-over bg-muted-background border-muted-foreground mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
-          <h3 className="text-center text-xl">Congratulations</h3>
+          <h3 className="text-center text-2xl">Congratulations</h3>
 
-          <p className="max-w-sm text-center text-xl">
+          <p className="max-w-sm text-center text-xl leading-relaxed">
             Awesome! Your wordle took <br />
-            <span className="font-lg font-bold">2 minutes 15 seconds</span>.
+            <span className="font-lg font-bold">{endTime}</span>.
           </p>
 
           <div className="controls flex gap-3">

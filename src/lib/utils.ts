@@ -1,5 +1,6 @@
 import { LANGUAGES } from "@/lib/constants";
 import { Language } from "@/types";
+import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 
 export function isLanguage(str: string): str is Language {
@@ -30,4 +31,20 @@ export function anim(animate: string, variants: Variants, custom: any = null) {
     variants,
     custom,
   };
+}
+
+export function getTimeDifference(start: Date, end: Date): string {
+  const duration = intervalToDuration({ start, end });
+
+  const parts: string[] = [];
+
+  if (duration.hours)
+    parts.push(`${duration.hours} hour${duration.hours > 1 ? "s" : ""}`);
+  if (duration.minutes)
+    parts.push(`${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}`);
+  if (duration.seconds)
+    parts.push(`${duration.seconds} second${duration.seconds > 1 ? "s" : ""}`);
+
+  // fallback if all are 0 (like < 1 sec)
+  return parts.length > 0 ? parts.join(" ") : "less than a second";
 }
