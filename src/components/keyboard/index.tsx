@@ -205,11 +205,12 @@ function Keyboard({ className }: Props) {
       </div>
       {/* Third row */}
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
+        {/* Enter button */}
         <button
           type="button"
           tabIndex={-1}
           onClick={submiGuess}
-          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-semibold"
+          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
           aria-label={englishKeys.controls.enter}
           aria-disabled="true"
         >
@@ -243,6 +244,7 @@ function Keyboard({ className }: Props) {
             </button>
           );
         })}
+        {/* Backspace button */}
         <button
           type="button"
           tabIndex={-1}
