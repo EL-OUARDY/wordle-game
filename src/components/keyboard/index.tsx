@@ -7,7 +7,7 @@ import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
 import WordService from "@/services/word";
 import { motion } from "motion/react";
-import { anim } from "@/lib/utils";
+import { anim, sleep } from "@/lib/utils";
 import { keyboardVariants } from "@/components/keyboard/animations";
 
 interface Props {
@@ -54,8 +54,10 @@ function Keyboard({ className }: Props) {
       setIsGameOver(true);
       // Reveal word animation
       setAnimationVariant("reveal");
+      // Bounce animation
+      await sleep(1250); // wait 1.25 second
+      setAnimationVariant("bounce");
 
-      // animate - dance
       return;
     }
 

@@ -9,7 +9,7 @@ type AnimationVariant =
   | "delete"
   | "shake"
   | "reveal"
-  | "dance"
+  | "bounce"
   | "idle";
 interface IState {
   guesses: string[];

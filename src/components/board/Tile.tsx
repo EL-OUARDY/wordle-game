@@ -75,6 +75,13 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         setLetterStatus();
       }
 
+      if (
+        animationVariant === "bounce" &&
+        lineIndex === currentGuessIndex - 1
+      ) {
+        await controls.start(animationVariant);
+      }
+
       // Reset after animation completes
       controls.start("idle");
     };
