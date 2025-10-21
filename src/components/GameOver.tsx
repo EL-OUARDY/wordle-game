@@ -1,5 +1,4 @@
 "use client";
-import Line from "@/components/board/Line";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import useStore from "@/hooks/useStore";
@@ -8,6 +7,7 @@ import { copyToClipboard, getTimeDifference } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { Share2Icon, Gamepad2Icon } from "lucide-react";
+import { motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 
 function GameOver() {
@@ -148,12 +148,26 @@ function GameOver() {
         <>
           <h3 className="text-center text-xl">Not this time!</h3>
 
-          <div className="max-h-[40px] w-[240px] overflow-hidden border">
-            <Line
-              lineIndex={currentGuessIndex - 1}
-              guess={solution as string}
-              className="px-[10px] !text-[1.4rem]"
-            />
+          <div className="w-[240px] overflow-hidden">
+            <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-[1.4rem]">
+              {solution?.split("").map((char, index) => {
+                return (
+                  <motion.div
+                    key={index}
+                    className="bg-correct text-tile-foreground tile flex size-[40px] items-center justify-center font-black uppercase"
+                    initial={{ y: 40, opacity: 0.8 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{
+                      duration: 0.3,
+                      ease: "easeOut",
+                      delay: index * 0.1,
+                    }}
+                  >
+                    {char}
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
 
           <p className="max-w-sm text-center text-lg">
