@@ -20,7 +20,19 @@ export const boardVariants: Variants = {
   }),
 };
 
+export const lineVariants: Variants = {
+  idle: { x: 0 },
+  shake: ({ isCurrent }) => {
+    if (!isCurrent) return {};
+    return {
+      x: [0, -12, 12, -8, 8, -4, 4, 0],
+      transition: { duration: 0.6, ease: "easeInOut" },
+    };
+  },
+};
+
 export const tileVariants: Variants = {
+  idle: { opacity: 1, scale: 1 },
   new_game: ({ row, col }) => ({
     opacity: [0, 1],
     scale: [0.8, 1],
@@ -31,8 +43,8 @@ export const tileVariants: Variants = {
       duration: 0.8,
     },
   }),
-  typing: ({ char }) => {
-    if (!char || char === " ") return {};
+  type: ({ char, isCurrent }) => {
+    if (!isCurrent || !char || char === " ") return {};
     return {
       opacity: 1,
       scale: [1, 1.1, 1],

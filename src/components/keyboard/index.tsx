@@ -36,7 +36,11 @@ function Keyboard({ className }: Props) {
 
     // Check if current guess is less than 5 letters
     if (currentGuess.length < WORD_LENGTH) {
-      // animate - shake
+      // Shake line animation
+      if (currentGuess.length > 0) {
+        setAnimationVariant("idle");
+        requestAnimationFrame(() => setAnimationVariant("shake"));
+      }
       return;
     }
 
@@ -58,8 +62,12 @@ function Keyboard({ className }: Props) {
     setIsSubmitting(true);
     const isValid = await WordService.isValidWord(currentGuess, language);
     if (!isValid) {
-      // animate - shake
       setIsSubmitting(false);
+      // Shake line animation
+      if (currentGuess.length > 0) {
+        setAnimationVariant("idle");
+        requestAnimationFrame(() => setAnimationVariant("shake"));
+      }
       return;
     } else {
       const newGuesses = guesses.map((guess, index) =>
@@ -83,6 +91,7 @@ function Keyboard({ className }: Props) {
     guesses,
     isSubmitting,
     language,
+    setAnimationVariant,
     setCurrentGuess,
     setCurrentGuessIndex,
     setGuesses,
@@ -110,6 +119,7 @@ function Keyboard({ className }: Props) {
       // Check if backspace key is pressed
       if (char === "Backspace") {
         setCurrentGuess(currentGuess.slice(0, -1));
+        setAnimationVariant("delete");
       }
 
       // Check if current guess is already 5 letters
@@ -121,20 +131,31 @@ function Keyboard({ className }: Props) {
 
       // Add character
       setCurrentGuess(currentGuess + char.toLowerCase());
-      setAnimationVariant("typing");
+      // Pop tile animation
+      setAnimationVariant("idle");
+      requestAnimationFrame(() => setAnimationVariant("type"));
     };
 
     window.addEventListener("keydown", handleTyping);
 
     return () => window.removeEventListener("keydown", handleTyping);
-  }, [currentGuess, isGameOver, isSubmitting, setCurrentGuess, submiGuess]);
+  }, [
+    currentGuess,
+    isGameOver,
+    isSubmitting,
+    setAnimationVariant,
+    setCurrentGuess,
+    submiGuess,
+  ]);
 
   const onKeyClick = (key: string) => {
     if (isSubmitting) return;
     if (isGameOver) return;
     if (currentGuess.length >= WORD_LENGTH) return;
     setCurrentGuess(currentGuess + key.toLowerCase());
-    setAnimationVariant("typing");
+    // Pop tile animation
+    setAnimationVariant("idle");
+    requestAnimationFrame(() => setAnimationVariant("type"));
   };
 
   return (
@@ -263,6 +284,7 @@ function Keyboard({ className }: Props) {
           onClick={() => {
             if (isSubmitting) return;
             setCurrentGuess(currentGuess.slice(0, -1));
+            setAnimationVariant("delete");
           }}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-normal"
           aria-label={englishKeys.controls.delete}

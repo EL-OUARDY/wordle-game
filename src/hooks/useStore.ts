@@ -2,7 +2,13 @@ import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { Language, LettersState } from "@/types";
 import { create } from "zustand";
 
-type AnimationVariant = "intro" | "new_game" | "typing";
+type AnimationVariant =
+  | "intro"
+  | "new_game"
+  | "type"
+  | "shake"
+  | "delete"
+  | "idle";
 interface IState {
   guesses: string[];
   setGuesses: (guesses: string[]) => void;

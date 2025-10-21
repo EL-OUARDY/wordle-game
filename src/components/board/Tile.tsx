@@ -13,6 +13,7 @@ interface Props {
 }
 
 function Tile({ char, charIndex, lineIndex, className }: Props) {
+  const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
   const [status, setStatus] = useState<LetterStatus | null>(null);
@@ -25,11 +26,6 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   useEffect(() => {
     setStatus(null);
   }, [solution]);
-
-  // // Char change
-  // useEffect(() => {
-  //   if (char && char !== " ") setAnimVariant("type");
-  // }, [char]);
 
   // Set status
   useEffect(() => {
@@ -65,7 +61,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
 
   return (
     <motion.div
-      key={solution}
+      key={solution + animationVariant}
       className={clsx(
         className,
         char && char !== " " ? "border-foreground" : "border-muted-foreground",
@@ -78,6 +74,9 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
             char,
             row: lineIndex,
             col: charIndex,
+            isCurrent:
+              lineIndex === currentGuessIndex &&
+              charIndex === currentGuess.length - 1,
           })
         : {})}
     >
