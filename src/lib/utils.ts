@@ -48,3 +48,7 @@ export function getTimeDifference(start: Date, end: Date): string {
   // fallback if all are 0 (like < 1 sec)
   return parts.length > 0 ? parts.join(" ") : "less than a second";
 }
+
+export function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
