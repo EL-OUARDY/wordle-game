@@ -78,7 +78,8 @@ function Wordle({ language = "English", className }: Props) {
           }}
           variant="default"
           className="flex items-center gap-2"
-          aria-label="New game"
+          aria-label="Play"
+          whileTap={{ scale: 0.95 }}
         >
           <Gamepad2Icon className="size-4" />
           Play

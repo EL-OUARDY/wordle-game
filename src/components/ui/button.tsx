@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 import clsx from "clsx";
+import { motion } from "motion/react";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -31,4 +32,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 
 Button.displayName = "Button";
 
-export default Button;
+// Create a motion version of the Button component
+export const MotionButton = motion.create(Button);
+
+export default MotionButton;

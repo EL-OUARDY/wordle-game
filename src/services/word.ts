@@ -2,9 +2,16 @@ import { Language } from "@/types";
 
 const WordService = {
   getNewWord: async (language: Language = "English") => {
+    // const word = ["store", "story", "stars", "stork", "straw"][
+    //   Math.floor(Math.random() * 5)
+    // ];
+    // console.log("📌 ", word);
+
+    // return word;
     const res = await fetch(`/api/word?language${language}`);
 
     const data = await res.json();
+    console.log("📌 ", data.word); //////
     if (res.ok) return data.word;
   },
 

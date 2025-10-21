@@ -119,6 +119,7 @@ function GameOver() {
               variant="outline"
               className="flex items-center gap-2"
               aria-label="Share"
+              whileTap={{ scale: 0.95 }}
             >
               <Share2Icon className="size-4" />
               Share
@@ -131,6 +132,7 @@ function GameOver() {
                 "flex items-center gap-2",
               )}
               aria-label="New game"
+              whileTap={{ scale: 0.95 }}
             >
               {isLoading ? (
                 <LoaderIcon className="size-4" />
@@ -161,6 +163,7 @@ function GameOver() {
               variant="outline"
               className="flex items-center gap-2"
               aria-label="Share"
+              whileTap={{ scale: 0.95 }}
             >
               <Share2Icon className="size-4" />
               Share
@@ -173,6 +176,7 @@ function GameOver() {
                 "flex items-center gap-2",
               )}
               aria-label="New game"
+              whileTap={{ scale: 0.95 }}
             >
               {isLoading ? (
                 <LoaderIcon className="size-4" />
