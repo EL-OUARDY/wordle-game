@@ -26,6 +26,8 @@ function Keyboard({ className }: Props) {
   const lettersState = useStore((s) => s.lettersState);
   const solution = useStore((s) => s.solution);
   const language = useStore((s) => s.language);
+  const animationVariant = useStore((s) => s.animationVariant);
+  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -119,6 +121,7 @@ function Keyboard({ className }: Props) {
 
       // Add character
       setCurrentGuess(currentGuess + char.toLowerCase());
+      setAnimationVariant("typing");
     };
 
     window.addEventListener("keydown", handleTyping);
@@ -131,6 +134,7 @@ function Keyboard({ className }: Props) {
     if (isGameOver) return;
     if (currentGuess.length >= WORD_LENGTH) return;
     setCurrentGuess(currentGuess + key.toLowerCase());
+    setAnimationVariant("typing");
   };
 
   return (
@@ -140,7 +144,7 @@ function Keyboard({ className }: Props) {
         "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px]",
       )}
       aria-label="Keyboard"
-      {...anim("intro", keyboardVariants)}
+      {...anim(animationVariant, keyboardVariants)}
     >
       {/* First row */}
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">

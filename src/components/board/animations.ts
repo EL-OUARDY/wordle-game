@@ -1,4 +1,3 @@
-import { anim } from "@/lib/utils";
 import { Variants } from "motion/react";
 
 const ANIMATION_ORIGIN = [0, 0];
@@ -16,17 +15,15 @@ const getDelay = (row: number, col: number) => {
 };
 
 export const boardVariants: Variants = {
-  initial: { opacity: 0 },
   intro: () => ({
-    opacity: 1,
+    opacity: [0, 1],
   }),
 };
 
 export const tileVariants: Variants = {
-  initial: { opacity: 0, scale: 0.8 },
   new_game: ({ row, col }) => ({
-    opacity: 1,
-    scale: 1,
+    opacity: [0, 1],
+    scale: [0.8, 1],
     transition: {
       type: "spring",
       bounce: 0.5,
@@ -34,4 +31,12 @@ export const tileVariants: Variants = {
       duration: 0.8,
     },
   }),
+  typing: ({ char }) => {
+    if (!char || char === " ") return {};
+    return {
+      opacity: 1,
+      scale: [1, 1.1, 1],
+      transition: { duration: 0.1, ease: "easeOut" },
+    };
+  },
 };

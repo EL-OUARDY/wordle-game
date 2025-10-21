@@ -2,6 +2,7 @@ import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { Language, LettersState } from "@/types";
 import { create } from "zustand";
 
+type AnimationVariant = "intro" | "new_game" | "typing";
 interface IState {
   guesses: string[];
   setGuesses: (guesses: string[]) => void;
@@ -21,6 +22,8 @@ interface IState {
   setLanguage: (language: Language) => void;
   startTime: Date;
   setStartTime: (date: Date) => void;
+  animationVariant: AnimationVariant;
+  setAnimationVariant: (variant: AnimationVariant) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -48,6 +51,8 @@ const useStore = create<IState>((set) => ({
   setLanguage: (language) => set({ language: language }),
   startTime: new Date(),
   setStartTime: (date) => set({ startTime: date }),
+  animationVariant: "intro",
+  setAnimationVariant: (variant) => set({ animationVariant: variant }),
 }));
 
 export default useStore;

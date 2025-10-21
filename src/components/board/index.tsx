@@ -16,6 +16,7 @@ function Board({ className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const animationVariant = useStore((s) => s.animationVariant);
 
   return (
     <motion.div
@@ -23,7 +24,7 @@ function Board({ className }: Props) {
         className,
         "board flex h-[360px] w-[300px] flex-col gap-[5px] p-[10px]",
       )}
-      {...anim("intro", boardVariants)}
+      {...anim(animationVariant, boardVariants)}
     >
       {guesses.map((guess, i) => {
         return (

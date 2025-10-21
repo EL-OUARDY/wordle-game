@@ -12,21 +12,24 @@ interface Props {
   className?: string;
 }
 
-type AnimationVariant = "new_game" | null;
-
 function Tile({ char, charIndex, lineIndex, className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
   const [status, setStatus] = useState<LetterStatus | null>(null);
   const setLettersState = useStore((s) => s.setLettersState);
+  const animationVariant = useStore((s) => s.animationVariant);
 
-  const [animVariant, setAnimVariant] = useState<AnimationVariant>(null);
+  // console.log("RERENDERED ", char);
 
   // Reset status when game restarts
   useEffect(() => {
     setStatus(null);
-    setAnimVariant("new_game");
   }, [solution]);
+
+  // // Char change
+  // useEffect(() => {
+  //   if (char && char !== " ") setAnimVariant("type");
+  // }, [char]);
 
   // Set status
   useEffect(() => {
@@ -70,8 +73,12 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         status ? `bg-${status}` : "bg-tile-background",
         "tile flex items-center justify-center border-2 font-black uppercase",
       )}
-      {...(animVariant
-        ? anim(animVariant, tileVariants, { row: lineIndex, col: charIndex })
+      {...(animationVariant
+        ? anim(animationVariant, tileVariants, {
+            char,
+            row: lineIndex,
+            col: charIndex,
+          })
         : {})}
     >
       {char}
