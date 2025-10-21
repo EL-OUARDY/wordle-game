@@ -24,7 +24,7 @@ export const boardVariants: Variants = {
 export const lineVariants: Variants = {
   idle: { x: 0 },
   shake: {
-    x: [0, -1, 2, -4, 4, -4, 4, -1, 0],
+    x: [0, -1, 2, -5, 5, -5, 5, -1, 0],
     transition: { duration: 0.6, ease: "easeOut" },
   },
 };
@@ -47,6 +47,17 @@ export const tileVariants: Variants = {
     opacity: 1,
     scale: [1, 1.1, 1],
     transition: { duration: 0.1, ease: "easeOut" },
+  },
+
+  bounce: ({ col }) => {
+    return {
+      y: [0, 0, -30, 5, -15, 2, 0],
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+        delay: col * 0.15,
+      },
+    };
   },
 
   flip_in: ({ col }) => {
