@@ -15,6 +15,7 @@ const WordService = {
   },
 
   isValidWord: async (word: string, language: Language) => {
+    return true;
     const res = await fetch("/api/word/validate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

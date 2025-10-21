@@ -148,11 +148,13 @@ function GameOver() {
         <>
           <h3 className="text-center text-xl">Not this time!</h3>
 
-          <Line
-            lineIndex={currentGuessIndex - 1}
-            guess={solution as string}
-            className="max-h-[40px] w-[240px] px-[10px] !text-[1.4rem]"
-          />
+          <div className="max-h-[40px] w-[240px] overflow-hidden border">
+            <Line
+              lineIndex={currentGuessIndex - 1}
+              guess={solution as string}
+              className="px-[10px] !text-[1.4rem]"
+            />
+          </div>
 
           <p className="max-w-sm text-center text-lg">
             {"No worries, you’ll get it next time."} <br />

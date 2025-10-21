@@ -51,12 +51,13 @@ function Keyboard({ className }: Props) {
       setGuesses(newGuesses);
       setCurrentGuess("");
       setCurrentGuessIndex(currentGuessIndex + 1);
-      setIsGameOver(true);
       // Reveal word animation
       setAnimationVariant("reveal");
       // Bounce animation
       await sleep(1250); // wait 1.25 second
       setAnimationVariant("bounce");
+      await sleep(1600); // wait 1.6 second
+      setIsGameOver(true);
 
       return;
     }
@@ -83,7 +84,10 @@ function Keyboard({ className }: Props) {
 
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
+        // Wait for reveal animation to finish
+        await sleep(1500); // wait 1.25 second
         setIsGameOver(true);
+        setAnimationVariant("slide_up");
       }
 
       setIsSubmitting(false);
