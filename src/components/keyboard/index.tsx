@@ -52,8 +52,11 @@ function Keyboard({ className }: Props) {
       setGuesses(newGuesses);
       setCurrentGuess("");
       setCurrentGuessIndex(currentGuessIndex + 1);
-      // Animate - reveal
       setIsGameOver(true);
+      // Reveal word animation
+      setAnimationVariant("idle");
+      requestAnimationFrame(() => setAnimationVariant("reveal"));
+
       // animate - dance
       return;
     }
@@ -76,7 +79,9 @@ function Keyboard({ className }: Props) {
       setGuesses(newGuesses);
       setCurrentGuess("");
       setCurrentGuessIndex(currentGuessIndex + 1);
-      // Animate - reveal
+      // Reveal word animation
+      setAnimationVariant("idle");
+      requestAnimationFrame(() => setAnimationVariant("reveal"));
 
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
