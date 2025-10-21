@@ -1,4 +1,5 @@
 import { Variants } from "motion/react";
+import { p } from "motion/react-client";
 
 const ANIMATION_ORIGIN = [0, 0];
 const ANIMATION_NOISE = 0.05;
@@ -22,12 +23,9 @@ export const boardVariants: Variants = {
 
 export const lineVariants: Variants = {
   idle: { x: 0 },
-  shake: ({ isCurrent }) => {
-    if (!isCurrent) return {};
-    return {
-      x: [0, -12, 12, -8, 8, -4, 4, 0],
-      transition: { duration: 0.6, ease: "easeInOut" },
-    };
+  shake: {
+    x: [0, -1, 2, -4, 4, -4, 4, -1, 0],
+    transition: { duration: 0.6, ease: "easeOut" },
   },
 };
 
