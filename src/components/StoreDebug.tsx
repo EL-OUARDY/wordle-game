@@ -25,7 +25,12 @@ function StoreDebug() {
       )}
     >
       {isExpanded && <pre>{JSON.stringify(state, null, 2)}</pre>}
-      {!isExpanded && <Code2Icon className="size-5" />}
+      {!isExpanded && (
+        <div className="flex items-center gap-2 px-4">
+          <Code2Icon className="size-5" />
+          <span className="">{state.animationVariant}</span>
+        </div>
+      )}
     </div>
   );
 }
