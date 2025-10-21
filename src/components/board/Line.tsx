@@ -15,7 +15,6 @@ interface Props {
 function Line({ guess, lineIndex, className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const animationVariant = useStore((s) => s.animationVariant);
-  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   return (
     <motion.div

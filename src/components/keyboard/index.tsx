@@ -38,8 +38,7 @@ function Keyboard({ className }: Props) {
     if (currentGuess.length < WORD_LENGTH) {
       // Shake line animation
       if (currentGuess.length > 0) {
-        setAnimationVariant("idle");
-        requestAnimationFrame(() => setAnimationVariant("shake"));
+        setAnimationVariant("shake");
       }
       return;
     }
@@ -54,8 +53,7 @@ function Keyboard({ className }: Props) {
       setCurrentGuessIndex(currentGuessIndex + 1);
       setIsGameOver(true);
       // Reveal word animation
-      setAnimationVariant("idle");
-      requestAnimationFrame(() => setAnimationVariant("reveal"));
+      setAnimationVariant("reveal");
 
       // animate - dance
       return;
@@ -68,8 +66,7 @@ function Keyboard({ className }: Props) {
       setIsSubmitting(false);
       // Shake line animation
       if (currentGuess.length > 0) {
-        setAnimationVariant("idle");
-        requestAnimationFrame(() => setAnimationVariant("shake"));
+        setAnimationVariant("shake");
       }
       return;
     } else {
@@ -80,8 +77,7 @@ function Keyboard({ className }: Props) {
       setCurrentGuess("");
       setCurrentGuessIndex(currentGuessIndex + 1);
       // Reveal word animation
-      setAnimationVariant("idle");
-      requestAnimationFrame(() => setAnimationVariant("reveal"));
+      setAnimationVariant("reveal");
 
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
@@ -137,8 +133,7 @@ function Keyboard({ className }: Props) {
       // Add character
       setCurrentGuess(currentGuess + char.toLowerCase());
       // Pop tile animation
-      setAnimationVariant("idle");
-      requestAnimationFrame(() => setAnimationVariant("type"));
+      setAnimationVariant("type");
     };
 
     window.addEventListener("keydown", handleTyping);
@@ -159,8 +154,7 @@ function Keyboard({ className }: Props) {
     if (currentGuess.length >= WORD_LENGTH) return;
     setCurrentGuess(currentGuess + key.toLowerCase());
     // Pop tile animation
-    setAnimationVariant("idle");
-    requestAnimationFrame(() => setAnimationVariant("type"));
+    setAnimationVariant("type");
   };
 
   return (

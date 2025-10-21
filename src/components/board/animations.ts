@@ -32,7 +32,8 @@ export const lineVariants: Variants = {
 };
 
 export const tileVariants: Variants = {
-  idle: { opacity: 1, scale: 1 },
+  idle: { opacity: 1, scale: 1, rotateX: 0 },
+
   new_game: ({ row, col }) => ({
     opacity: [0, 1],
     scale: [0.8, 1],
@@ -43,12 +44,31 @@ export const tileVariants: Variants = {
       duration: 0.8,
     },
   }),
-  type: ({ char, isCurrent }) => {
-    if (!isCurrent || !char || char === " ") return {};
+
+  type: {
+    opacity: 1,
+    scale: [1, 1.1, 1],
+    transition: { duration: 0.1, ease: "easeOut" },
+  },
+
+  flip_in: ({ col }) => {
     return {
-      opacity: 1,
-      scale: [1, 1.1, 1],
-      transition: { duration: 0.1, ease: "easeOut" },
+      rotateX: [0, -90],
+      transition: {
+        duration: 0.25,
+        delay: col * 0.25,
+        ease: "easeIn",
+      },
+    };
+  },
+
+  flip_out: ({}) => {
+    return {
+      rotateX: [-90, 0],
+      transition: {
+        duration: 0.25,
+        ease: "easeIn",
+      },
     };
   },
 };

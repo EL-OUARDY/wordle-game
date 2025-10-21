@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import { LetterStatus } from "@/types";
-import { motion } from "motion/react";
-import { anim } from "@/lib/utils";
+import { motion, useAnimation } from "motion/react";
 import { tileVariants } from "@/components/board/animations";
 interface Props {
   char: string;
@@ -20,17 +19,16 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const setLettersState = useStore((s) => s.setLettersState);
   const animationVariant = useStore((s) => s.animationVariant);
 
-  // console.log("RERENDERED ", char);
+  const controls = useAnimation();
 
   // Reset status when game restarts
   useEffect(() => {
     setStatus(null);
   }, [solution]);
 
-  // Set status
-  useEffect(() => {
+  const setLetterStatus = useCallback(() => {
+    if (!char || char === " ") return;
     if (!solution) return;
-    if (lineIndex >= currentGuessIndex) return;
     if (solution[charIndex] === char) {
       setStatus("correct");
       setLettersState((prev) => ({
@@ -50,35 +48,69 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         present: [...prev.present, char],
       }));
     }
+  }, [char, charIndex, setLettersState, solution]);
+
+  // Apply current animation variant
+  useEffect(() => {
+    const runAnimation = async () => {
+      const isCurrent =
+        lineIndex === currentGuessIndex &&
+        charIndex === currentGuess.length - 1;
+
+      if (
+        animationVariant === "reveal" &&
+        currentGuessIndex - 1 === lineIndex
+      ) {
+        await controls.start("flip_in");
+        setLetterStatus();
+        await controls.start("flip_out");
+      }
+
+      if (animationVariant === "type" && isCurrent && char && char !== " ") {
+        await controls.start(animationVariant);
+      }
+
+      if (animationVariant === "new_game") {
+        await controls.start(animationVariant);
+        setLetterStatus();
+      }
+
+      // Reset after animation completes
+      controls.start("idle");
+    };
+
+    runAnimation();
   }, [
+    animationVariant,
     char,
     charIndex,
+    controls,
+    currentGuess.length,
     currentGuessIndex,
     lineIndex,
-    setLettersState,
-    solution,
+    setLetterStatus,
   ]);
 
   return (
     <motion.div
-      key={solution + animationVariant}
       className={clsx(
         className,
         char && char !== " " ? "border-foreground" : "border-muted-foreground",
-        lineIndex < currentGuessIndex && "text-tile-foreground !border-0",
+        status && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
         "tile flex items-center justify-center border-2 font-black uppercase",
       )}
-      {...(animationVariant
-        ? anim(animationVariant, tileVariants, {
-            char,
-            row: lineIndex,
-            col: charIndex,
-            isCurrent:
-              lineIndex === currentGuessIndex &&
-              charIndex === currentGuess.length - 1,
-          })
-        : {})}
+      animate={controls}
+      variants={tileVariants}
+      custom={{
+        char,
+        row: lineIndex,
+        col: charIndex,
+        isCurrent:
+          lineIndex === currentGuessIndex &&
+          charIndex === currentGuess.length - 1,
+        currentLineIndex: currentGuessIndex,
+      }}
     >
       {char}
     </motion.div>
