@@ -9,9 +9,16 @@ interface Props {
   charIndex: number;
   lineIndex: number;
   className?: string;
+  animated?: boolean;
 }
 
-function Tile({ char, charIndex, lineIndex, className }: Props) {
+function Tile({
+  char,
+  charIndex,
+  lineIndex,
+  className,
+  animated = true,
+}: Props) {
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
@@ -61,21 +68,32 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         animationVariant === "reveal" &&
         currentGuessIndex - 1 === lineIndex
       ) {
-        await controls.start("flip_in");
-        setLetterStatus();
-        await controls.start("flip_out");
+        if (animated) {
+          await controls.start("flip_in");
+          setLetterStatus();
+          await controls.start("flip_out");
+        } else {
+          setLetterStatus();
+        }
       }
 
-      if (animationVariant === "type" && isCurrent && char && char !== " ") {
+      if (
+        animated &&
+        animationVariant === "type" &&
+        isCurrent &&
+        char &&
+        char !== " "
+      ) {
         await controls.start(animationVariant);
       }
 
-      if (animationVariant === "new_game") {
+      if (animated && animationVariant === "new_game") {
         await controls.start(animationVariant);
         setLetterStatus();
       }
 
       if (
+        animated &&
         animationVariant === "bounce" &&
         lineIndex === currentGuessIndex - 1
       ) {
@@ -88,6 +106,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
 
     runAnimation();
   }, [
+    animated,
     animationVariant,
     char,
     charIndex,

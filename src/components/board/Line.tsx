@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import Tile from "@/components/board/Tile";
-import { anim } from "@/lib/utils";
 import useStore from "@/hooks/useStore";
 import { lineVariants } from "@/components/board/animations";
 import { motion, useAnimation } from "motion/react";
@@ -10,9 +9,10 @@ interface Props {
   guess: string;
   lineIndex: number;
   className?: string;
+  animated?: boolean;
 }
 
-function Line({ guess, lineIndex, className }: Props) {
+function Line({ guess, lineIndex, className, animated = true }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
@@ -21,6 +21,7 @@ function Line({ guess, lineIndex, className }: Props) {
 
   // Apply current animation variant
   useEffect(() => {
+    if (!animated) return;
     const runAnimation = async () => {
       const isCurrent = lineIndex === currentGuessIndex;
 
@@ -34,6 +35,7 @@ function Line({ guess, lineIndex, className }: Props) {
 
     runAnimation();
   }, [
+    animated,
     animationVariant,
     controls,
     currentGuessIndex,
@@ -57,6 +59,7 @@ function Line({ guess, lineIndex, className }: Props) {
             char={char}
             charIndex={charIndex}
             lineIndex={lineIndex}
+            animated={animated}
           />
         );
       })}
