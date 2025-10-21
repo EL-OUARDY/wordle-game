@@ -37,7 +37,7 @@ function GameOver() {
     setIsLoading(true);
 
     const word = await WordService.getNewWord(language);
-    if (word) {
+    if (word && word !== solution) {
       setSolution(word);
       // Reset state
       setIsGameOver(false);
@@ -60,6 +60,7 @@ function GameOver() {
     setLettersState,
     setSolution,
     setStartTime,
+    solution,
   ]);
 
   // Start new game when hitting enter
