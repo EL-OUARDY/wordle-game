@@ -8,6 +8,7 @@ import clsx from "clsx";
 import WordService from "@/services/word";
 import { motion } from "motion/react";
 import { sleep } from "@/lib/utils";
+import { LettersStateMap } from "@/types";
 
 interface Props {
   className?: string;
@@ -22,16 +23,24 @@ function Keyboard({ className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
-  const lettersStatusMap = useStore((s) => s.lettersStatusMap);
   const solution = useStore((s) => s.solution);
   const language = useStore((s) => s.language);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
+  const isSubmitting = useStore((s) => s.isSubmitting);
+  const setIsSubmitting = useStore((s) => s.setIsSubmitting);
+  const storeLettersStatusMap = useStore((s) => s.lettersStatusMap);
+  const [lettersStatusMap, setLettersStatusMap] = useState<LettersStateMap>({
+    correct: [],
+    present: [],
+    absent: [],
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const previousSubmittedWrongGuess = useRef<string>("");
 
   const submiGuess = useCallback(async () => {
     if (isSubmitting) return;
+
+    setIsSubmitting(true);
 
     // Check if current guess is less than 5 letters
     if (currentGuess.length < WORD_LENGTH) {
@@ -39,6 +48,7 @@ function Keyboard({ className }: Props) {
       if (currentGuess.length > 0) {
         setAnimationVariant("shake");
       }
+      setIsSubmitting(false);
       return;
     }
 
@@ -54,17 +64,16 @@ function Keyboard({ className }: Props) {
       setAnimationVariant("reveal");
       // Bounce animation
       await sleep(1250); // wait 1.25 second
+      setIsSubmitting(false);
       setAnimationVariant("bounce");
       await sleep(1600); // wait 1.6 second
       setIsGameOver(true);
       previousSubmittedWrongGuess.current = "";
-
       return;
     }
 
     // Verify if the word is different from last one
     // and exists in the dictionary
-    setIsSubmitting(true);
     const isValid =
       previousSubmittedWrongGuess.current !== currentGuess &&
       (await WordService.isValidWord(currentGuess, language));
@@ -108,6 +117,7 @@ function Keyboard({ className }: Props) {
     setCurrentGuessIndex,
     setGuesses,
     setIsGameOver,
+    setIsSubmitting,
     solution,
   ]);
 
@@ -167,6 +177,12 @@ function Keyboard({ className }: Props) {
     // Pop tile animation
     setAnimationVariant("type");
   };
+
+  // Update local letters status map after animation completes
+  useEffect(() => {
+    if (isSubmitting) return;
+    setLettersStatusMap(storeLettersStatusMap);
+  }, [isSubmitting, storeLettersStatusMap]);
 
   return (
     <motion.div

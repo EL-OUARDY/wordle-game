@@ -26,6 +26,7 @@ function GameOver() {
   const startTime = useStore((s) => s.startTime);
   const setStartTime = useStore((s) => s.setStartTime);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
+  const setIsSubmitting = useStore((s) => s.setIsSubmitting);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [endTime, setEndTime] = useState<string>("");
@@ -47,6 +48,7 @@ function GameOver() {
       setLettersStatusMap({ correct: [], present: [], absent: [] });
       setStartTime(new Date());
       setAnimationVariant("new_game");
+      setIsSubmitting(false);
     }
     setIsLoading(false);
   }, [
@@ -57,6 +59,7 @@ function GameOver() {
     setCurrentGuessIndex,
     setGuesses,
     setIsGameOver,
+    setIsSubmitting,
     setLettersStatusMap,
     setSolution,
     setStartTime,

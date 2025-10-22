@@ -13,6 +13,8 @@ interface IState {
   setSolution: (solution: string) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
+  isSubmitting: boolean;
+  setIsSubmitting: (state: boolean) => void;
   lettersStatusMap: LettersStateMap;
   setLettersStatusMap: (
     updater: LettersStateMap | ((prev: LettersStateMap) => LettersStateMap),
@@ -36,6 +38,8 @@ const useStore = create<IState>((set) => ({
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
+  isSubmitting: false,
+  setIsSubmitting: (state) => set({ isSubmitting: state }),
   lettersStatusMap: { correct: [], present: [], absent: [] },
   setLettersStatusMap: (updater) =>
     set((state) => ({
