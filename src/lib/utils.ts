@@ -1,5 +1,5 @@
 import { LANGUAGES } from "@/lib/constants";
-import { Language } from "@/types";
+import { Language, LetterStatus } from "@/types";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 
@@ -51,4 +51,39 @@ export function getTimeDifference(start: Date, end: Date): string {
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Returns the status of each letter in a guess compared to the solution.
+ * Handling edge cases involving duplicate letters
+ */
+export function getGuessStatuses(
+  solution: string,
+  guess: string,
+): LetterStatus[] {
+  const statuses: LetterStatus[] = Array(guess.length).fill("absent");
+
+  // Find correct letters
+  const unmatched = new Map<string, number>();
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === solution[i]) {
+      statuses[i] = "correct";
+    } else {
+      const count = unmatched.get(solution[i]) ?? 0;
+      unmatched.set(solution[i], count + 1);
+    }
+  }
+
+  // Find present letters
+  for (let i = 0; i < 5; i++) {
+    if (statuses[i] === "correct") {
+      continue;
+    }
+    const count = unmatched.get(guess[i]);
+    if (count !== undefined && count > 0) {
+      statuses[i] = "present";
+      unmatched.set(guess[i], count - 1);
+    }
+  }
+  return statuses;
 }

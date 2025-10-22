@@ -4,6 +4,7 @@ import useStore from "@/hooks/useStore";
 import { LetterStatus } from "@/types";
 import { motion, useAnimation } from "motion/react";
 import { tileVariants } from "@/components/board/animations";
+import { getGuessStatuses } from "@/lib/utils";
 interface Props {
   char: string;
   charIndex: number;
@@ -19,6 +20,7 @@ function Tile({
   className,
   animated = true,
 }: Props) {
+  const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
@@ -37,26 +39,39 @@ function Tile({
   const updateLetterStatus = useCallback(() => {
     if (!char || char === " ") return;
     if (!solution) return;
-    if (solution[charIndex] === char) {
-      setStatus("correct");
+
+    const wordStatus = getGuessStatuses(
+      solution,
+      guesses[currentGuessIndex - 1],
+    );
+    const charStatus = wordStatus[charIndex];
+
+    setStatus(charStatus);
+
+    if (charStatus === "correct") {
       setLettersStatusMap((prev) => ({
         ...prev,
         correct: [...prev.correct, char],
       }));
-    } else if (!solution.includes(char)) {
-      setStatus("absent");
-      setLettersStatusMap((prev) => ({
-        ...prev,
-        absent: [...prev.absent, char],
-      }));
-    } else if (solution.includes(char)) {
-      setStatus("present");
+    } else if (charStatus === "present") {
       setLettersStatusMap((prev) => ({
         ...prev,
         present: [...prev.present, char],
       }));
+    } else {
+      setLettersStatusMap((prev) => ({
+        ...prev,
+        absent: [...prev.absent, char],
+      }));
     }
-  }, [char, charIndex, setLettersStatusMap, solution]);
+  }, [
+    char,
+    charIndex,
+    currentGuessIndex,
+    guesses,
+    setLettersStatusMap,
+    solution,
+  ]);
 
   // Apply current animation variant
   useEffect(() => {
