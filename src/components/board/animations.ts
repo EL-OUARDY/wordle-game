@@ -1,5 +1,4 @@
 import { Variants } from "motion/react";
-import { p } from "motion/react-client";
 
 const ANIMATION_ORIGIN = [0, 0];
 const ANIMATION_NOISE = 0.05;
@@ -13,12 +12,6 @@ const getDelay = (row: number, col: number) => {
       0.5 +
     Math.random() * ANIMATION_NOISE
   );
-};
-
-export const boardVariants: Variants = {
-  intro: () => ({
-    opacity: [0, 1],
-  }),
 };
 
 export const lineVariants: Variants = {

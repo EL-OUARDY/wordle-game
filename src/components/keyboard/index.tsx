@@ -7,8 +7,7 @@ import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
 import WordService from "@/services/word";
 import { motion } from "motion/react";
-import { anim, sleep } from "@/lib/utils";
-import { keyboardVariants } from "@/components/keyboard/animations";
+import { sleep } from "@/lib/utils";
 
 interface Props {
   className?: string;
@@ -170,7 +169,8 @@ function Keyboard({ className }: Props) {
         "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px]",
       )}
       aria-label="Keyboard"
-      {...anim(animationVariant, keyboardVariants)}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
     >
       {/* First row */}
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">

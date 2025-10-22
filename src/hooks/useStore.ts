@@ -3,7 +3,6 @@ import { Language, LettersState } from "@/types";
 import { create } from "zustand";
 
 type AnimationVariant =
-  | "intro"
   | "new_game"
   | "type"
   | "delete"
@@ -60,7 +59,7 @@ const useStore = create<IState>((set) => ({
   setLanguage: (language) => set({ language: language }),
   startTime: new Date(),
   setStartTime: (date) => set({ startTime: date }),
-  animationVariant: "intro",
+  animationVariant: "idle",
   setAnimationVariant: (variant) => set({ animationVariant: variant }),
 }));
 
