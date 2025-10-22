@@ -22,7 +22,7 @@ function Keyboard({ className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
-  const lettersState = useStore((s) => s.lettersState);
+  const lettersStatusMap = useStore((s) => s.lettersStatusMap);
   const solution = useStore((s) => s.solution);
   const language = useStore((s) => s.language);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
@@ -175,11 +175,11 @@ function Keyboard({ className }: Props) {
       <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
         {englishKeys.row1.map((key, i) => {
           let keyClasses = "";
-          if (lettersState.correct.includes(key))
+          if (lettersStatusMap.correct.includes(key))
             keyClasses = "bg-correct text-tile-foreground";
-          else if (lettersState.absent.includes(key))
+          else if (lettersStatusMap.absent.includes(key))
             keyClasses = "bg-absent text-tile-foreground";
-          else if (lettersState.present.includes(key))
+          else if (lettersStatusMap.present.includes(key))
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (
@@ -209,11 +209,11 @@ function Keyboard({ className }: Props) {
         <div className="flex-[0.5]"></div>
         {englishKeys.row2.map((key, i) => {
           let keyClasses = "";
-          if (lettersState.correct.includes(key))
+          if (lettersStatusMap.correct.includes(key))
             keyClasses = "bg-correct text-tile-foreground";
-          else if (lettersState.absent.includes(key))
+          else if (lettersStatusMap.absent.includes(key))
             keyClasses = "bg-absent text-tile-foreground";
-          else if (lettersState.present.includes(key))
+          else if (lettersStatusMap.present.includes(key))
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (
@@ -254,11 +254,11 @@ function Keyboard({ className }: Props) {
         </motion.button>
         {englishKeys.row3.map((key, i) => {
           let keyClasses = "";
-          if (lettersState.correct.includes(key))
+          if (lettersStatusMap.correct.includes(key))
             keyClasses = "bg-correct text-tile-foreground";
-          else if (lettersState.absent.includes(key))
+          else if (lettersStatusMap.absent.includes(key))
             keyClasses = "bg-absent text-tile-foreground";
-          else if (lettersState.present.includes(key))
+          else if (lettersStatusMap.present.includes(key))
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (

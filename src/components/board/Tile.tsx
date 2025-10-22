@@ -23,7 +23,7 @@ function Tile({
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const solution = useStore((s) => s.solution);
   const [status, setStatus] = useState<LetterStatus | null>(null);
-  const setLettersState = useStore((s) => s.setLettersState);
+  const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
@@ -39,24 +39,24 @@ function Tile({
     if (!solution) return;
     if (solution[charIndex] === char) {
       setStatus("correct");
-      setLettersState((prev) => ({
+      setLettersStatusMap((prev) => ({
         ...prev,
         correct: [...prev.correct, char],
       }));
     } else if (!solution.includes(char)) {
       setStatus("absent");
-      setLettersState((prev) => ({
+      setLettersStatusMap((prev) => ({
         ...prev,
         absent: [...prev.absent, char],
       }));
     } else if (solution.includes(char)) {
       setStatus("present");
-      setLettersState((prev) => ({
+      setLettersStatusMap((prev) => ({
         ...prev,
         present: [...prev.present, char],
       }));
     }
-  }, [char, charIndex, setLettersState, solution]);
+  }, [char, charIndex, setLettersStatusMap, solution]);
 
   // Apply current animation variant
   useEffect(() => {

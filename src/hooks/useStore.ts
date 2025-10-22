@@ -1,16 +1,7 @@
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
-import { Language, LettersState } from "@/types";
+import { AnimationVariant, Language, LettersStateMap } from "@/types";
 import { create } from "zustand";
 
-type AnimationVariant =
-  | "new_game"
-  | "type"
-  | "delete"
-  | "shake"
-  | "reveal"
-  | "bounce"
-  | "slide_up"
-  | "idle";
 interface IState {
   guesses: string[];
   setGuesses: (guesses: string[]) => void;
@@ -22,9 +13,9 @@ interface IState {
   setSolution: (solution: string) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
-  lettersState: LettersState;
-  setLettersState: (
-    updater: LettersState | ((prev: LettersState) => LettersState),
+  lettersStatusMap: LettersStateMap;
+  setLettersStatusMap: (
+    updater: LettersStateMap | ((prev: LettersStateMap) => LettersStateMap),
   ) => void;
   language: Language;
   setLanguage: (language: Language) => void;
@@ -45,13 +36,13 @@ const useStore = create<IState>((set) => ({
   setSolution: (solution) => set({ solution: solution }),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
-  lettersState: { correct: [], present: [], absent: [] },
-  setLettersState: (updater) =>
+  lettersStatusMap: { correct: [], present: [], absent: [] },
+  setLettersStatusMap: (updater) =>
     set((state) => ({
-      lettersState:
+      lettersStatusMap:
         typeof updater === "function"
-          ? (updater as (prev: LettersState) => LettersState)(
-              state.lettersState,
+          ? (updater as (prev: LettersStateMap) => LettersStateMap)(
+              state.lettersStatusMap,
             )
           : updater,
     })),

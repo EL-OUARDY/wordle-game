@@ -22,7 +22,7 @@ function GameOver() {
   const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
   const isGameOver = useStore((s) => s.isGameOver);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
-  const setLettersState = useStore((s) => s.setLettersState);
+  const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const startTime = useStore((s) => s.startTime);
   const setStartTime = useStore((s) => s.setStartTime);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
@@ -44,7 +44,7 @@ function GameOver() {
       setGuesses(Array(NUMBER_OF_GUESSES).fill(null));
       setCurrentGuess("");
       setCurrentGuessIndex(0);
-      setLettersState({ correct: [], present: [], absent: [] });
+      setLettersStatusMap({ correct: [], present: [], absent: [] });
       setStartTime(new Date());
       setAnimationVariant("new_game");
     }
@@ -57,7 +57,7 @@ function GameOver() {
     setCurrentGuessIndex,
     setGuesses,
     setIsGameOver,
-    setLettersState,
+    setLettersStatusMap,
     setSolution,
     setStartTime,
     solution,
