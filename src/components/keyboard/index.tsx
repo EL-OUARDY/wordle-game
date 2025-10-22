@@ -25,7 +25,6 @@ function Keyboard({ className }: Props) {
   const lettersState = useStore((s) => s.lettersState);
   const solution = useStore((s) => s.solution);
   const language = useStore((s) => s.language);
-  const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -153,7 +152,7 @@ function Keyboard({ className }: Props) {
     submiGuess,
   ]);
 
-  const onKeyClick = (key: string) => {
+  const onScreenKeyClick = (key: string) => {
     if (isSubmitting) return;
     if (isGameOver) return;
     if (currentGuess.length >= WORD_LENGTH) return;
@@ -189,7 +188,7 @@ function Keyboard({ className }: Props) {
               type="button"
               tabIndex={-1}
               onClick={() => {
-                onKeyClick(key);
+                onScreenKeyClick(key);
               }}
               className={clsx(
                 keyClasses,
@@ -223,7 +222,7 @@ function Keyboard({ className }: Props) {
               type="button"
               tabIndex={-1}
               onClick={() => {
-                onKeyClick(key);
+                onScreenKeyClick(key);
               }}
               className={clsx(
                 keyClasses,
@@ -268,7 +267,7 @@ function Keyboard({ className }: Props) {
               type="button"
               tabIndex={-1}
               onClick={() => {
-                onKeyClick(key);
+                onScreenKeyClick(key);
               }}
               className={clsx(
                 keyClasses,

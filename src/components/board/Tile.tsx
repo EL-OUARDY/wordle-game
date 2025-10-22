@@ -25,6 +25,7 @@ function Tile({
   const [status, setStatus] = useState<LetterStatus | null>(null);
   const setLettersState = useStore((s) => s.setLettersState);
   const animationVariant = useStore((s) => s.animationVariant);
+  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const controls = useAnimation();
 
@@ -60,9 +61,17 @@ function Tile({
   // Apply current animation variant
   useEffect(() => {
     const runAnimation = async () => {
+      if (animationVariant === "idle") return;
+
       const isCurrent =
         lineIndex === currentGuessIndex &&
         charIndex === currentGuess.length - 1;
+
+      // Reset after animation completes
+      const resetAnimationVariant = () => {
+        controls.start("idle");
+        setAnimationVariant("idle");
+      };
 
       if (
         animationVariant === "reveal" &&
@@ -72,8 +81,10 @@ function Tile({
           await controls.start("flip_in");
           setLetterStatus();
           await controls.start("flip_out");
+          resetAnimationVariant();
         } else {
           setLetterStatus();
+          resetAnimationVariant();
         }
       }
 
@@ -85,11 +96,18 @@ function Tile({
         char !== " "
       ) {
         await controls.start(animationVariant);
+        resetAnimationVariant();
+      }
+
+      if (animated && animationVariant === "delete") {
+        await controls.start(animationVariant);
+        resetAnimationVariant();
       }
 
       if (animated && animationVariant === "new_game") {
         await controls.start(animationVariant);
         setLetterStatus();
+        resetAnimationVariant();
       }
 
       if (
@@ -98,10 +116,8 @@ function Tile({
         lineIndex === currentGuessIndex - 1
       ) {
         await controls.start(animationVariant);
+        resetAnimationVariant();
       }
-
-      // Reset after animation completes
-      controls.start("idle");
     };
 
     runAnimation();
@@ -114,6 +130,7 @@ function Tile({
     currentGuess.length,
     currentGuessIndex,
     lineIndex,
+    setAnimationVariant,
     setLetterStatus,
   ]);
 
