@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { englishKeys } from "@/components/keyboard/keys";
 import BackspaceIcon from "@/components/ui/icons/backspace";
 import useStore from "@/hooks/useStore";
@@ -28,6 +28,7 @@ function Keyboard({ className }: Props) {
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const previousSubmittedWrongGuess = useRef<string>("");
 
   const submiGuess = useCallback(async () => {
     if (isSubmitting) return;
@@ -56,18 +57,23 @@ function Keyboard({ className }: Props) {
       setAnimationVariant("bounce");
       await sleep(1600); // wait 1.6 second
       setIsGameOver(true);
+      previousSubmittedWrongGuess.current = "";
 
       return;
     }
 
-    // Verify if the word exists in the dictionary
+    // Verify if the word is different from last one
+    // and exists in the dictionary
     setIsSubmitting(true);
-    const isValid = await WordService.isValidWord(currentGuess, language);
+    const isValid =
+      previousSubmittedWrongGuess.current !== currentGuess &&
+      (await WordService.isValidWord(currentGuess, language));
     if (!isValid) {
       setIsSubmitting(false);
       // Shake line animation
       if (currentGuess.length > 0) {
         setAnimationVariant("shake");
+        previousSubmittedWrongGuess.current = currentGuess;
       }
       return;
     } else {
@@ -86,6 +92,7 @@ function Keyboard({ className }: Props) {
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
         setIsGameOver(true);
         setAnimationVariant("slide_up");
+        previousSubmittedWrongGuess.current = "";
       }
 
       setIsSubmitting(false);
