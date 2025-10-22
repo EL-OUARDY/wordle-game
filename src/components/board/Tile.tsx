@@ -34,7 +34,7 @@ function Tile({
     setStatus(null);
   }, [solution]);
 
-  const setLetterStatus = useCallback(() => {
+  const updateLetterStatus = useCallback(() => {
     if (!char || char === " ") return;
     if (!solution) return;
     if (solution[charIndex] === char) {
@@ -79,11 +79,11 @@ function Tile({
       ) {
         if (animated) {
           await controls.start("flip_in");
-          setLetterStatus();
+          updateLetterStatus();
           await controls.start("flip_out");
           resetAnimationVariant();
         } else {
-          setLetterStatus();
+          updateLetterStatus();
           resetAnimationVariant();
         }
       }
@@ -106,7 +106,7 @@ function Tile({
 
       if (animated && animationVariant === "new_game") {
         await controls.start(animationVariant);
-        setLetterStatus();
+        updateLetterStatus();
         resetAnimationVariant();
       }
 
@@ -131,7 +131,7 @@ function Tile({
     currentGuessIndex,
     lineIndex,
     setAnimationVariant,
-    setLetterStatus,
+    updateLetterStatus,
   ]);
 
   return (
