@@ -156,7 +156,7 @@ function Tile({
         char && char !== " " ? "border-foreground" : "border-muted-foreground",
         status && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
-        "tile flex items-center justify-center border-2 font-black uppercase",
+        "tile flex items-center justify-center border-2 text-center font-black uppercase",
       )}
       animate={controls}
       variants={tileVariants}

@@ -19,7 +19,7 @@ function Board({ className }: Props) {
     <motion.div
       className={clsx(
         className,
-        "board flex h-[360px] w-[300px] flex-col gap-[5px] p-[10px]",
+        "board flex h-[357px] w-[300px] flex-col gap-[5px] p-[10px]",
       )}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
