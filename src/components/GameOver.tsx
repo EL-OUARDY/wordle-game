@@ -109,9 +109,9 @@ function GameOver() {
         <>
           <h3 className="text-center text-2xl">Congratulations</h3>
 
-          <p className="max-w-sm text-center text-xl leading-relaxed">
+          <p className="max-w-sm text-center text-xl">
             Awesome! Your wordle took <br />
-            <span className="font-lg font-bold">{endTime}</span>.
+            <span className="text-base font-bold">{endTime}</span>
           </p>
 
           <div className="controls flex gap-3">
