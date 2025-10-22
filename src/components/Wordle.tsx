@@ -45,14 +45,16 @@ function Wordle({ language = "English", className }: Props) {
     <div
       className={clsx(
         className,
-        "flex size-full flex-1 flex-col items-center justify-center gap-[10px]",
+        "flex size-full flex-1 flex-col items-center justify-between gap-[10px]",
       )}
     >
       {/* Game is loaded */}
       {!isLoading && solution && (
         <>
-          <Board />
-          <div className="flex w-full items-center justify-center">
+          <div className="flex w-full flex-1 items-center justify-center border">
+            <Board />
+          </div>
+          <div className="flex w-full items-center justify-center border">
             {isGameOver ? <GameOver /> : <Keyboard />}
           </div>
         </>
