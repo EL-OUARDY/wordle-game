@@ -39,24 +39,12 @@ function Tile({
     if (!solution) return;
     if (solution[charIndex] === char) {
       setStatus("correct");
-      setLettersStatusMap((prev) => ({
-        ...prev,
-        correct: [...prev.correct, char],
-      }));
     } else if (!solution.includes(char)) {
       setStatus("absent");
-      setLettersStatusMap((prev) => ({
-        ...prev,
-        absent: [...prev.absent, char],
-      }));
     } else if (solution.includes(char)) {
       setStatus("present");
-      setLettersStatusMap((prev) => ({
-        ...prev,
-        present: [...prev.present, char],
-      }));
     }
-  }, [char, charIndex, setLettersStatusMap, solution]);
+  }, [char, charIndex, solution]);
 
   // Apply current animation variant
   useEffect(() => {
