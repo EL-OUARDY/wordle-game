@@ -79,11 +79,11 @@ function Keyboard({ className }: Props) {
       setCurrentGuessIndex(currentGuessIndex + 1);
       // Reveal word animation
       setAnimationVariant("reveal");
+      // Wait (1.25 second) for reveal animation to finish
+      await sleep(1500);
 
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
-        // Wait for reveal animation to finish
-        await sleep(1500); // wait 1.25 second
         setIsGameOver(true);
         setAnimationVariant("slide_up");
       }
