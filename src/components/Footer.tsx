@@ -1,12 +1,34 @@
 import React from "react";
 import clsx from "clsx";
+import Link from "next/link";
+import { APP_NAME, EMAIL } from "@/lib/constants";
 
 interface Props {
   className?: string;
 }
 
 function Footer({ className }: Props) {
-  return <footer className={clsx(className, "h-12")}></footer>;
+  return (
+    <footer className={clsx(className, "h-12 text-sm")}>
+      <div className="flex size-full items-center justify-center gap-2">
+        <Link href={"/"} className="hover:underline">
+          &copy; {new Date().getFullYear()} {APP_NAME}
+        </Link>
+        <span>|</span>
+        <a href={`mailto:${EMAIL}`} className="hover:underline">
+          Contact
+        </a>
+        <span>|</span>
+        <Link href={"/cookie-policy"} className="hover:underline">
+          Cookie Policy
+        </Link>
+        <span>|</span>
+        <Link href={"/privacy-policy"} className="hover:underline">
+          Privacy Policy
+        </Link>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

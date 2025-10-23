@@ -1,3 +1,4 @@
+"use client";
 import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -8,7 +9,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "icon" | "icon-outline";
 }
 
-const Button = forwardRef<HTMLButtonElement, Props>(
+export const Button = forwardRef<HTMLButtonElement, Props>(
   ({ className, children, variant = "default", ...props }, ref) => {
     return (
       <button
@@ -19,8 +20,10 @@ const Button = forwardRef<HTMLButtonElement, Props>(
           variant === "default" &&
             "bg-button-background text-button-foreground",
           variant === "outline" && "text-foreground border-foreground border",
-          variant === "icon" && "bg-key-background size-12 !p-0",
-          variant === "icon-outline" && "border-foreground size-12 border !p-0",
+          variant === "icon" &&
+            "hover:bg-key-background flex aspect-square items-center justify-center rounded-none !p-0",
+          variant === "icon-outline" &&
+            "border-foreground aspect-square rounded-none border !p-0",
           className,
         )}
       >

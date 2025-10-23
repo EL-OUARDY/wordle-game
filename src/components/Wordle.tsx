@@ -5,11 +5,11 @@ import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
-import { Gamepad2Icon } from "lucide-react";
 import GameOver from "@/components/GameOver";
 import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
+import GamepadIcon from "@/components/ui/icons/gamepad";
 
 interface Props {
   language?: Language;
@@ -85,7 +85,7 @@ function Wordle({ language = "English", className }: Props) {
             aria-label="Play"
             whileTap={{ scale: 0.95 }}
           >
-            <Gamepad2Icon className="size-4" />
+            <GamepadIcon className="size-4" />
             Play
           </Button>
         </div>

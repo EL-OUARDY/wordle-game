@@ -1,12 +1,13 @@
 "use client";
 import Button from "@/components/ui/button";
+import GamepadIcon from "@/components/ui/icons/gamepad";
 import LoaderIcon from "@/components/ui/icons/loader";
+import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { copyToClipboard, getTimeDifference } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
-import { Share2Icon, Gamepad2Icon } from "lucide-react";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 
@@ -110,11 +111,13 @@ function GameOver() {
     <div className="game-over bg-muted-background border-muted-foreground mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
-          <h3 className="text-center text-2xl">Congratulations</h3>
+          <h3 className="text-center text-2xl font-semibold">
+            Congratulations
+          </h3>
 
           <p className="max-w-sm text-center text-xl">
             Awesome! Your wordle took <br />
-            <span className="text-lg font-bold">{endTime}</span>
+            <span className="text-lg font-semibold">{endTime}</span>
           </p>
 
           <div className="controls flex gap-3">
@@ -125,7 +128,7 @@ function GameOver() {
               aria-label="Share"
               whileTap={{ scale: 0.95 }}
             >
-              <Share2Icon className="size-4" />
+              <ShareIcon className="size-4" />
               Share
             </Button>
             <Button
@@ -141,7 +144,7 @@ function GameOver() {
               {isLoading ? (
                 <LoaderIcon className="size-4" />
               ) : (
-                <Gamepad2Icon className="size-4" />
+                <GamepadIcon className="size-4" />
               )}
               {isLoading ? "Loading .." : "New Game"}
             </Button>
@@ -185,7 +188,7 @@ function GameOver() {
               aria-label="Share"
               whileTap={{ scale: 0.95 }}
             >
-              <Share2Icon className="size-4" />
+              <ShareIcon className="size-4" />
               Share
             </Button>
             <Button
@@ -201,7 +204,7 @@ function GameOver() {
               {isLoading ? (
                 <LoaderIcon className="size-4" />
               ) : (
-                <Gamepad2Icon className="size-4" />
+                <GamepadIcon className="size-4" />
               )}
               {isLoading ? "Loading .." : "New Game"}
             </Button>
