@@ -15,17 +15,13 @@ function Footer({ className }: Props) {
           &copy; {new Date().getFullYear()} {APP_NAME}
         </Link>
         <span>|</span>
-        <a href={`mailto:${EMAIL}`} className="hover:underline">
-          Contact
-        </a>
-        <span>|</span>
-        <Link href={"/cookie-policy"} className="hover:underline">
-          Cookie Policy
-        </Link>
-        <span>|</span>
         <Link href={"/privacy-policy"} className="hover:underline">
           Privacy Policy
         </Link>
+        <span>|</span>
+        <a href={`mailto:${EMAIL}`} className="hover:underline">
+          Contact
+        </a>
       </div>
     </footer>
   );

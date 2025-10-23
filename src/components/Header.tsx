@@ -13,22 +13,22 @@ interface Props {
 function Header({ className }: Props) {
   return (
     <header className={clsx(className, "border-muted-foreground border-b")}>
-      <nav className="flex h-12 px-[8px] sm:h-14">
+      <nav className="flex h-12 sm:h-14 sm:px-[8px]">
         <Button variant="icon">
-          <MenuIcon className="size-5 sm:size-6" />
+          <MenuIcon className="size-[1.35rem] sm:size-6" />
         </Button>
         <div className="ml-auto flex">
           <Button variant="icon">
-            <GlobeIcon className="size-5 sm:size-6" />
+            <GlobeIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button variant="icon">
-            <ChartIcon className="size-5 sm:size-6" />
+            <ChartIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button variant="icon">
-            <InfoIcon className="size-5 sm:size-6" />
+            <InfoIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button variant="icon">
-            <SettingsIcon className="size-5 sm:size-6" />
+            <SettingsIcon className="size-[1.35rem] sm:size-6" />
           </Button>
         </div>
       </nav>
