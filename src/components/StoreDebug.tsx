@@ -2,9 +2,13 @@
 import { useEffect, useState } from "react";
 import useStore from "@/hooks/useStore";
 import clsx from "clsx";
-import { Code2Icon } from "lucide-react";
 
-function StoreDebug() {
+type StoreState = ReturnType<typeof useStore.getState>;
+interface Props {
+  property?: keyof StoreState;
+}
+
+function StoreDebug({ property }: Props) {
   const [mounted, setMounted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const state = useStore();
@@ -12,6 +16,9 @@ function StoreDebug() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Do not render on production environement
+  if (process.env.NODE_ENV === "production") return null;
 
   if (!mounted) return null; // skip SSR render
 
@@ -27,8 +34,10 @@ function StoreDebug() {
       {isExpanded && <pre>{JSON.stringify(state, null, 2)}</pre>}
       {!isExpanded && (
         <div className="flex items-center gap-2 px-4">
-          <Code2Icon className="size-5" />
-          <span className="">{state.animationVariant}</span>
+          {!property && "Store"}
+          {property && (
+            <span>{`${property}:${JSON.stringify(state[property as keyof typeof state])}`}</span>
+          )}
         </div>
       )}
     </div>
