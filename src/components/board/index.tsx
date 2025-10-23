@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import Line from "@/components/board/Line";
@@ -14,30 +14,56 @@ function Board({ className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (!containerRef.current) return;
+      const containerH = containerRef.current.offsetHeight;
+      const windowWidth = window.innerWidth;
+      let size = { w: 300, h: 357 };
+
+      if (containerH <= 420 && windowWidth < 768) size = { w: 240, h: 285 };
+      else if (containerH >= 450 && windowWidth < 768)
+        size = { w: 350, h: 417 };
+      else size = { w: 300, h: 357 };
+
+      setSize(size);
+    };
+    updateHeight(); // initial run
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
 
   return (
-    <motion.div
-      className={clsx(
-        className,
-        "board flex h-[285px] w-[240px] flex-col gap-[5px] p-[10px] sm:h-[357px] sm:w-[300px] md:h-[417px] md:w-[350px] lg:h-[357px] lg:w-[300px]",
-      )}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+    <div
+      ref={containerRef}
+      className="board-container flex w-full flex-1 items-center justify-center border"
     >
-      {guesses.map((guess, i) => {
-        return (
-          <Line
-            key={i}
-            lineIndex={i}
-            guess={
-              currentGuessIndex === i
-                ? currentGuess.padEnd(WORD_LENGTH, " ")
-                : (guess ?? " ".repeat(WORD_LENGTH))
-            }
-          />
-        );
-      })}
-    </motion.div>
+      {size && (
+        <motion.div
+          className={clsx(className, "board flex flex-col gap-[5px] p-[10px]")}
+          style={{ width: size.w, height: size.h }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          {guesses.map((guess, i) => {
+            return (
+              <Line
+                key={i}
+                lineIndex={i}
+                guess={
+                  currentGuessIndex === i
+                    ? currentGuess.padEnd(WORD_LENGTH, " ")
+                    : (guess ?? " ".repeat(WORD_LENGTH))
+                }
+              />
+            );
+          })}
+        </motion.div>
+      )}
+    </div>
   );
 }
 

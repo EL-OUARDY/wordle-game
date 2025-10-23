@@ -51,9 +51,7 @@ function Wordle({ language = "English", className }: Props) {
       {/* Game is loaded */}
       {!isLoading && solution && (
         <>
-          <div className="flex w-full flex-1 items-center justify-center border">
-            <Board />
-          </div>
+          <Board />
           <div className="flex w-full items-center justify-center border">
             {isGameOver ? <GameOver /> : <Keyboard />}
           </div>
@@ -62,30 +60,35 @@ function Wordle({ language = "English", className }: Props) {
 
       {/* Loading solution word */}
       {isLoading && !solution && (
-        <div aria-label="Loading" className="flex items-center justify-center">
+        <div
+          aria-label="Loading"
+          className="flex w-full flex-1 items-center justify-center"
+        >
           <LoaderIcon className="text-key-background size-8" />
         </div>
       )}
 
       {/* Fails to load word */}
       {!isLoading && !solution && (
-        <Button
-          onClick={async () => {
-            setIsLoading(true);
-            const word = await WordService.getNewWord(language);
-            if (word) {
-              setSolution(word);
-            }
-            setIsLoading(false);
-          }}
-          variant="default"
-          className="flex items-center gap-2"
-          aria-label="Play"
-          whileTap={{ scale: 0.95 }}
-        >
-          <Gamepad2Icon className="size-4" />
-          Play
-        </Button>
+        <div className="flex w-full flex-1 items-center justify-center">
+          <Button
+            onClick={async () => {
+              setIsLoading(true);
+              const word = await WordService.getNewWord(language);
+              if (word) {
+                setSolution(word);
+              }
+              setIsLoading(false);
+            }}
+            variant="default"
+            className="flex items-center gap-2"
+            aria-label="Play"
+            whileTap={{ scale: 0.95 }}
+          >
+            <Gamepad2Icon className="size-4" />
+            Play
+          </Button>
+        </div>
       )}
     </div>
   );
