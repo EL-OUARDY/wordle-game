@@ -44,10 +44,7 @@ function Line({ guess, lineIndex, className, animated = true }: Props) {
 
   return (
     <motion.div
-      className={clsx(
-        className,
-        "line grid flex-1 grid-cols-5 gap-[5px] text-[1.7rem]",
-      )}
+      className={clsx(className, "line grid flex-1 grid-cols-5 gap-[5px]")}
       animate={controls}
       variants={lineVariants}
     >

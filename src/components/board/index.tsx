@@ -47,6 +47,7 @@ function Board({ className }: Props) {
           style={{
             width: size.w,
             height: size.h,
+            fontSize: size.w === 240 ? "1.4rem" : "1.7rem",
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
