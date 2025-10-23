@@ -153,7 +153,7 @@ function Tile({
     <motion.div
       className={clsx(
         className,
-        char && char !== " " ? "border-foreground" : "border-muted-foreground",
+        char && char !== " " ? "border-foreground" : "border-key-background",
         status && "text-tile-foreground !border-0",
         status ? `bg-${status}` : "bg-tile-background",
         "tile flex aspect-square items-center justify-center self-center border-2 text-center font-black uppercase",

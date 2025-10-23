@@ -108,7 +108,7 @@ function GameOver() {
   };
 
   return (
-    <div className="game-over bg-muted-background border-muted-foreground mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
+    <div className="game-over bg-muted-background border-key-background mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
           <h3 className="text-center text-2xl font-semibold">
@@ -135,7 +135,7 @@ function GameOver() {
               onClick={newGame}
               variant="default"
               className={clsx(
-                isLoading && "text-muted-foreground",
+                isLoading && "text-key-background",
                 "flex items-center gap-2",
               )}
               aria-label="New game"
@@ -195,7 +195,7 @@ function GameOver() {
               onClick={newGame}
               variant="default"
               className={clsx(
-                isLoading && "text-muted-foreground",
+                isLoading && "text-key-background",
                 "flex items-center gap-2",
               )}
               aria-label="New game"

@@ -20,7 +20,7 @@ function Header({ className }: Props) {
 
   return (
     <motion.header
-      className={clsx(className, "border-muted-foreground border-b")}
+      className={clsx(className, "border-key-background border-b")}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
