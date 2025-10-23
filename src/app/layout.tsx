@@ -2,18 +2,22 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-export const futuraltBook = localFont({
-  variable: "--font-futura-book",
+export const futuraFont = localFont({
+  variable: "--font-futura",
   display: "swap",
-  weight: "400",
   src: [
     {
-      path: "../../public/fonts/futuralt-book.woff2",
+      path: "../../public/fonts/FuturaCyrillicBook.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/futuralt-bold.woff2",
+      path: "../../public/fonts/FuturaCyrillicDemi.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/FuturaCyrillicBold.ttf",
       weight: "700",
       style: "normal",
     },
@@ -32,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${futuraltBook.variable} antialiased`}>{children}</body>
+      <body className={`${futuraFont.variable} antialiased`}>{children}</body>
     </html>
   );
 }

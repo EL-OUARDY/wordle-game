@@ -188,14 +188,14 @@ function Keyboard({ className }: Props) {
     <motion.div
       className={clsx(
         className,
-        "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px]",
+        "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px] font-semibold",
       )}
       aria-label="Keyboard"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
       {/* First row */}
-      <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
+      <div className="row flex w-full [touch-action:manipulation] gap-1">
         {englishKeys.row1.map((key, i) => {
           let keyClasses = "";
           if (lettersStatusMap.correct.includes(key))
@@ -228,7 +228,7 @@ function Keyboard({ className }: Props) {
       </div>
 
       {/* Second row */}
-      <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
+      <div className="row flex w-full [touch-action:manipulation] gap-1">
         <div className="flex-[0.5]"></div>
         {englishKeys.row2.map((key, i) => {
           let keyClasses = "";
@@ -262,13 +262,13 @@ function Keyboard({ className }: Props) {
         <div className="flex-[0.5]"></div>
       </div>
       {/* Third row */}
-      <div className="row flex w-full [touch-action:manipulation] gap-1 font-bold">
+      <div className="row flex w-full [touch-action:manipulation] gap-1">
         {/* Enter button */}
         <motion.button
           type="button"
           tabIndex={-1}
           onClick={submiGuess}
-          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
+          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
           aria-label={englishKeys.controls.enter}
           aria-disabled="true"
           whileTap={{ scale: 0.9 }}
@@ -313,7 +313,7 @@ function Keyboard({ className }: Props) {
             setCurrentGuess(currentGuess.slice(0, -1));
             setAnimationVariant("delete");
           }}
-          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-normal"
+          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
           aria-label={englishKeys.controls.delete}
           aria-disabled="true"
           whileTap={{ scale: 0.9 }}

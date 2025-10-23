@@ -28,7 +28,7 @@
   --color-key-background: var(--key-background);
   --color-button-background: var(--button-background);
   --color-button-foreground: var(--button-foreground);
-  --font-body: var(--font-futura-book);
+  --font-body: var(--font-futura);
 }
 
 body {
