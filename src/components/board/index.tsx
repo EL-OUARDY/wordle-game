@@ -24,7 +24,7 @@ function Board({ className }: Props) {
       const windowWidth = window.innerWidth;
       let size = { w: 300, h: 357 };
 
-      if (containerH <= 420 && windowWidth < 768) size = { w: 240, h: 285 };
+      if (containerH <= 420 && windowWidth < 400) size = { w: 240, h: 285 };
       else if (containerH >= 450 && windowWidth < 768)
         size = { w: 350, h: 417 };
       else size = { w: 300, h: 357 };
