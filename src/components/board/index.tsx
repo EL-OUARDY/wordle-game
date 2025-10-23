@@ -39,12 +39,15 @@ function Board({ className }: Props) {
   return (
     <div
       ref={containerRef}
-      className="board-container flex w-full flex-1 items-center justify-center border"
+      className="board-container flex w-full flex-1 items-center justify-center"
     >
       {size && (
         <motion.div
           className={clsx(className, "board flex flex-col gap-[5px] p-[10px]")}
-          style={{ width: size.w, height: size.h }}
+          style={{
+            width: size.w,
+            height: size.h,
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >

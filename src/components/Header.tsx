@@ -6,7 +6,7 @@ interface Props {
 }
 
 function Header({ className }: Props) {
-  return <header className={clsx(className, "h-12 border")}></header>;
+  return <header className={clsx(className, "h-12")}></header>;
 }
 
 export default Header;

@@ -52,7 +52,7 @@ function Wordle({ language = "English", className }: Props) {
       {!isLoading && solution && (
         <>
           <Board />
-          <div className="flex w-full items-center justify-center border">
+          <div className="flex w-full items-center justify-center">
             {isGameOver ? <GameOver /> : <Keyboard />}
           </div>
         </>

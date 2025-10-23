@@ -6,7 +6,7 @@ interface Props {
 }
 
 function Footer({ className }: Props) {
-  return <footer className={clsx(className, "h-12 border")}></footer>;
+  return <footer className={clsx(className, "h-12")}></footer>;
 }
 
 export default Footer;
