@@ -206,9 +206,8 @@ function Keyboard({ className }: Props) {
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (
-            <motion.button
+            <motion.div
               key={i}
-              type="button"
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -218,11 +217,10 @@ function Keyboard({ className }: Props) {
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               aria-label={`add ${key}`}
-              aria-disabled="true"
               whileTap={{ scale: 0.9 }}
             >
               {key}
-            </motion.button>
+            </motion.div>
           );
         })}
       </div>
@@ -240,9 +238,8 @@ function Keyboard({ className }: Props) {
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (
-            <motion.button
+            <motion.div
               key={i}
-              type="button"
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -252,11 +249,10 @@ function Keyboard({ className }: Props) {
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               aria-label={`add ${key}`}
-              aria-disabled="true"
               whileTap={{ scale: 0.9 }}
             >
               {key}
-            </motion.button>
+            </motion.div>
           );
         })}
         <div className="flex-[0.5]"></div>
@@ -264,17 +260,15 @@ function Keyboard({ className }: Props) {
       {/* Third row */}
       <div className="row flex w-full [touch-action:manipulation] gap-1">
         {/* Enter button */}
-        <motion.button
-          type="button"
+        <motion.div
           tabIndex={-1}
           onClick={submiGuess}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
           aria-label={englishKeys.controls.enter}
-          aria-disabled="true"
           whileTap={{ scale: 0.9 }}
         >
           {englishKeys.controls.enter}
-        </motion.button>
+        </motion.div>
         {englishKeys.row3.map((key, i) => {
           let keyClasses = "";
           if (lettersStatusMap.correct.includes(key))
@@ -285,9 +279,8 @@ function Keyboard({ className }: Props) {
             keyClasses = "bg-present text-tile-foreground";
           else keyClasses = "bg-key-background";
           return (
-            <motion.button
+            <motion.div
               key={i}
-              type="button"
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -297,16 +290,14 @@ function Keyboard({ className }: Props) {
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               aria-label={`add ${key}`}
-              aria-disabled="true"
               whileTap={{ scale: 0.9 }}
             >
               {key}
-            </motion.button>
+            </motion.div>
           );
         })}
         {/* Backspace button */}
-        <motion.button
-          type="button"
+        <motion.div
           tabIndex={-1}
           onClick={() => {
             if (isSubmitting) return;
@@ -315,11 +306,10 @@ function Keyboard({ className }: Props) {
           }}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
           aria-label={englishKeys.controls.delete}
-          aria-disabled="true"
           whileTap={{ scale: 0.9 }}
         >
           <BackspaceIcon className="size-[1.4rem]" />
-        </motion.button>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -37,11 +37,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-button {
+* {
   outline: 0;
-}
-
-button:focus-visible {
-  outline: 1px solid var(--muted-foreground);
-  outline-offset: 1px;
 }
