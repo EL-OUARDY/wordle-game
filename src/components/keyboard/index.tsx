@@ -132,6 +132,9 @@ function Keyboard({ className }: Props) {
       // Ignore if key is being held down
       if (e.repeat) return;
 
+      // Ignore if Ctrl (Windows/Linux) or Cmd (Mac) is held
+      if (e.ctrlKey || e.metaKey) return;
+
       // Check if game is over
       if (isGameOver) return;
 
