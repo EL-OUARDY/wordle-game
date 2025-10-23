@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { APP_NAME, EMAIL } from "@/lib/constants";
+import { motion } from "motion/react";
 
 interface Props {
   className?: string;
@@ -9,7 +11,11 @@ interface Props {
 
 function Footer({ className }: Props) {
   return (
-    <footer className={clsx(className, "h-12 text-sm")}>
+    <motion.footer
+      className={clsx(className, "h-12 text-sm")}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <div className="flex size-full items-center justify-center gap-2">
         <Link href={"/"} className="hover:underline">
           &copy; {new Date().getFullYear()} {APP_NAME}
@@ -23,7 +29,7 @@ function Footer({ className }: Props) {
           Contact
         </a>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
 
