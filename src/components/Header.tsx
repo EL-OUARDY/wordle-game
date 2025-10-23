@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import ChartIcon from "@/components/ui/icons/chart";
@@ -9,14 +9,35 @@ import InfoIcon from "@/components/ui/icons/info";
 import SettingsIcon from "@/components/ui/icons/settings";
 import { motion } from "motion/react";
 import Drawer from "@/components/ui/drawer";
+import Settings from "@/components/Settings";
+import HowToPlay from "@/components/HowToPlay";
+import UserStats from "@/components/UserStats";
+import SideBar from "@/components/Sidebar";
 interface Props {
   className?: string;
 }
 
-type Menu = "settings" | "language" | "sidebar" | "statistics" | "info" | null;
+type Menu = "settings" | "sidebar" | "statistics" | "info";
+
+interface MenuContent {
+  title: string;
+  direction: "bottom" | "left" | "right";
+  content: ReactNode;
+}
 
 function Header({ className }: Props) {
-  const [shownMenu, setShownMenu] = React.useState<Menu>(null);
+  const [shownMenu, setShownMenu] = React.useState<Menu | null>(null);
+
+  const menus: Record<Menu, MenuContent> = {
+    settings: { title: "Settings", content: <Settings />, direction: "right" },
+    sidebar: { title: "", content: <SideBar />, direction: "left" },
+    statistics: {
+      title: "Statistics",
+      content: <UserStats />,
+      direction: "bottom",
+    },
+    info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
+  };
 
   return (
     <motion.header
@@ -34,11 +55,7 @@ function Header({ className }: Props) {
         </Button>
 
         <div className="ml-auto flex">
-          <Button
-            onClick={() => setShownMenu("language")}
-            variant="icon"
-            className="size-12 sm:size-14"
-          >
+          <Button variant="icon" className="size-12 sm:size-14">
             <GlobeIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button
@@ -71,10 +88,10 @@ function Header({ className }: Props) {
         onOpenChange={(value) => {
           if (!value) setShownMenu(null);
         }}
-        direction={shownMenu === "info" ? "right" : "bottom"}
+        direction={(shownMenu && menus[shownMenu].direction) || "bottom"}
+        title={(shownMenu && menus[shownMenu].title) || ""}
       >
-        {/* Content */}
-        hello
+        {shownMenu && menus[shownMenu].content}
       </Drawer>
     </motion.header>
   );

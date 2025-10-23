@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { ReactNode } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 
@@ -7,8 +8,9 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
-  direction?: "top" | "bottom" | "left" | "right";
+  direction?: "bottom" | "left" | "right";
   className?: string;
+  title?: string;
 }
 
 function Drawer({
@@ -17,6 +19,7 @@ function Drawer({
   children,
   direction = "bottom",
   className,
+  title = "",
 }: Props) {
   return (
     <VaulDrawer.Root
@@ -28,24 +31,38 @@ function Drawer({
         <VaulDrawer.Overlay className="fixed inset-0 bg-black/40" />
         <VaulDrawer.Content
           aria-describedby={undefined}
-          className="fixed right-0 bottom-0 left-0 mt-24 flex h-fit flex-col rounded-t-[10px] outline-none"
+          className={clsx(
+            "fixed flex outline-none",
+            direction === "left" && "top-2 bottom-2 left-2 z-10 w-[310px]",
+            direction === "right" && "top-2 right-2 bottom-2 z-10 w-[310px]",
+            direction === "bottom" &&
+              "right-0 bottom-0 left-0 mt-24 h-fit flex-col rounded-t-[10px]",
+          )}
+          style={
+            direction === "right" || direction === "left"
+              ? ({
+                  "--initial-transform": "calc(100% + 8px)",
+                } as React.CSSProperties)
+              : {}
+          }
         >
-          <div className="bg-background flex-1 rounded-t-[10px] p-4">
-            <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
+          <div
+            className={clsx(
+              "bg-background drawer-container",
+              (direction === "right" || direction === "left") &&
+                "flex h-full w-full grow flex-col rounded-[16px] p-5",
+              direction === "bottom" && "flex-1 rounded-t-[10px] p-4",
+              className,
+            )}
+          >
+            {direction === "bottom" && (
+              <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
+            )}
             <div className="mx-auto max-w-md">
-              <VaulDrawer.Title className="mb-4 font-medium">
-                A controlled VaulDrawer.
+              <VaulDrawer.Title className="mb-4 text-xl font-semibold">
+                {title}
               </VaulDrawer.Title>
-              <p className="text-muted-foreground mb-2">
-                This means that the drawer no longer manages its own state.
-                Instead, you can control it programmatically from the outside.
-              </p>
-              <p className="text-muted-foreground mb-2">
-                But you can still let the drawer help you a bit by passing the
-                `onOpenChange` prop. This way, the drawer will change your open
-                state when the user clicks outside of it, or when they press the
-                escape key for example.
-              </p>
+              {children}
             </div>
           </div>
         </VaulDrawer.Content>
