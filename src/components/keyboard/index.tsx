@@ -34,6 +34,7 @@ function Keyboard({ className }: Props) {
     present: [],
     absent: [],
   });
+  const [pressedKey, setPressedKey] = useState<string | null>(null);
 
   const previousSubmittedWrongGuess = useRef<string>("");
 
@@ -121,6 +122,11 @@ function Keyboard({ className }: Props) {
     solution,
   ]);
 
+  const updatePressedKey = useCallback((key: string) => {
+    setPressedKey(null); // reset first
+    setTimeout(() => setPressedKey(key), 0); // then set
+  }, []);
+
   // Handle device keyboard typing
   useEffect(() => {
     const handleTyping = async (e: KeyboardEvent) => {
@@ -137,6 +143,9 @@ function Keyboard({ className }: Props) {
 
       // Check if game is over
       if (isGameOver) return;
+
+      // Set pressed key
+      updatePressedKey(char);
 
       // Check if Enter key is pressed
       if (char === "Enter") await submiGuess();
@@ -170,6 +179,7 @@ function Keyboard({ className }: Props) {
     setAnimationVariant,
     setCurrentGuess,
     submiGuess,
+    updatePressedKey,
   ]);
 
   const onScreenKeyClick = (key: string) => {
@@ -211,7 +221,7 @@ function Keyboard({ className }: Props) {
           else keyClasses = "bg-key-background";
           return (
             <motion.div
-              key={i}
+              key={i + (pressedKey || "")}
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -223,6 +233,8 @@ function Keyboard({ className }: Props) {
               role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
+              animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               {key}
             </motion.div>
@@ -244,7 +256,7 @@ function Keyboard({ className }: Props) {
           else keyClasses = "bg-key-background";
           return (
             <motion.div
-              key={i}
+              key={i + (pressedKey || "")}
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -256,6 +268,8 @@ function Keyboard({ className }: Props) {
               role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
+              animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               {key}
             </motion.div>
@@ -267,12 +281,15 @@ function Keyboard({ className }: Props) {
       <div className="row flex w-full [touch-action:manipulation] gap-1">
         {/* Enter button */}
         <motion.div
+          key={"enter" + pressedKey || ""}
           tabIndex={-1}
           onClick={submiGuess}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
           role="button"
           aria-label={englishKeys.controls.enter}
           whileTap={{ scale: 0.9 }}
+          animate={{ scale: pressedKey === "Enter" ? [0.9, 1] : 1 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
           {englishKeys.controls.enter}
         </motion.div>
@@ -287,7 +304,7 @@ function Keyboard({ className }: Props) {
           else keyClasses = "bg-key-background";
           return (
             <motion.div
-              key={i}
+              key={i + (pressedKey || "")}
               tabIndex={-1}
               onClick={() => {
                 onScreenKeyClick(key);
@@ -299,6 +316,8 @@ function Keyboard({ className }: Props) {
               role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
+              animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               {key}
             </motion.div>
@@ -306,6 +325,7 @@ function Keyboard({ className }: Props) {
         })}
         {/* Backspace button */}
         <motion.div
+          key={"backspace" + pressedKey || ""}
           tabIndex={-1}
           onClick={() => {
             if (isSubmitting) return;
@@ -316,6 +336,8 @@ function Keyboard({ className }: Props) {
           role="button"
           aria-label={englishKeys.controls.delete}
           whileTap={{ scale: 0.9 }}
+          animate={{ scale: pressedKey === "Backspace" ? [0.9, 1] : 1 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
           <BackspaceIcon className="size-[1.4rem]" />
         </motion.div>
