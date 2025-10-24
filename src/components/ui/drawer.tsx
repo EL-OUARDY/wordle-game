@@ -47,9 +47,9 @@ function Drawer({
         <VaulDrawer.Content
           aria-describedby={undefined}
           className={clsx(
-            "fixed flex outline-none",
-            direction === "left" && "top-2 bottom-2 left-2 z-10 w-[310px]",
-            direction === "right" && "top-2 right-2 bottom-2 z-10 w-[310px]",
+            "font-body fixed flex outline-none",
+            direction === "left" && "top-2 bottom-2 left-2 z-10 w-[320px]",
+            direction === "right" && "top-2 right-2 bottom-2 z-10 w-[320px]",
             direction === "bottom" &&
               "right-0 bottom-0 left-0 mt-24 h-fit flex-col rounded-t-[10px]",
             direction === "center" &&
@@ -83,7 +83,7 @@ function Drawer({
               <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
             )}
             <div className="mx-auto">
-              <VaulDrawer.Title className="mb-4 text-xl font-semibold">
+              <VaulDrawer.Title className="border-key-background mb-4 border-b pb-4 text-2xl font-semibold">
                 {title}
               </VaulDrawer.Title>
               {children}
