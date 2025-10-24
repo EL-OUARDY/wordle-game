@@ -1,0 +1,18 @@
+import Link from "next/link";
+import React from "react";
+
+function NotFound() {
+  return (
+    <div className="mx-auto flex w-full flex-1 flex-col items-center justify-center px-4">
+      <div className="flex items-center gap-2">
+        <span className="text-2xl font-semibold">404</span>
+        <span className="bg-key-background h-10 w-px"></span>
+        <Link href={"/"} className="text-lg capitalize hover:underline">
+          Take me home
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export default NotFound;
