@@ -21,7 +21,7 @@ type Menu = "settings" | "sidebar" | "statistics" | "info";
 
 interface MenuContent {
   title: string;
-  direction: "bottom" | "left" | "right";
+  direction: "bottom" | "left" | "right" | "center";
   content: ReactNode;
 }
 
@@ -35,7 +35,7 @@ function Header({ className }: Props) {
     statistics: {
       title: "Statistics",
       content: <UserStats />,
-      direction: "bottom",
+      direction: "center",
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
   };

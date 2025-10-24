@@ -1,14 +1,14 @@
 "use client";
 
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
-  direction?: "bottom" | "left" | "right";
+  direction?: "bottom" | "left" | "right" | "center";
   className?: string;
   title?: string;
 }
@@ -21,14 +21,29 @@ function Drawer({
   className,
   title = "",
 }: Props) {
+  const initialTransformStyle: React.CSSProperties = useMemo(() => {
+    if (direction === "right" || direction === "left")
+      return {
+        "--initial-transform": "calc(100% + 8px)",
+      } as React.CSSProperties;
+
+    // default return
+    return {};
+  }, [direction]);
+
   return (
     <VaulDrawer.Root
       open={open}
       onOpenChange={onOpenChange}
-      direction={direction}
+      // since Vault does not support "center" direction
+      direction={direction === "center" ? "bottom" : direction}
+      dismissible={direction !== "center"}
     >
       <VaulDrawer.Portal>
-        <VaulDrawer.Overlay className="fixed inset-0 bg-black/40" />
+        <VaulDrawer.Overlay
+          onClick={() => onOpenChange(false)}
+          className="fixed inset-0 bg-black/40"
+        />
         <VaulDrawer.Content
           aria-describedby={undefined}
           className={clsx(
@@ -37,28 +52,37 @@ function Drawer({
             direction === "right" && "top-2 right-2 bottom-2 z-10 w-[310px]",
             direction === "bottom" &&
               "right-0 bottom-0 left-0 mt-24 h-fit flex-col rounded-t-[10px]",
+            direction === "center" &&
+              "top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 !animate-none ![animation-duration:0s]",
           )}
-          style={
-            direction === "right" || direction === "left"
-              ? ({
-                  "--initial-transform": "calc(100% + 8px)",
-                } as React.CSSProperties)
-              : {}
-          }
+          style={initialTransformStyle}
         >
           <div
             className={clsx(
               "bg-background drawer-container",
               (direction === "right" || direction === "left") &&
-                "flex h-full w-full grow flex-col rounded-[16px] p-5",
-              direction === "bottom" && "flex-1 rounded-t-[10px] p-4",
+                "flex h-full w-full max-w-md grow flex-col rounded-[16px] p-5",
+              direction === "bottom" && "max-w-md flex-1 rounded-t-[10px] p-4",
+              direction === "center" &&
+                "w-[90vw] max-w-sm flex-1 rounded-[10px] p-4 md:w-[80vw] md:max-w-md lg:w-[60vw] lg:max-w-lg",
               className,
             )}
+            style={
+              direction === "center"
+                ? ({
+                    "--initial-transform": "calc(30%)",
+                    animation: "slideFromBottom",
+                    transition: "transform .5s cubic-bezier(.32, .72, 0, 1)",
+                    animationDuration: "0.5s",
+                    animationTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
+                  } as React.CSSProperties)
+                : {}
+            }
           >
             {direction === "bottom" && (
               <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
             )}
-            <div className="mx-auto max-w-md">
+            <div className="mx-auto">
               <VaulDrawer.Title className="mb-4 text-xl font-semibold">
                 {title}
               </VaulDrawer.Title>
