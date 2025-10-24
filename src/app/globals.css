@@ -13,6 +13,10 @@
   --key-background: #d3d6da;
   --button-background: #181818;
   --button-foreground: #ffffff;
+
+  --sb-track-color: #d3d6da;
+  --sb-thumb-color: #4a5565;
+  --sb-size: 5px;
 }
 
 @theme inline {
@@ -39,4 +43,25 @@ body {
 
 * {
   outline: 0;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }

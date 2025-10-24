@@ -4,7 +4,7 @@ import React from "react";
 function HowToPlay() {
   const currentBgColor = getComputedStyle(
     document.documentElement,
-  ).getPropertyValue("--background");
+  ).getPropertyValue("--tile-background");
   const bgCorrect = getComputedStyle(document.documentElement).getPropertyValue(
     "--correct",
   );
@@ -30,9 +30,9 @@ function HowToPlay() {
       </p>
       <div className="text-muted-foreground">
         <p className="mb-2">
-          • Each guess you make must be a valid 5-letter word.
+          - Each guess you make must be a valid 5-letter word.
         </p>
-        <p>• Tile colors show how close your guess is to the answer.</p>
+        <p>- Tile colors show how close your guess is to the answer.</p>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -44,7 +44,7 @@ function HowToPlay() {
               return (
                 <motion.div
                   key={index}
-                  className="tile border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
+                  className="tile bg-tile-background border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
                   animate={
                     char === "s" && {
                       rotateX: [0, -90, 0],
@@ -86,7 +86,7 @@ function HowToPlay() {
               return (
                 <motion.div
                   key={index}
-                  className="tile border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
+                  className="tile bg-tile-background border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
                   animate={
                     char === "l" && {
                       rotateX: [0, -90, 0],
@@ -128,7 +128,7 @@ function HowToPlay() {
               return (
                 <motion.div
                   key={index}
-                  className="tile border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
+                  className="tile bg-tile-background border-key-background flex size-[40px] items-center justify-center border-2 font-black uppercase"
                   animate={
                     char === "a" && {
                       rotateX: [0, -90, 0],
