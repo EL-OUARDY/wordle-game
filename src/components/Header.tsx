@@ -54,12 +54,17 @@ function Header({ className }: Props) {
           }}
           variant="icon"
           className="size-12 sm:size-14"
+          aria-label="Open Menu"
         >
           <MenuIcon className="size-[1.35rem] sm:size-6" />
         </Button>
 
         <div className="ml-auto flex">
-          <Button variant="icon" className="size-12 sm:size-14">
+          <Button
+            variant="icon"
+            className="size-12 sm:size-14"
+            aria-label="Choose Language"
+          >
             <GlobeIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button
@@ -69,6 +74,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
+            aria-label="Statistics"
           >
             <ChartIcon className="size-[1.35rem] sm:size-6" />
           </Button>
@@ -79,6 +85,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
+            aria-label="How To Play"
           >
             <InfoIcon className="size-[1.35rem] sm:size-6" />
           </Button>
@@ -89,6 +96,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
+            aria-label="Settings"
           >
             <SettingsIcon className="size-[1.35rem] sm:size-6" />
           </Button>

@@ -193,6 +193,7 @@ function Keyboard({ className }: Props) {
         className,
         "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px] font-semibold",
       )}
+      role="group"
       aria-label="Keyboard"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -219,6 +220,7 @@ function Keyboard({ className }: Props) {
                 keyClasses,
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
+              role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
             >
@@ -251,6 +253,7 @@ function Keyboard({ className }: Props) {
                 keyClasses,
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
+              role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
             >
@@ -267,6 +270,7 @@ function Keyboard({ className }: Props) {
           tabIndex={-1}
           onClick={submiGuess}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
+          role="button"
           aria-label={englishKeys.controls.enter}
           whileTap={{ scale: 0.9 }}
         >
@@ -292,6 +296,7 @@ function Keyboard({ className }: Props) {
                 keyClasses,
                 "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
+              role="button"
               aria-label={`add ${key}`}
               whileTap={{ scale: 0.9 }}
             >
@@ -308,6 +313,7 @@ function Keyboard({ className }: Props) {
             setAnimationVariant("delete");
           }}
           className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
+          role="button"
           aria-label={englishKeys.controls.delete}
           whileTap={{ scale: 0.9 }}
         >
