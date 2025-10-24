@@ -26,7 +26,8 @@ interface MenuContent {
 }
 
 function Header({ className }: Props) {
-  const [shownMenu, setShownMenu] = React.useState<Menu | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [activeMenu, setActiveMenu] = React.useState<Menu | null>(null);
 
   const menus: Record<Menu, MenuContent> = {
     settings: { title: "Settings", content: <Settings />, direction: "right" },
@@ -47,7 +48,10 @@ function Header({ className }: Props) {
     >
       <nav className="flex h-12 sm:h-14 sm:px-[8px]">
         <Button
-          onClick={() => setShownMenu("sidebar")}
+          onClick={() => {
+            setActiveMenu("sidebar");
+            setIsMenuOpen(true);
+          }}
           variant="icon"
           className="size-12 sm:size-14"
         >
@@ -59,21 +63,30 @@ function Header({ className }: Props) {
             <GlobeIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button
-            onClick={() => setShownMenu("statistics")}
+            onClick={() => {
+              setActiveMenu("statistics");
+              setIsMenuOpen(true);
+            }}
             variant="icon"
             className="size-12 sm:size-14"
           >
             <ChartIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button
-            onClick={() => setShownMenu("info")}
+            onClick={() => {
+              setActiveMenu("info");
+              setIsMenuOpen(true);
+            }}
             variant="icon"
             className="size-12 sm:size-14"
           >
             <InfoIcon className="size-[1.35rem] sm:size-6" />
           </Button>
           <Button
-            onClick={() => setShownMenu("settings")}
+            onClick={() => {
+              setActiveMenu("settings");
+              setIsMenuOpen(true);
+            }}
             variant="icon"
             className="size-12 sm:size-14"
           >
@@ -83,16 +96,16 @@ function Header({ className }: Props) {
       </nav>
 
       {/* Menus */}
-      <Drawer
-        open={!!shownMenu}
-        onOpenChange={(value) => {
-          if (!value) setShownMenu(null);
-        }}
-        direction={(shownMenu && menus[shownMenu].direction) || "bottom"}
-        title={(shownMenu && menus[shownMenu].title) || ""}
-      >
-        {shownMenu && menus[shownMenu].content}
-      </Drawer>
+      {activeMenu && (
+        <Drawer
+          open={isMenuOpen}
+          onOpenChange={setIsMenuOpen}
+          direction={menus[activeMenu].direction}
+          title={menus[activeMenu].title}
+        >
+          {menus[activeMenu].content}
+        </Drawer>
+      )}
     </motion.header>
   );
 }
