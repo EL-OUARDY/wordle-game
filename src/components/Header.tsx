@@ -13,6 +13,8 @@ import Settings from "@/components/Settings";
 import HowToPlay from "@/components/HowToPlay";
 import UserStats from "@/components/UserStats";
 import SideBar from "@/components/Sidebar";
+import { APP_NAME } from "@/lib/constants";
+import LanguagesMenu from "@/components/LanguagesMenu";
 interface Props {
   className?: string;
 }
@@ -28,10 +30,12 @@ interface MenuContent {
 function Header({ className }: Props) {
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [activeMenu, setActiveMenu] = React.useState<Menu | null>(null);
+  const [isLanguagesListShown, setIsLanguagesListShown] =
+    React.useState<boolean>(false);
 
   const menus: Record<Menu, MenuContent> = {
     settings: { title: "Settings", content: <Settings />, direction: "right" },
-    sidebar: { title: "", content: <SideBar />, direction: "left" },
+    sidebar: { title: APP_NAME, content: <SideBar />, direction: "left" },
     statistics: {
       title: "Statistics",
       content: <UserStats />,
@@ -60,13 +64,30 @@ function Header({ className }: Props) {
         </Button>
 
         <div className="ml-auto flex">
-          <Button
-            variant="icon"
-            className="size-12 sm:size-14"
-            aria-label="Choose Language"
-          >
-            <GlobeIcon className="size-[1.35rem] sm:size-6" />
-          </Button>
+          <div className="languages relative">
+            <Button
+              onClick={() => setIsLanguagesListShown((prev) => !prev)}
+              variant="icon"
+              className="size-12 sm:size-14"
+              aria-label="Choose Language"
+            >
+              <GlobeIcon className="size-[1.35rem] sm:size-6" />
+            </Button>
+
+            {isLanguagesListShown && (
+              <div
+                onClick={() => setIsLanguagesListShown(false)}
+                className="overlay fixed inset-0"
+              />
+            )}
+
+            <LanguagesMenu
+              className={clsx(
+                !isLanguagesListShown && "hidden",
+                "border-key-background absolute z-100 mt-1 border",
+              )}
+            />
+          </div>
           <Button
             onClick={() => {
               setActiveMenu("statistics");
