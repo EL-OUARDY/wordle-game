@@ -26,7 +26,7 @@ function Footer({ className }: Props) {
         </Link>
         <span>|</span>
         <a href={`mailto:${EMAIL}`} className="hover:underline">
-          Contact
+          Feedback
         </a>
       </div>
     </motion.footer>
