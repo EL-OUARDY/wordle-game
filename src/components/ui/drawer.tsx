@@ -62,7 +62,7 @@ function Drawer({
               "bg-background drawer-container",
               (direction === "right" || direction === "left") &&
                 "flex h-full w-full max-w-md grow flex-col rounded-[16px] p-5",
-              direction === "bottom" && "max-w-md flex-1 rounded-t-[10px] p-4",
+              direction === "bottom" && "flex-1 rounded-t-[10px] p-4",
               direction === "center" &&
                 "w-[90vw] max-w-sm flex-1 rounded-[10px] p-4 md:w-[80vw] md:max-w-md lg:w-[60vw] lg:max-w-lg",
               className,
