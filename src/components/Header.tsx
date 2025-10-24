@@ -15,6 +15,7 @@ import UserStats from "@/components/UserStats";
 import SideBar from "@/components/Sidebar";
 import { APP_NAME } from "@/lib/constants";
 import LanguagesMenu from "@/components/LanguagesMenu";
+import useMediaQuery from "@/hooks/useMediaQuery";
 interface Props {
   className?: string;
 }
@@ -32,14 +33,19 @@ function Header({ className }: Props) {
   const [activeMenu, setActiveMenu] = React.useState<Menu | null>(null);
   const [isLanguagesListShown, setIsLanguagesListShown] =
     React.useState<boolean>(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   const menus: Record<Menu, MenuContent> = {
-    settings: { title: "Settings", content: <Settings />, direction: "right" },
+    settings: {
+      title: "Settings",
+      content: <Settings />,
+      direction: isDesktop ? "right" : "bottom",
+    },
     sidebar: { title: APP_NAME, content: <SideBar />, direction: "left" },
     statistics: {
       title: "Statistics",
       content: <UserStats />,
-      direction: "center",
+      direction: isDesktop ? "center" : "bottom",
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
   };
