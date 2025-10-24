@@ -82,9 +82,11 @@ function Header({ className }: Props) {
             )}
 
             <LanguagesMenu
+              key={isLanguagesListShown.toString()}
+              onClick={() => setIsLanguagesListShown(false)}
               className={clsx(
                 !isLanguagesListShown && "hidden",
-                "border-key-background absolute z-100 mt-1 border",
+                "border-key-background absolute left-1/2 z-100 mt-1 -translate-x-1/2 transform border",
               )}
             />
           </div>
