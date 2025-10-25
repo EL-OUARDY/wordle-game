@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import ChartIcon from "@/components/ui/icons/chart";
@@ -16,6 +16,8 @@ import SideBar from "@/components/Sidebar";
 import { APP_NAME } from "@/lib/constants";
 import LanguagesMenu from "@/components/LanguagesMenu";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import StatsService from "@/services/stats";
+import useStore from "@/hooks/useStore";
 interface Props {
   className?: string;
 }
@@ -35,6 +37,8 @@ function Header({ className }: Props) {
     React.useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
+  const setUserStats = useStore((s) => s.setUserStats);
+
   const menus: Record<Menu, MenuContent> = {
     settings: {
       title: "Settings",
@@ -49,6 +53,12 @@ function Header({ className }: Props) {
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
   };
+
+  // Load user stats
+  useEffect(() => {
+    const stats = StatsService.get();
+    if (stats) setUserStats(stats);
+  }, [setUserStats]);
 
   return (
     <motion.header
