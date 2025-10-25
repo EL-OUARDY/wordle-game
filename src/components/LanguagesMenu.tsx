@@ -22,7 +22,7 @@ interface LanguagesList {
   icon: ReactNode;
 }
 
-const languagesList: LanguagesList[] = [
+export const languagesList: LanguagesList[] = [
   {
     name: "English",
     displayName: "English",
