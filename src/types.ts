@@ -17,3 +17,14 @@ export type AnimationVariant =
   | "bounce"
   | "slide_up"
   | "idle";
+
+export interface UserStats {
+  played: number;
+  streak: number;
+  maxStreak: number;
+  lastSolvedTries: number;
+  guessDistribution: {
+    guess: number;
+    count: number;
+  }[];
+}

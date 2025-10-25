@@ -45,7 +45,7 @@ function Header({ className }: Props) {
     statistics: {
       title: "Statistics",
       content: <UserStats />,
-      direction: isDesktop ? "center" : "center",
+      direction: isDesktop ? "center" : "bottom",
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
   };
