@@ -9,6 +9,7 @@ import WordService from "@/services/word";
 import { motion } from "motion/react";
 import { sleep } from "@/lib/utils";
 import { LettersStateMap } from "@/types";
+import StatsService from "@/services/stats";
 
 interface Props {
   className?: string;
@@ -34,9 +35,50 @@ function Keyboard({ className }: Props) {
     present: [],
     absent: [],
   });
+  const userStats = useStore((s) => s.userStats);
+  const setUserStats = useStore((s) => s.setUserStats);
+
   const [pressedKey, setPressedKey] = useState<string | null>(null);
 
   const previousSubmittedWrongGuess = useRef<string>("");
+
+  const updateUserStats = useCallback(
+    (status: "won" | "lost") => {
+      if (status === "lost") {
+        const newStats = {
+          ...userStats,
+          played: userStats.played + 1,
+          streak: 0,
+        };
+        setUserStats(newStats);
+        StatsService.save(newStats);
+      }
+      // Won
+      else {
+        const newStats = {
+          played: userStats.played + 1,
+
+          streak: userStats.streak + 1,
+
+          maxStreak:
+            userStats.streak + 1 > userStats.maxStreak
+              ? userStats.streak + 1
+              : userStats.maxStreak,
+
+          lastSolvedTries: currentGuessIndex + 1,
+
+          guessDistribution: userStats.guessDistribution.map((guessStat) =>
+            guessStat.guess === currentGuessIndex + 1
+              ? { ...guessStat, count: guessStat.count + 1 }
+              : guessStat,
+          ),
+        };
+        setUserStats(newStats);
+        StatsService.save(newStats);
+      }
+    },
+    [currentGuessIndex, setUserStats, userStats],
+  );
 
   const submiGuess = useCallback(async () => {
     if (isSubmitting) return;
@@ -69,6 +111,7 @@ function Keyboard({ className }: Props) {
       setAnimationVariant("bounce");
       await sleep(1600); // wait 1.6 second
       setIsGameOver(true);
+      updateUserStats("won");
       previousSubmittedWrongGuess.current = "";
       return;
     }
@@ -101,6 +144,7 @@ function Keyboard({ className }: Props) {
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
         setIsGameOver(true);
+        updateUserStats("lost");
         setAnimationVariant("slide_up");
         previousSubmittedWrongGuess.current = "";
       }
@@ -120,6 +164,7 @@ function Keyboard({ className }: Props) {
     setIsGameOver,
     setIsSubmitting,
     solution,
+    updateUserStats,
   ]);
 
   const updatePressedKey = useCallback((key: string) => {
