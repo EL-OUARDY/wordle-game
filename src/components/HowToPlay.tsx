@@ -21,8 +21,6 @@ function HowToPlay() {
     "--tile-foreground",
   );
 
-  console.log(currentBgColor, bgCorrect);
-
   return (
     <div className="flex flex-col gap-4 text-lg">
       <p className="text-balance">
