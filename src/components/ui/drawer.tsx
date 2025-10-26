@@ -11,6 +11,7 @@ interface Props {
   direction?: "bottom" | "left" | "right" | "center";
   className?: string;
   title?: string;
+  showTitle?: boolean;
 }
 
 function Drawer({
@@ -20,6 +21,7 @@ function Drawer({
   direction = "bottom",
   className,
   title = "",
+  showTitle = true,
 }: Props) {
   const initialTransformStyle: React.CSSProperties = useMemo(() => {
     if (direction === "right" || direction === "left")
@@ -86,7 +88,7 @@ function Drawer({
               <VaulDrawer.Title
                 className={clsx(
                   "border-key-background mb-4 border-b pb-4 text-2xl font-semibold",
-                  !title && "hidden",
+                  !showTitle && "sr-only",
                 )}
               >
                 {title}

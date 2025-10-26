@@ -31,6 +31,7 @@ interface MenuContent {
   title: string;
   direction: "bottom" | "left" | "right" | "center";
   content: ReactNode;
+  showTitle?: boolean;
 }
 
 function Header({ className }: Props) {
@@ -57,9 +58,10 @@ function Header({ className }: Props) {
       direction: "left",
     },
     statistics: {
-      title: "",
+      title: "Statistics",
       content: <UserStats />,
       direction: isDesktop ? "center" : "bottom",
+      showTitle: false,
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
   };
@@ -194,6 +196,7 @@ function Header({ className }: Props) {
           onOpenChange={setIsMenuOpen}
           direction={menus[activeMenu].direction}
           title={menus[activeMenu].title}
+          showTitle={menus[activeMenu].showTitle}
         >
           {menus[activeMenu].content}
         </Drawer>
