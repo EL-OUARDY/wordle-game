@@ -53,7 +53,7 @@ function Drawer({
             direction === "bottom" &&
               "right-0 bottom-0 left-0 mt-24 h-fit flex-col rounded-t-[10px]",
             direction === "center" &&
-              "top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 !animate-none ![animation-duration:0s]",
+              "top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 !animate-none ![animation-duration:0s] after:hidden",
           )}
           style={initialTransformStyle}
         >
