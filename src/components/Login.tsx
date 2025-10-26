@@ -1,13 +1,18 @@
+"use client";
 import React from "react";
 import useAuth from "@/hooks/useAuth";
 import Button from "@/components/ui/button";
+import clsx from "clsx";
 
-function Login() {
+interface Props {
+  className?: string;
+}
+function Login({ className }: Props) {
   const { login } = useAuth();
 
   return (
-    <div className="flex flex-col gap-4 sm:mt-2">
-      <h3 className="mx-auto max-w-xs text-center text-2xl">
+    <div className={clsx("flex flex-col gap-4", className)}>
+      <h3 className="mx-auto text-center text-2xl">
         Track your progress, earn badges, and celebrate your Wordle wins.
       </h3>
 

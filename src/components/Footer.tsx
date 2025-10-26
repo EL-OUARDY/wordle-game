@@ -4,12 +4,15 @@ import clsx from "clsx";
 import Link from "next/link";
 import { APP_NAME, EMAIL } from "@/lib/constants";
 import { motion } from "motion/react";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
   className?: string;
 }
 
 function Footer({ className }: Props) {
+  const { user } = useAuth();
+
   return (
     <motion.footer
       className={clsx(className, "h-12 text-sm")}
@@ -25,9 +28,15 @@ function Footer({ className }: Props) {
           Privacy Policy
         </Link>
         <span>|</span>
-        <a href={`mailto:${EMAIL}`} className="hover:underline">
-          Feedback
-        </a>
+        {!user ? (
+          <Link href={"/login"} className="hover:underline">
+            Login
+          </Link>
+        ) : (
+          <a href={`mailto:${EMAIL}`} className="hover:underline">
+            Feedback
+          </a>
+        )}
       </div>
     </motion.footer>
   );

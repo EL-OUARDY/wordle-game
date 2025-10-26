@@ -43,7 +43,7 @@ function UserStats() {
   return (
     <>
       {!user || !stats ? (
-        <Login />
+        <Login className="mx-auto max-w-xs sm:mt-2" />
       ) : (
         <div className="user-stats flex flex-col gap-4 px-4">
           <hr className="separator border-key-background" />
