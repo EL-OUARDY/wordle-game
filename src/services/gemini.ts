@@ -45,7 +45,7 @@ Rules:
 5. The word must be singular (not plural).
 6. Never include explanations, suggestions, or any text outside the JSON object.
 Example response:
-{ "word": "apple" }
+{ "word": "story" }
 `,
           },
         ],

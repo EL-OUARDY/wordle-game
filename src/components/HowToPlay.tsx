@@ -34,8 +34,10 @@ function HowToPlay() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h3 className="text-xl font-semibold">Examples</h3>
-
+        <div className="mb-2 flex items-center gap-2">
+          <h3 className="text-xl font-semibold">Examples</h3>
+          <hr className="separator border-key-background flex-1" />
+        </div>
         <div className="guess">
           <div className="line grid w-[220px] flex-1 grid-cols-5 gap-[5px] text-xl">
             {"stone".split("").map((char, index) => {
