@@ -83,7 +83,12 @@ function Drawer({
               <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
             )}
             <div className="mx-auto overflow-y-auto">
-              <VaulDrawer.Title className="border-key-background mb-4 border-b pb-4 text-2xl font-semibold">
+              <VaulDrawer.Title
+                className={clsx(
+                  "border-key-background mb-4 border-b pb-4 text-2xl font-semibold",
+                  !title && "hidden",
+                )}
+              >
                 {title}
               </VaulDrawer.Title>
               {children}
