@@ -3,6 +3,24 @@ import { Language, LetterStatus } from "@/types";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 
+export const ranks = [
+  { name: "Beginner", min: 0, color: "#9CA3AF" }, // gray
+  { name: "Rookie", min: 5, color: "#60A5FA" }, // blue
+  { name: "Skilled", min: 15, color: "#34D399" }, // green
+  { name: "Expert", min: 30, color: "#FBBF24" }, // yellow
+  { name: "Master", min: 50, color: "#FB923C" }, // orange
+  { name: "Legend", min: 75, color: "#EF4444" }, // red
+  { name: "Wordle King", min: 100, color: "#A855F7" }, // purple
+  { name: "Elite", min: 120, color: "#F472B6" }, // pink
+  { name: "Knight", min: 150, color: "#3B82F6" }, // bright blue
+  { name: "Villain", min: 170, color: "#D97706" }, // orange-brown
+  { name: "Hero", min: 220, color: "#10B981" }, // teal/green
+  { name: "Wizard", min: 250, color: "#8B5CF6" }, // violet
+  { name: "Devil", min: 270, color: "#7F1D1D" }, // dark red
+  { name: "Angel", min: 300, color: "#93C5FD" }, // light blue
+  { name: "GOD", min: 366, color: "#FDE68A" }, // golden
+];
+
 /**
  * Returns the status of each letter in a guess compared to the solution.
  * Handling edge cases involving duplicate letters
@@ -102,6 +120,12 @@ export const share = async () => {
     alert("Link copied to clipboard!");
   }
 };
+
+export const getRank = (solved: number) =>
+  ranks
+    .slice()
+    .reverse()
+    .find((r) => solved >= r.min) || ranks[0];
 
 export function removeArabicDiacritics(word: string) {
   return word.replace(
