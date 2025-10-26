@@ -18,6 +18,9 @@ import LanguagesMenu, { languagesList } from "@/components/LanguagesMenu";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import StatsService from "@/services/stats";
 import useStore from "@/hooks/useStore";
+import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
+import LogoIcon from "@/components/ui/icons/logo";
 interface Props {
   className?: string;
 }
@@ -39,6 +42,8 @@ function Header({ className }: Props) {
 
   const setUserStats = useStore((s) => s.setUserStats);
   const language = useStore((s) => s.language);
+
+  const { user } = useAuth();
 
   const menus: Record<Menu, MenuContent> = {
     settings: {
@@ -77,7 +82,32 @@ function Header({ className }: Props) {
           className="size-12 sm:size-14"
           aria-label="Open Menu"
         >
-          <MenuIcon className="size-[1.35rem] sm:size-6" />
+          {!user ? (
+            <MenuIcon className="size-[1.35rem] sm:size-6" />
+          ) : (
+            <div className="user-avatar">
+              {user.photoURL ? (
+                <Image
+                  src={user.photoURL}
+                  alt="User avatar"
+                  width={40}
+                  height={40}
+                  className="size-[1.35rem] rounded-full sm:size-6"
+                />
+              ) : user.displayName ? (
+                <span className="flex size-full items-center justify-center text-lg">
+                  {user.displayName
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2)}
+                </span>
+              ) : (
+                <LogoIcon className="size-[1.35rem] sm:size-6" />
+              )}
+            </div>
+          )}
         </Button>
 
         <div className="ml-auto flex">
