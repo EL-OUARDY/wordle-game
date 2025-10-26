@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import useAuth from "@/hooks/useAuth";
 import Login from "@/components/Login";
+import Image from "next/image";
+import LogoIcon from "@/components/ui/icons/logo";
 
 function UserStats() {
   const stats = useStore((s) => s.userStats);
@@ -38,6 +40,43 @@ function UserStats() {
         <Login />
       ) : (
         <div className="user-stats flex flex-col gap-4 px-4">
+          <hr className="separator border-key-background" />
+
+          <div className="user-info flex items-center gap-2">
+            <div className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]">
+              {user.photoURL ? (
+                <Image
+                  src={user.photoURL}
+                  alt="User avatar"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              ) : user.displayName ? (
+                <span className="flex size-[40px] items-center justify-center text-lg">
+                  {user.displayName
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2)}
+                </span>
+              ) : (
+                <LogoIcon className="size-5" />
+              )}
+            </div>
+            <div className="flex flex-1 flex-col justify-between">
+              <div className="user-fullname text-lg font-semibold">
+                {user.displayName}
+              </div>
+              <div className="user-email text-muted-foreground">
+                {user.email}
+              </div>
+            </div>
+          </div>
+
+          <hr className="separator border-key-background" />
+
           <div className="numbers flex">
             <div className="box flex flex-1 text-center">
               <div className="flex w-full flex-col gap-1">

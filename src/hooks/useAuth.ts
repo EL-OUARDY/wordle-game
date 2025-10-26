@@ -1,10 +1,11 @@
+"use client";
 import { useEffect, useState } from "react";
 import { auth, provider } from "@/lib/firebase";
 import {
-  signInWithPopup,
   signOut,
   onAuthStateChanged,
   User,
+  signInWithPopup,
 } from "firebase/auth";
 
 export default function useAuth() {

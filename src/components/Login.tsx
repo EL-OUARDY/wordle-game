@@ -1,7 +1,10 @@
-import Button from "@/components/ui/button";
 import React from "react";
+import useAuth from "@/hooks/useAuth";
+import Button from "@/components/ui/button";
 
 function Login() {
+  const { login } = useAuth();
+
   return (
     <div className="flex flex-col gap-4 sm:mt-2">
       <h3 className="mx-auto max-w-xs text-center text-2xl">
@@ -21,6 +24,7 @@ function Login() {
 
       <div className="mx-auto flex w-fit flex-col gap-2">
         <Button
+          onClick={() => login()}
           variant="outline"
           className="w-64 rounded-none"
           aria-label="Share"
@@ -29,7 +33,7 @@ function Login() {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { delay: 1 * 0.05, duration: 0.2 },
+            transition: { delay: 2 * 0.05, duration: 0.2 },
           }}
         >
           <span className="flex w-1/2 items-center !justify-between gap-2">
@@ -70,7 +74,7 @@ function Login() {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { delay: 2 * 0.05, duration: 0.2 },
+            transition: { delay: 3 * 0.05, duration: 0.2 },
           }}
         >
           <span className="flex w-1/2 items-center !justify-between gap-2">
@@ -119,7 +123,7 @@ function Login() {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { delay: 3 * 0.05, duration: 0.2 },
+            transition: { delay: 4 * 0.05, duration: 0.2 },
           }}
         >
           <span className="flex w-1/2 items-center !justify-between gap-2">
@@ -154,7 +158,7 @@ function Login() {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { delay: 4 * 0.05, duration: 0.2 },
+            transition: { delay: 5 * 0.05, duration: 0.2 },
           }}
         >
           <span className="flex w-1/2 items-center !justify-between gap-2">
