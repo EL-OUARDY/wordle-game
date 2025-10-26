@@ -19,7 +19,8 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
           "inline-flex cursor-pointer items-center justify-center rounded-3xl px-6 py-2 text-center text-[1.06rem] capitalize transition-colors duration-300 select-none",
           variant === "default" &&
             "bg-button-background text-button-foreground",
-          variant === "outline" && "text-foreground border-foreground border",
+          variant === "outline" &&
+            "hover:bg-muted-background text-foreground border-foreground border",
           variant === "icon" &&
             "hover:bg-key-background flex aspect-square items-center justify-center rounded-none !p-0",
           variant === "icon-outline" &&

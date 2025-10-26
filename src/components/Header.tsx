@@ -18,6 +18,7 @@ import LanguagesMenu, { languagesList } from "@/components/LanguagesMenu";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import StatsService from "@/services/stats";
 import useStore from "@/hooks/useStore";
+import useAuth from "@/hooks/useAuth";
 interface Props {
   className?: string;
 }
@@ -40,6 +41,8 @@ function Header({ className }: Props) {
   const setUserStats = useStore((s) => s.setUserStats);
   const language = useStore((s) => s.language);
 
+  const { user } = useAuth();
+
   const menus: Record<Menu, MenuContent> = {
     settings: {
       title: "Settings",
@@ -48,7 +51,7 @@ function Header({ className }: Props) {
     },
     sidebar: { title: APP_NAME, content: <SideBar />, direction: "left" },
     statistics: {
-      title: "Statistics",
+      title: user ? "Statistics" : "",
       content: <UserStats />,
       direction: isDesktop ? "center" : "bottom",
     },
