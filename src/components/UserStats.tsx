@@ -14,6 +14,7 @@ import Login from "@/components/Login";
 import Image from "next/image";
 import LogoIcon from "@/components/ui/icons/logo";
 import { APP_NAME } from "@/lib/constants";
+import { getRank, wordlesToNextRank } from "@/lib/utils";
 
 function UserStats() {
   const stats = useStore((s) => s.userStats);
@@ -27,6 +28,9 @@ function UserStats() {
       ? 0
       : Math.floor((wins * 100) / stats.played)
     : 0;
+
+  const rank = getRank(wins);
+  const toNextRank = wordlesToNextRank(wins);
 
   const bgAbsentColor = getComputedStyle(
     document.documentElement,
@@ -49,7 +53,12 @@ function UserStats() {
           <hr className="separator border-key-background" />
 
           <div className="user-info flex items-center gap-2">
-            <div className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]">
+            <div
+              className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]"
+              style={{
+                borderColor: rank.color,
+              }}
+            >
               {user.photoURL ? (
                 <Image
                   src={user.photoURL}
@@ -75,16 +84,31 @@ function UserStats() {
               <div className="user-fullname text-lg font-semibold">
                 {user.displayName || user.email || `${APP_NAME} Player`}
               </div>
-              <div className="user-email text-muted-foreground">
-                Playing since{" "}
-                {new Date(user.metadata.creationTime!).toLocaleDateString(
-                  undefined,
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  },
-                )}
+
+              <div
+                className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden rounded-lg px-2"
+                style={{
+                  borderColor: rank.color,
+                }}
+              >
+                <span>Rank:</span>
+                <div
+                  className="absolute inset-0 opacity-10"
+                  style={{
+                    backgroundColor: rank.color,
+                  }}
+                />
+                <span
+                  className="relative text-base font-normal"
+                  style={{ color: rank.color }}
+                >
+                  {rank.name}
+                </span>
+                <span className="text-key-background">|</span>
+                <span>
+                  <span className="font-semibold">{toNextRank}</span> wins to
+                  next rank
+                </span>
               </div>
             </div>
           </div>
@@ -186,6 +210,18 @@ function UserStats() {
           </div>
 
           <hr className="separator border-key-background" />
+
+          <div className="text-muted-foreground ml-auto">
+            Playing since{" "}
+            {new Date(user.metadata.creationTime!).toLocaleDateString(
+              undefined,
+              {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              },
+            )}
+          </div>
         </div>
       )}
     </>

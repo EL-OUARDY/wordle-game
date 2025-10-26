@@ -6,13 +6,14 @@ import Image from "next/image";
 import Button from "@/components/ui/button";
 import LogoutIcon from "@/components/ui/icons/logout";
 import { motion } from "motion/react";
-import { share } from "@/lib/utils";
+import { getRank, share } from "@/lib/utils";
 import ShareIcon from "@/components/ui/icons/share";
 import Link from "next/link";
 import UserIcon from "@/components/ui/icons/user";
 import BuyMeACofeeIcon from "@/components/ui/icons/bmc";
 import { languagesList } from "@/components/LanguagesMenu";
 import clsx from "clsx";
+import useStore from "@/hooks/useStore";
 
 interface Props {
   onClose?: () => void;
@@ -20,6 +21,13 @@ interface Props {
 
 function SideBar({ onClose }: Props) {
   const { user, logout } = useAuth();
+  const stats = useStore((s) => s.userStats);
+
+  const wins = stats
+    ? stats.guessDistribution.reduce((acc, cur) => acc + cur.count, 0)
+    : 0;
+  const rank = getRank(wins);
+
   return (
     <div className="sidebar relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4">
@@ -72,7 +80,12 @@ function SideBar({ onClose }: Props) {
         {user ? (
           <>
             <div className="flex items-center gap-2">
-              <div className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]">
+              <div
+                className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]"
+                style={{
+                  borderColor: rank.color,
+                }}
+              >
                 {user.photoURL ? (
                   <Image
                     src={user.photoURL}
@@ -98,17 +111,24 @@ function SideBar({ onClose }: Props) {
                 <div className="user-fullname text-lg font-semibold">
                   {user.displayName || user.email || `${APP_NAME} Player`}
                 </div>
-                <div className="user-email text-muted-foreground">
-                  <span>
-                    Playing since{" "}
-                    {new Date(user.metadata.creationTime!).toLocaleDateString(
-                      undefined,
-                      {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      },
-                    )}
+                <div
+                  className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden rounded-lg border px-2"
+                  style={{
+                    borderColor: rank.color,
+                  }}
+                >
+                  <span>Rank:</span>
+                  <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                      backgroundColor: rank.color,
+                    }}
+                  />
+                  <span
+                    className="relative text-base font-normal"
+                    style={{ color: rank.color }}
+                  >
+                    {rank.name}
                   </span>
                 </div>
               </div>
@@ -126,7 +146,11 @@ function SideBar({ onClose }: Props) {
                 Share
               </Button>
               <Button
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  // Hard page reload
+                  window.location.href = window.location.href;
+                }}
                 className="flex flex-1 items-center gap-2 rounded-xl !px-2 !py-1 normal-case"
                 aria-label="Log out"
                 whileTap={{ scale: 0.95 }}
