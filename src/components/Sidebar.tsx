@@ -111,12 +111,8 @@ function SideBar({ onClose }: Props) {
                 <div className="user-fullname text-lg font-semibold">
                   {user.displayName || user.email || `${APP_NAME} Player`}
                 </div>
-                <div
-                  className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden rounded-lg border px-2"
-                  style={{
-                    borderColor: rank.color,
-                  }}
-                >
+
+                <div className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden px-2">
                   <span>Rank:</span>
                   <div
                     className="absolute inset-0 opacity-10"

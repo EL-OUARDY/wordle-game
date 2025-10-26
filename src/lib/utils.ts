@@ -4,21 +4,21 @@ import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 
 export const ranks = [
-  { name: "Starter", min: 0, color: "#34D399" }, // green
-  { name: "Rookie", min: 5, color: "#60A5FA" }, // blue
-  { name: "Skilled", min: 15, color: "#9CA3AF" }, // gray
+  { name: "Novice", min: 0, color: "#10B981" }, // teal/green
+  { name: "Rookie", min: 5, color: "#FB923C" }, // orange
+  { name: "Skilled", min: 15, color: "#6366f1" }, // indigo
   { name: "Expert", min: 30, color: "#FBBF24" }, // yellow
-  { name: "Master", min: 50, color: "#FB923C" }, // orange
-  { name: "Legend", min: 75, color: "#EF4444" }, // red
+  { name: "Master", min: 50, color: "#60A5FA" }, // blue
+  { name: "Knight", min: 75, color: "#EF4444" }, // red
   { name: "Wordle King", min: 100, color: "#A855F7" }, // purple
-  { name: "Elite", min: 120, color: "#F472B6" }, // pink
-  { name: "Knight", min: 150, color: "#3B82F6" }, // bright blue
-  { name: "Villain", min: 170, color: "#D97706" }, // orange-brown
-  { name: "Hero", min: 220, color: "#10B981" }, // teal/green
+  { name: "Legend", min: 120, color: "#3B82F6" }, // bright blue
+  { name: "Elite", min: 150, color: "#F472B6" }, // pink
+  { name: "Villain", min: 180, color: "#D97706" }, // orange-brown
+  { name: "Hero", min: 220, color: "#f43f5e" }, // rose
   { name: "Wizard", min: 250, color: "#8B5CF6" }, // violet
   { name: "Devil", min: 270, color: "#7F1D1D" }, // dark red
-  { name: "Angel", min: 300, color: "#93C5FD" }, // light blue
-  { name: "GOD", min: 366, color: "#FDE68A" }, // golden
+  { name: "Angel", min: 300, color: "#0ea5e9" }, // sky blue
+  { name: "GOD", min: 365, color: "#FFD700" }, // golden
 ];
 
 /**
@@ -133,7 +133,7 @@ export const wordlesToNextRank = (wins: number) => {
     const nextRank = ranks[i + 1];
 
     if (wins < rank.min) continue; // not reached this rank yet
-    if (!nextRank) return 0; // already at top rank
+    if (!nextRank) return -1; // already at top rank
 
     if (wins >= rank.min && wins < nextRank.min) {
       return nextRank.min - wins;

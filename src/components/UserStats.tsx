@@ -52,7 +52,7 @@ function UserStats() {
         <div className="user-stats flex flex-col gap-4 px-4">
           <hr className="separator border-key-background" />
 
-          <div className="user-info flex items-center gap-2">
+          <div className="user-info flex items-center gap-2 py-2">
             <div
               className="user-avatar border-key-background flex size-[46px] items-center justify-center rounded-full border p-[2px]"
               style={{
@@ -85,12 +85,7 @@ function UserStats() {
                 {user.displayName || user.email || `${APP_NAME} Player`}
               </div>
 
-              <div
-                className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden rounded-lg px-2"
-                style={{
-                  borderColor: rank.color,
-                }}
-              >
+              <div className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden px-2">
                 <span>Rank:</span>
                 <div
                   className="absolute inset-0 opacity-10"
@@ -104,11 +99,16 @@ function UserStats() {
                 >
                   {rank.name}
                 </span>
-                <span className="text-key-background">|</span>
-                <span>
-                  <span className="font-semibold">{toNextRank}</span> wins to
-                  next rank
-                </span>
+                {toNextRank !== -1 && (
+                  <>
+                    <span className="text-key-background">|</span>
+                    <span>
+                      <span className="font-semibold">{toNextRank}</span>{" "}
+                      <span>{toNextRank > 1 ? "wins" : "win"}</span> to next
+                      rank
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
