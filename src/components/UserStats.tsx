@@ -19,9 +19,14 @@ function UserStats() {
   const stats = useStore((s) => s.userStats);
   const { user } = useAuth();
 
-  const wins = stats.guessDistribution.reduce((acc, cur) => acc + cur.count, 0);
-  const winRatio =
-    stats.played === 0 ? 0 : Math.floor((wins * 100) / stats.played);
+  const wins = stats
+    ? stats.guessDistribution.reduce((acc, cur) => acc + cur.count, 0)
+    : 0;
+  const winRatio = stats
+    ? stats.played === 0
+      ? 0
+      : Math.floor((wins * 100) / stats.played)
+    : 0;
 
   const bgAbsentColor = getComputedStyle(
     document.documentElement,
@@ -37,7 +42,7 @@ function UserStats() {
 
   return (
     <>
-      {!user ? (
+      {!user || !stats ? (
         <Login />
       ) : (
         <div className="user-stats flex flex-col gap-4 px-4">
@@ -54,7 +59,7 @@ function UserStats() {
                   className="rounded-full"
                 />
               ) : user.displayName ? (
-                <span className="flex size-[40px] items-center justify-center text-lg">
+                <span className="flex size-full items-center justify-center text-lg">
                   {user.displayName
                     ?.split(" ")
                     .map((n) => n[0])

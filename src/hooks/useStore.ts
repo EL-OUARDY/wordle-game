@@ -30,8 +30,8 @@ interface IState {
   setStartTime: (date: Date) => void;
   animationVariant: AnimationVariant;
   setAnimationVariant: (variant: AnimationVariant) => void;
-  userStats: UserStats;
-  setUserStats: (stats: UserStats) => void;
+  userStats: UserStats | null;
+  setUserStats: (stats: UserStats | null) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -63,20 +63,7 @@ const useStore = create<IState>((set) => ({
   setStartTime: (date) => set({ startTime: date }),
   animationVariant: "idle",
   setAnimationVariant: (variant) => set({ animationVariant: variant }),
-  userStats: {
-    played: 0,
-    streak: 0,
-    maxStreak: 0,
-    lastSolvedTries: 0,
-    guessDistribution: [
-      { guess: 1, count: 0 },
-      { guess: 2, count: 0 },
-      { guess: 3, count: 0 },
-      { guess: 4, count: 0 },
-      { guess: 5, count: 0 },
-      { guess: 6, count: 0 },
-    ],
-  },
+  userStats: null,
   setUserStats: (stats) => set({ userStats: stats }),
 }));
 

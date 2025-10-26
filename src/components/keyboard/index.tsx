@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 import { sleep } from "@/lib/utils";
 import { LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
   className?: string;
@@ -38,46 +39,55 @@ function Keyboard({ className }: Props) {
   const userStats = useStore((s) => s.userStats);
   const setUserStats = useStore((s) => s.setUserStats);
 
+  const { user } = useAuth();
+
   const [pressedKey, setPressedKey] = useState<string | null>(null);
 
   const previousSubmittedWrongGuess = useRef<string>("");
 
   const updateUserStats = useCallback(
-    (status: "won" | "lost") => {
+    async (status: "won" | "lost") => {
+      // User is not logged in
+      if (!user) return;
+
+      const serverStats = await StatsService.get(user.uid);
+
+      if (!serverStats) return;
+
       if (status === "lost") {
         const newStats = {
-          ...userStats,
-          played: userStats.played + 1,
+          ...serverStats,
+          played: serverStats.played + 1,
           streak: 0,
         };
         setUserStats(newStats);
-        StatsService.save(newStats);
+        StatsService.save(user.uid, newStats);
       }
       // Won
       else {
         const newStats = {
-          played: userStats.played + 1,
+          played: serverStats.played + 1,
 
-          streak: userStats.streak + 1,
+          streak: serverStats.streak + 1,
 
           maxStreak:
-            userStats.streak + 1 > userStats.maxStreak
-              ? userStats.streak + 1
-              : userStats.maxStreak,
+            serverStats.streak + 1 > serverStats.maxStreak
+              ? serverStats.streak + 1
+              : serverStats.maxStreak,
 
           lastSolvedTries: currentGuessIndex + 1,
 
-          guessDistribution: userStats.guessDistribution.map((guessStat) =>
+          guessDistribution: serverStats.guessDistribution.map((guessStat) =>
             guessStat.guess === currentGuessIndex + 1
               ? { ...guessStat, count: guessStat.count + 1 }
               : guessStat,
           ),
         };
         setUserStats(newStats);
-        StatsService.save(newStats);
+        StatsService.save(user.uid, newStats);
       }
     },
-    [currentGuessIndex, setUserStats, userStats],
+    [currentGuessIndex, setUserStats, user],
   );
 
   const submiGuess = useCallback(async () => {

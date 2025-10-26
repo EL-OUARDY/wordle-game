@@ -62,9 +62,15 @@ function Header({ className }: Props) {
 
   // Load user stats
   useEffect(() => {
-    const stats = StatsService.get();
-    if (stats) setUserStats(stats);
-  }, [setUserStats]);
+    if (!user) return;
+
+    const loadStats = async () => {
+      const stats = await StatsService.get(user?.uid);
+      if (stats) setUserStats(stats);
+    };
+
+    loadStats();
+  }, [setUserStats, user]);
 
   return (
     <motion.header
