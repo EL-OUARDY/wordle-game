@@ -160,7 +160,7 @@ function UserStats() {
           <div className="guess-distribution flex flex-col gap-2">
             <h3 className="text-xl font-semibold">Guess Distribution</h3>
             <div className="chart">
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={180}>
                 <BarChart
                   data={stats.guessDistribution}
                   layout="vertical"
