@@ -13,6 +13,7 @@ import useAuth from "@/hooks/useAuth";
 import Login from "@/components/Login";
 import Image from "next/image";
 import LogoIcon from "@/components/ui/icons/logo";
+import { APP_NAME } from "@/lib/constants";
 
 function UserStats() {
   const stats = useStore((s) => s.userStats);
@@ -67,10 +68,18 @@ function UserStats() {
             </div>
             <div className="flex flex-1 flex-col justify-between">
               <div className="user-fullname text-lg font-semibold">
-                {user.displayName}
+                {user.displayName || user.email || `${APP_NAME} Player`}
               </div>
               <div className="user-email text-muted-foreground">
-                {user.email}
+                Playing since{" "}
+                {new Date(user.metadata.creationTime!).toLocaleDateString(
+                  undefined,
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  },
+                )}
               </div>
             </div>
           </div>
