@@ -5,7 +5,7 @@ import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
-import { copyToClipboard, getTimeDifference } from "@/lib/utils";
+import { copyToClipboard, getTimeDifference, share } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -84,28 +84,6 @@ function GameOver() {
   useEffect(() => {
     if (isGameOver) setEndTime(getTimeDifference(startTime, new Date()));
   }, [isGameOver, startTime]);
-
-  const share = async () => {
-    const title = document.title;
-    const url = window.location.href;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-      } catch (err: unknown) {
-        if (err instanceof DOMException && err.name !== "AbortError") {
-          console.error("Error sharing:", err);
-          await copyToClipboard(url);
-          alert("Link copied to clipboard!");
-        } else if (!(err instanceof DOMException)) {
-          console.error("Unexpected error:", err);
-        }
-      }
-    } else {
-      await copyToClipboard(url);
-      alert("Link copied to clipboard!");
-    }
-  };
 
   return (
     <div className="game-over bg-muted-background border-key-background mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">

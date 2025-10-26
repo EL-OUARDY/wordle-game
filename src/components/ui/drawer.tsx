@@ -82,7 +82,7 @@ function Drawer({
             {direction === "bottom" && (
               <div className="bg-key-background mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full" />
             )}
-            <div className="mx-auto overflow-y-auto">
+            <div className="mx-auto flex min-h-full flex-col overflow-y-auto">
               <VaulDrawer.Title
                 className={clsx(
                   "border-key-background mb-4 border-b pb-4 text-2xl font-semibold",
@@ -91,7 +91,7 @@ function Drawer({
               >
                 {title}
               </VaulDrawer.Title>
-              {children}
+              <div className="flex-1">{children}</div>
             </div>
           </div>
         </VaulDrawer.Content>

@@ -32,7 +32,7 @@ function Login({ className }: Props) {
           onClick={() => login()}
           variant="outline"
           className="w-64 rounded-none"
-          aria-label="Share"
+          aria-label="Google"
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: -10 }}
           animate={{
@@ -73,7 +73,7 @@ function Login({ className }: Props) {
         <Button
           variant="outline"
           className="w-64 rounded-none"
-          aria-label="Share"
+          aria-label="Facebook"
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: -10 }}
           animate={{
@@ -122,7 +122,7 @@ function Login({ className }: Props) {
         <Button
           variant="outline"
           className="w-64 rounded-none"
-          aria-label="Share"
+          aria-label="Apple ID"
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: -10 }}
           animate={{
@@ -157,7 +157,7 @@ function Login({ className }: Props) {
         <Button
           variant="outline"
           className="w-64 rounded-none"
-          aria-label="Share"
+          aria-label="Microsoft"
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: -10 }}
           animate={{

@@ -13,3 +13,4 @@ export const LANGUAGES: Language[] = [
 ];
 
 export const EMAIL = "contact@wadi3.codes";
+export const BMC_LINK = "";

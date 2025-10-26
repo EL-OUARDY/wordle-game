@@ -51,7 +51,11 @@ function Header({ className }: Props) {
       content: <Settings />,
       direction: isDesktop ? "right" : "bottom",
     },
-    sidebar: { title: APP_NAME, content: <SideBar />, direction: "left" },
+    sidebar: {
+      title: APP_NAME,
+      content: <SideBar onClose={() => setIsMenuOpen(false)} />,
+      direction: "left",
+    },
     statistics: {
       title: "",
       content: <UserStats />,
