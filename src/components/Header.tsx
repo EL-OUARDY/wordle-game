@@ -70,7 +70,7 @@ function Header({ className }: Props) {
     settings: {
       title: "Settings",
       content: <Settings />,
-      direction: isDesktop ? "right" : "bottom",
+      direction: isDesktop ? "right" : "right",
     },
     sidebar: {
       title: APP_NAME,
