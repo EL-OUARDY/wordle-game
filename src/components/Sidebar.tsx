@@ -30,7 +30,7 @@ function SideBar({ onClose }: Props) {
 
   return (
     <div className="sidebar relative flex h-full flex-col gap-4">
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4 pb-42">
         <p className="text-lg">
           Play Wordle for free, in your language, with no ads — unlimited fun,
           no limits!
@@ -76,6 +76,7 @@ function SideBar({ onClose }: Props) {
           Buy us a coffee
         </motion.a>
       </div>
+
       <div className="user-info bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
         {user ? (
           <>
