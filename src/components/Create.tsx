@@ -5,7 +5,7 @@ import Copy from "@/components/ui/icons/copy";
 import LoaderIcon from "@/components/ui/icons/loader";
 import LogoIcon from "@/components/ui/icons/logo";
 import { WORD_LENGTH } from "@/lib/constants";
-import { isValidWord } from "@/lib/utils";
+import { isValidWord, sleep } from "@/lib/utils";
 import CreateService from "@/services/create";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -28,6 +28,9 @@ function Create() {
     }
 
     setIsLoading(true);
+
+    // Add a bit of delay
+    await sleep(3000);
 
     const wordId = await CreateService.createCustomWord(
       word.toLowerCase(),
