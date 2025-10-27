@@ -61,19 +61,19 @@ function SideBar({ onClose }: Props) {
 
         <hr className="separator border-key-background" />
 
-        <p className="support text-lg text-balance">
+        <p className="support text-xl text-balance">
           Support the game and keep it free, ad-free, and fun for everyone!
         </p>
 
         <motion.a
           href={BMC_LINK}
           target="_blank"
-          className="flex w-fit items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 py-1 text-lg text-[#181818]"
+          className="flex w-fit items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 py-2 text-lg text-[#181818]"
           aria-label="Support"
           whileTap={{ scale: 0.95 }}
         >
-          <BuyMeACofeeIcon className="size-4" />
-          Support us
+          <BuyMeACofeeIcon className="size-5" />
+          Buy us a coffee
         </motion.a>
       </div>
       <div className="user-info bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
@@ -158,7 +158,7 @@ function SideBar({ onClose }: Props) {
           </>
         ) : (
           <>
-            <p className="text-xl">
+            <p className="text-lg">
               Track your game stats by logging in or creating a free account.
             </p>
             <div className="controls flex w-full justify-between gap-4">
