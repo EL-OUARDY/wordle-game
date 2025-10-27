@@ -19,6 +19,13 @@
   --sb-size: 5px;
 }
 
+.high-contrast {
+  --correct: #f5793a;
+  --present: #85c0f9;
+  --absent: #787c7e;
+  --tile-fourground: #181818;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
