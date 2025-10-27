@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 
 interface Props {
@@ -23,6 +23,19 @@ function Drawer({
   title = "",
   showTitle = true,
 }: Props) {
+  // Close when pressing escape
+  useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onOpenChange(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeydown);
+
+    return () => window.removeEventListener("keydown", handleKeydown);
+  }, [onOpenChange]);
+
   const initialTransformStyle: React.CSSProperties = useMemo(() => {
     if (direction === "right" || direction === "left")
       return {
