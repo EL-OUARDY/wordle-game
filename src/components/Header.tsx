@@ -85,7 +85,8 @@ function Header({ className }: Props) {
     create: {
       title: "Create your own Wordle",
       content: <Create />,
-      direction: isDesktop ? "center" : "bottom",
+      direction: isDesktop ? "center" : "center",
+      showTitle: false,
     },
   };
 
@@ -100,6 +101,18 @@ function Header({ className }: Props) {
 
     loadStats();
   }, [setUserStats, user]);
+
+  // Block keyboard typing when a menu is open
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    // block typing
+    window.dispatchEvent(new CustomEvent("blockTyping", { detail: true }));
+
+    return () => {
+      // unblock typing on unmount
+      window.dispatchEvent(new CustomEvent("blockTyping", { detail: false }));
+    };
+  }, [isMenuOpen]);
 
   const newGame = useCallback(async () => {
     if (isLoading) return;

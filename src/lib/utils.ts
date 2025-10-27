@@ -1,4 +1,4 @@
-import { LANGUAGES } from "@/lib/constants";
+import { LANGUAGES, WORD_LENGTH } from "@/lib/constants";
 import { Language, LetterStatus } from "@/types";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
@@ -54,6 +54,15 @@ export function getGuessStatuses(
     }
   }
   return statuses;
+}
+
+export function isValidLetter(char: string) {
+  return /^[a-zA-Z]$/.test(char);
+}
+
+export function isValidWord(word: string) {
+  if (!word) return false;
+  return word.length === WORD_LENGTH && [...word].every(isValidLetter);
 }
 
 export function isLanguage(str: string): str is Language {

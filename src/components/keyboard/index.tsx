@@ -7,7 +7,7 @@ import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
 import WordService from "@/services/word";
 import { motion } from "motion/react";
-import { sleep } from "@/lib/utils";
+import { isValidLetter, sleep } from "@/lib/utils";
 import { LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
 import useAuth from "@/hooks/useAuth";
@@ -36,7 +36,6 @@ function Keyboard({ className }: Props) {
     present: [],
     absent: [],
   });
-  const userStats = useStore((s) => s.userStats);
   const setUserStats = useStore((s) => s.setUserStats);
 
   const { user } = useAuth();
@@ -44,6 +43,8 @@ function Keyboard({ className }: Props) {
   const [pressedKey, setPressedKey] = useState<string | null>(null);
 
   const previousSubmittedWrongGuess = useRef<string>("");
+
+  const blockTypingRef = useRef(false);
 
   const updateUserStats = useCallback(
     async (status: "won" | "lost") => {
@@ -187,6 +188,9 @@ function Keyboard({ className }: Props) {
     const handleTyping = async (e: KeyboardEvent) => {
       const char = e.key;
 
+      // Typing is turned off
+      if (blockTypingRef.current) return;
+
       // Return if is submitting
       if (isSubmitting) return;
 
@@ -215,8 +219,7 @@ function Keyboard({ className }: Props) {
       if (currentGuess.length >= WORD_LENGTH) return;
 
       // Check if typed key is valid letter
-      const isLetter = /^[a-zA-Z]$/.test(char);
-      if (!isLetter) return;
+      if (!isValidLetter(char)) return;
 
       // Add character
       setCurrentGuess(currentGuess + char.toLowerCase());
@@ -224,9 +227,20 @@ function Keyboard({ className }: Props) {
       setAnimationVariant("type");
     };
 
-    window.addEventListener("keydown", handleTyping);
+    const handleBlockEvent = (e: CustomEvent<boolean>) => {
+      blockTypingRef.current = e.detail;
+    };
 
-    return () => window.removeEventListener("keydown", handleTyping);
+    window.addEventListener("keydown", handleTyping);
+    window.addEventListener("blockTyping", handleBlockEvent as EventListener);
+
+    return () => {
+      window.removeEventListener("keydown", handleTyping);
+      window.removeEventListener(
+        "blockTyping",
+        handleBlockEvent as EventListener,
+      );
+    };
   }, [
     currentGuess,
     isGameOver,
