@@ -60,6 +60,7 @@ function Header({ className }: Props) {
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
   const setIsSubmitting = useStore((s) => s.setIsSubmitting);
   const setWordCreator = useStore((s) => s.setWordCreator);
+  const isGameOver = useStore((s) => s.isGameOver);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -197,7 +198,7 @@ function Header({ className }: Props) {
 
         <div className="ml-auto flex">
           {/* Create btn */}
-          {currentGuessIndex === 0 && (
+          {(currentGuessIndex === 0 || isGameOver) && (
             <Button
               onClick={() => {
                 setActiveMenu("create");
@@ -212,7 +213,7 @@ function Header({ className }: Props) {
           )}
 
           {/* Give up */}
-          {currentGuessIndex > 0 && (
+          {currentGuessIndex > 0 && !isGameOver && (
             <Button
               onClick={newGame}
               variant="icon"
