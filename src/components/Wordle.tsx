@@ -10,6 +10,8 @@ import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import GamepadIcon from "@/components/ui/icons/gamepad";
+import { useSearchParams } from "next/navigation";
+import CreateService from "@/services/create";
 
 interface Props {
   language?: Language;
@@ -22,6 +24,10 @@ function Wordle({ language = "English", className }: Props) {
   const setSolution = useStore((s) => s.setSolution);
   const solution = useStore((s) => s.solution);
   const isGameOver = useStore((s) => s.isGameOver);
+  const setWordCreator = useStore((s) => s.setWordCreator);
+
+  const searchParams = useSearchParams();
+  const wordId = searchParams.get("w");
 
   // Set language
   useEffect(() => {
@@ -38,8 +44,21 @@ function Wordle({ language = "English", className }: Props) {
       setIsLoading(false);
     };
 
-    getWord();
-  }, [language, setSolution]);
+    const loadCustomWordle = async (wordId: string) => {
+      const result = await CreateService.getCustomWord(wordId);
+      if (result) {
+        setSolution(result.word.toLowerCase());
+        setWordCreator(result.creator || null);
+      }
+      setIsLoading(false);
+    };
+
+    if (wordId) {
+      loadCustomWordle(wordId);
+    } else {
+      getWord();
+    }
+  }, [language, setSolution, setWordCreator, wordId]);
 
   return (
     <div

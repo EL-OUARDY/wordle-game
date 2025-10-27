@@ -32,6 +32,8 @@ interface IState {
   setAnimationVariant: (variant: AnimationVariant) => void;
   userStats: UserStats | null;
   setUserStats: (stats: UserStats | null) => void;
+  wordCreator: string | null;
+  setWordCreator: (creator: string | null) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -65,6 +67,8 @@ const useStore = create<IState>((set) => ({
   setAnimationVariant: (variant) => set({ animationVariant: variant }),
   userStats: null,
   setUserStats: (stats) => set({ userStats: stats }),
+  wordCreator: null,
+  setWordCreator: (creator) => set({ wordCreator: creator }),
 }));
 
 export default useStore;

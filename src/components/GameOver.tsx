@@ -28,6 +28,8 @@ function GameOver() {
   const setStartTime = useStore((s) => s.setStartTime);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
   const setIsSubmitting = useStore((s) => s.setIsSubmitting);
+  const wordCreator = useStore((s) => s.wordCreator);
+  const setWordCreator = useStore((s) => s.setWordCreator);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [endTime, setEndTime] = useState<string>("");
@@ -50,6 +52,7 @@ function GameOver() {
       setStartTime(new Date());
       setAnimationVariant("new_game");
       setIsSubmitting(false);
+      setWordCreator(null);
     }
     setIsLoading(false);
   }, [
@@ -64,6 +67,7 @@ function GameOver() {
     setLettersStatusMap,
     setSolution,
     setStartTime,
+    setWordCreator,
     solution,
   ]);
 
@@ -94,7 +98,21 @@ function GameOver() {
           </h3>
 
           <p className="max-w-sm text-center text-xl">
-            Awesome! Your wordle took <br />
+            {wordCreator ? (
+              <span>
+                You solved{" "}
+                <span className="font-semibold capitalize">
+                  {wordCreator[0].toUpperCase() + wordCreator.slice(1)}
+                </span>
+                &apos;s <br /> Wordle in{" "}
+              </span>
+            ) : (
+              <span>
+                Awesome! Your wordle took
+                <br />
+              </span>
+            )}
+
             <span className="text-lg font-semibold">{endTime}</span>
           </p>
 

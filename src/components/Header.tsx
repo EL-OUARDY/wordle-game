@@ -59,6 +59,7 @@ function Header({ className }: Props) {
   const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
   const setIsSubmitting = useStore((s) => s.setIsSubmitting);
+  const setWordCreator = useStore((s) => s.setWordCreator);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -85,7 +86,7 @@ function Header({ className }: Props) {
     create: {
       title: "Create your own Wordle",
       content: <Create />,
-      direction: isDesktop ? "center" : "center",
+      direction: isDesktop ? "center" : "bottom",
       showTitle: false,
     },
   };
@@ -130,6 +131,7 @@ function Header({ className }: Props) {
       setStartTime(new Date());
       setAnimationVariant("new_game");
       setIsSubmitting(false);
+      setWordCreator(null);
     }
     setIsLoading(false);
   }, [
@@ -144,6 +146,7 @@ function Header({ className }: Props) {
     setLettersStatusMap,
     setSolution,
     setStartTime,
+    setWordCreator,
     solution,
   ]);
 
