@@ -5,7 +5,7 @@ import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
-import { copyToClipboard, getTimeDifference, share } from "@/lib/utils";
+import { getTimeDifference, share } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { motion } from "motion/react";
