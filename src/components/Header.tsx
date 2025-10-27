@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import ChartIcon from "@/components/ui/icons/chart";
@@ -13,7 +13,7 @@ import Settings from "@/components/Settings";
 import HowToPlay from "@/components/HowToPlay";
 import UserStats from "@/components/UserStats";
 import SideBar from "@/components/Sidebar";
-import { APP_NAME } from "@/lib/constants";
+import { APP_NAME, NUMBER_OF_GUESSES } from "@/lib/constants";
 import LanguagesMenu, { languagesList } from "@/components/LanguagesMenu";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import StatsService from "@/services/stats";
@@ -21,11 +21,16 @@ import useStore from "@/hooks/useStore";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import LogoIcon from "@/components/ui/icons/logo";
+import Create from "@/components/Create";
+import PlusIcon from "@/components/ui/icons/plus";
+import FlagIcon from "@/components/ui/icons/flag";
+import WordService from "@/services/word";
+import LoaderIcon from "@/components/ui/icons/loader";
 interface Props {
   className?: string;
 }
 
-type Menu = "settings" | "sidebar" | "statistics" | "info";
+type Menu = "settings" | "sidebar" | "statistics" | "info" | "create";
 
 interface MenuContent {
   title: string;
@@ -42,7 +47,20 @@ function Header({ className }: Props) {
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   const setUserStats = useStore((s) => s.setUserStats);
+  const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const language = useStore((s) => s.language);
+  const setIsGameOver = useStore((s) => s.setIsGameOver);
+  const setCurrentGuess = useStore((s) => s.setCurrentGuess);
+  const setGuesses = useStore((s) => s.setGuesses);
+  const solution = useStore((s) => s.solution);
+  const setSolution = useStore((s) => s.setSolution);
+  const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
+  const setStartTime = useStore((s) => s.setStartTime);
+  const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
+  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
+  const setIsSubmitting = useStore((s) => s.setIsSubmitting);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -64,6 +82,11 @@ function Header({ className }: Props) {
       showTitle: false,
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
+    create: {
+      title: "Create your own Wordle",
+      content: <Create />,
+      direction: isDesktop ? "center" : "bottom",
+    },
   };
 
   // Load user stats
@@ -78,6 +101,39 @@ function Header({ className }: Props) {
     loadStats();
   }, [setUserStats, user]);
 
+  const newGame = useCallback(async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const word = await WordService.getNewWord(language);
+    if (word && word !== solution) {
+      setSolution(word);
+      // Reset state
+      setIsGameOver(false);
+      setGuesses(Array(NUMBER_OF_GUESSES).fill(null));
+      setCurrentGuess("");
+      setCurrentGuessIndex(0);
+      setLettersStatusMap({ correct: [], present: [], absent: [] });
+      setStartTime(new Date());
+      setAnimationVariant("new_game");
+      setIsSubmitting(false);
+    }
+    setIsLoading(false);
+  }, [
+    isLoading,
+    language,
+    setAnimationVariant,
+    setCurrentGuess,
+    setCurrentGuessIndex,
+    setGuesses,
+    setIsGameOver,
+    setIsSubmitting,
+    setLettersStatusMap,
+    setSolution,
+    setStartTime,
+    solution,
+  ]);
+
   return (
     <motion.header
       className={clsx(className, "border-key-background border-b")}
@@ -85,6 +141,7 @@ function Header({ className }: Props) {
       animate={{ opacity: 1 }}
     >
       <nav className="flex h-12 sm:h-14 sm:px-[8px]">
+        {/* Sidebar btn */}
         <Button
           onClick={() => {
             setActiveMenu("sidebar");
@@ -123,6 +180,38 @@ function Header({ className }: Props) {
         </Button>
 
         <div className="ml-auto flex">
+          {/* Create btn */}
+          {currentGuessIndex === 0 && (
+            <Button
+              onClick={() => {
+                setActiveMenu("create");
+                setIsMenuOpen(true);
+              }}
+              variant="icon"
+              className="size-12 sm:size-14"
+              aria-label="Create your own custom wordle"
+            >
+              <PlusIcon className="size-[1.35rem] sm:size-6" />
+            </Button>
+          )}
+
+          {/* Give up */}
+          {currentGuessIndex > 0 && (
+            <Button
+              onClick={newGame}
+              variant="icon"
+              className="size-12 sm:size-14"
+              aria-label="Give up"
+            >
+              {isLoading ? (
+                <LoaderIcon className="size-[1.35rem] sm:size-6" />
+              ) : (
+                <FlagIcon className="size-[1.35rem] sm:size-6" />
+              )}
+            </Button>
+          )}
+
+          {/* languages btn */}
           <div className="languages relative">
             <Button
               onClick={() => setIsLanguagesListShown((prev) => !prev)}
@@ -153,6 +242,8 @@ function Header({ className }: Props) {
               )}
             />
           </div>
+
+          {/* Stats btn */}
           <Button
             onClick={() => {
               setActiveMenu("statistics");
@@ -164,6 +255,8 @@ function Header({ className }: Props) {
           >
             <ChartIcon className="size-[1.35rem] sm:size-6" />
           </Button>
+
+          {/* How to play btn */}
           <Button
             onClick={() => {
               setActiveMenu("info");
@@ -175,6 +268,8 @@ function Header({ className }: Props) {
           >
             <InfoIcon className="size-[1.35rem] sm:size-6" />
           </Button>
+
+          {/* Settings btn */}
           <Button
             onClick={() => {
               setActiveMenu("settings");
