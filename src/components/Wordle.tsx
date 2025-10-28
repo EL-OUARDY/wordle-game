@@ -37,7 +37,10 @@ function Wordle({ language = "English", className }: Props) {
 
   // Get initial word when app loads
   useEffect(() => {
-    if (solution) return;
+    if (solution) {
+      setIsLoading(false);
+      return;
+    }
 
     const getWord = async () => {
       const word = await WordService.getNewWord(language);
