@@ -28,3 +28,5 @@ export interface UserStats {
     count: number;
   }[];
 }
+
+export type Theme = "classic" | "Coffee" | "Dracula" | "Sakura";

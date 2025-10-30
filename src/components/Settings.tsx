@@ -2,8 +2,21 @@ import React from "react";
 import * as Switch from "@radix-ui/react-switch";
 import Button from "@/components/ui/button";
 import GamepadIcon from "@/components/ui/icons/gamepad";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { languagesList } from "@/components/LanguagesMenu";
+import useStore from "@/hooks/useStore";
+import ColorsGrid from "@/components/ui/colors-grid";
 
 function Settings() {
+  const language = useStore((s) => s.language);
+
   return (
     <div className="settings relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
@@ -11,30 +24,81 @@ function Settings() {
           <label className="font-semibold" htmlFor="default-language">
             Default Language
           </label>
-          <Switch.Root
-            id="default-language"
-            className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
-          </Switch.Root>
+          <Select value={languagesList.find((l) => l.name === language)?.name}>
+            <SelectTrigger
+              id="default-language"
+              className="w-fit gap-1 border-0 px-0"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="w-fit !min-w-26">
+              <SelectGroup className="">
+                {languagesList.map((language, index) => (
+                  <SelectItem
+                    key={index}
+                    value={language.name}
+                    className="flex justify-center"
+                  >
+                    {language.icon}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="theme flex flex-col gap-2">
+        <div className="themes flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <label className="font-semibold" htmlFor="theme">
-              Theme
-            </label>
-            <Switch.Root
-              id="theme"
-              className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
-            </Switch.Root>
+            <div className="flex w-full items-center gap-2">
+              <span className="font-semibold">Themes</span>
+              <hr className="separator border-key-background flex-1" />
+            </div>
           </div>
-          <p className="text-muted-foreground">
-            Switch between light, dark, or custom themes to personalize the
-            look.
-          </p>
+
+          <div className="grid grid-cols-2 gap-2">
+            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
+              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
+                <ColorsGrid
+                  color1={"#22c55e"}
+                  color2={"#eab308"}
+                  color3={"#9ca3af"}
+                />
+                <span className="flex-1">Classic</span>
+              </div>
+            </div>
+
+            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
+              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
+                <ColorsGrid
+                  color1={"#22c55e"}
+                  color2={"#eab308"}
+                  color3={"#9ca3af"}
+                />
+                <span className="flex-1">Coffee</span>
+              </div>
+            </div>
+            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
+              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
+                <ColorsGrid
+                  color1={"#22c55e"}
+                  color2={"#eab308"}
+                  color3={"#9ca3af"}
+                />
+                <span className="flex-1">Sakura</span>
+              </div>
+            </div>
+            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
+              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
+                <ColorsGrid
+                  color1={"#22c55e"}
+                  color2={"#eab308"}
+                  color3={"#9ca3af"}
+                />
+                <span className="flex-1">Dracula</span>
+              </div>
+            </div>
+          </div>
+          <hr className="separator border-key-background mt-2" />
         </div>
 
         <div className="high-contrast-mode flex items-center justify-between">
