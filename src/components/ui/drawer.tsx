@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { ReactNode, useEffect, useMemo } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 
@@ -61,7 +61,7 @@ function Drawer({
         />
         <VaulDrawer.Content
           aria-describedby={undefined}
-          className={clsx(
+          className={cn(
             "font-body fixed flex outline-none",
             direction === "left" && "top-2 bottom-2 left-2 z-10 w-[320px]",
             direction === "right" && "top-2 right-2 bottom-2 z-10 w-[320px]",
@@ -73,7 +73,7 @@ function Drawer({
           style={initialTransformStyle}
         >
           <div
-            className={clsx(
+            className={cn(
               "bg-background drawer-container",
               (direction === "right" || direction === "left") &&
                 "flex h-full w-full max-w-md grow flex-col rounded-[16px] p-5",
@@ -99,7 +99,7 @@ function Drawer({
             )}
             <div className="mx-auto flex min-h-full w-full flex-col overflow-y-auto">
               <VaulDrawer.Title
-                className={clsx(
+                className={cn(
                   "border-key-background mb-4 border-b pb-4 text-2xl font-semibold",
                   !showTitle && "sr-only",
                 )}

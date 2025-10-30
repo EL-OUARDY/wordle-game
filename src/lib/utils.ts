@@ -1,7 +1,9 @@
 import { LANGUAGES, WORD_LENGTH } from "@/lib/constants";
 import { Language, LetterStatus } from "@/types";
+import clsx, { ClassValue } from "clsx";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
+import { twMerge } from "tailwind-merge";
 
 export const ranks = [
   { name: "Novice", min: 0, color: "#10B981" }, // teal/green
@@ -150,6 +152,10 @@ export const wordlesToNextRank = (wins: number) => {
   }
   return 0;
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export function removeArabicDiacritics(word: string) {
   return word.replace(

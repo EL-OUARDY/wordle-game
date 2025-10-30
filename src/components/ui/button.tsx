@@ -1,7 +1,7 @@
 "use client";
 import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
-import clsx from "clsx";
 import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -15,7 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
       <button
         {...props}
         ref={ref}
-        className={clsx(
+        className={cn(
           "inline-flex cursor-pointer items-center justify-center rounded-3xl px-6 py-2 text-center text-[1.06rem] capitalize transition-colors duration-300 select-none",
           variant === "default" &&
             "bg-button-background text-button-foreground",
