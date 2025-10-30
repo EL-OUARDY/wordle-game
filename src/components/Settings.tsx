@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import * as Switch from "@radix-ui/react-switch";
 import Button from "@/components/ui/button";
@@ -13,10 +14,36 @@ import {
 import { languagesList } from "@/components/LanguagesMenu";
 import useStore from "@/hooks/useStore";
 import ColorsGrid from "@/components/ui/colors-grid";
+import { Language, Theme } from "@/types";
+import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+const themes: {
+  name: Theme;
+  color1: string;
+  color2: string;
+  color3: string;
+}[] = [
+  { name: "classic", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+  { name: "coffee", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+  { name: "sakura", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+  { name: "dracula", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+];
 
 function Settings() {
-  const language = useStore((s) => s.language);
+  const settings = useStore((s) => s.settings);
+  const setSettings = useStore((s) => s.setSettings);
 
+  // Persist settings to localStorage whenever they change
+  React.useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("wordle_settings", JSON.stringify(settings));
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [settings]);
   return (
     <div className="settings relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
@@ -24,14 +51,21 @@ function Settings() {
           <label className="font-semibold" htmlFor="default-language">
             Default Language
           </label>
-          <Select value={languagesList.find((l) => l.name === language)?.name}>
+          <Select
+            value={
+              languagesList.find((l) => l.name === settings.language)?.name
+            }
+            onValueChange={(value) =>
+              setSettings({ ...settings, language: value as Language })
+            }
+          >
             <SelectTrigger
               id="default-language"
               className="w-fit gap-1 border-0 px-0"
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="w-fit !min-w-26">
+            <SelectContent className="!min-w-24">
               <SelectGroup className="">
                 {languagesList.map((language, index) => (
                   <SelectItem
@@ -56,47 +90,26 @@ function Settings() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
-              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
-                <ColorsGrid
-                  color1={"#22c55e"}
-                  color2={"#eab308"}
-                  color3={"#9ca3af"}
-                />
-                <span className="flex-1">Classic</span>
-              </div>
-            </div>
-
-            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
-              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
-                <ColorsGrid
-                  color1={"#22c55e"}
-                  color2={"#eab308"}
-                  color3={"#9ca3af"}
-                />
-                <span className="flex-1">Coffee</span>
-              </div>
-            </div>
-            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
-              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
-                <ColorsGrid
-                  color1={"#22c55e"}
-                  color2={"#eab308"}
-                  color3={"#9ca3af"}
-                />
-                <span className="flex-1">Sakura</span>
-              </div>
-            </div>
-            <div className="theme border-key-background hover:bg-tile-background cursor-pointer border py-1">
-              <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
-                <ColorsGrid
-                  color1={"#22c55e"}
-                  color2={"#eab308"}
-                  color3={"#9ca3af"}
-                />
-                <span className="flex-1">Dracula</span>
-              </div>
-            </div>
+            {themes.map((theme, index) => (
+              <motion.div
+                onClick={() => setSettings({ ...settings, theme: theme.name })}
+                key={index}
+                className={cn(
+                  "theme border-key-background hover:bg-tile-background cursor-pointer border py-1",
+                  settings.theme === theme.name && "border-foreground",
+                )}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="mx-auto flex w-3/5 items-center justify-between gap-2">
+                  <ColorsGrid
+                    color1={theme.color1}
+                    color2={theme.color2}
+                    color3={theme.color3}
+                  />
+                  <span className="flex-1 capitalize">{theme.name}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
           <hr className="separator border-key-background mt-2" />
         </div>
@@ -106,6 +119,10 @@ function Settings() {
             High Contrast Mode
           </label>
           <Switch.Root
+            checked={settings.highContrastMode}
+            onCheckedChange={(value) =>
+              setSettings({ ...settings, highContrastMode: value })
+            }
             id="high-contrast-mode"
             className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           >
@@ -118,6 +135,10 @@ function Settings() {
             Onscreen Input Only
           </label>
           <Switch.Root
+            checked={settings.onScreenOnly}
+            onCheckedChange={(value) =>
+              setSettings({ ...settings, onScreenOnly: value })
+            }
             id="onscreen-input-only"
             className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           >
@@ -130,6 +151,10 @@ function Settings() {
             Swap Enter/Backspace
           </label>
           <Switch.Root
+            checked={settings.swapEnterBackspace}
+            onCheckedChange={(value) =>
+              setSettings({ ...settings, swapEnterBackspace: value })
+            }
             id="swap-enter-backspace"
             className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           >
@@ -143,6 +168,10 @@ function Settings() {
               Reduce Motion
             </label>
             <Switch.Root
+              checked={settings.reduceMotion}
+              onCheckedChange={(value) =>
+                setSettings({ ...settings, reduceMotion: value })
+              }
               id="reduce-motion"
               className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >

@@ -3,6 +3,7 @@ import {
   AnimationVariant,
   Language,
   LettersStateMap,
+  Settings,
   UserStats,
 } from "@/types";
 import { create } from "zustand";
@@ -34,6 +35,8 @@ interface IState {
   setUserStats: (stats: UserStats | null) => void;
   wordCreator: string | null;
   setWordCreator: (creator: string | null) => void;
+  settings: Settings;
+  setSettings: (settings: Settings) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -69,6 +72,15 @@ const useStore = create<IState>((set) => ({
   setUserStats: (stats) => set({ userStats: stats }),
   wordCreator: null,
   setWordCreator: (creator) => set({ wordCreator: creator }),
+  settings: {
+    language: "English",
+    theme: "classic",
+    highContrastMode: false,
+    onScreenOnly: false,
+    swapEnterBackspace: false,
+    reduceMotion: false,
+  },
+  setSettings: (settings) => set({ settings: settings }),
 }));
 
 export default useStore;

@@ -29,4 +29,13 @@ export interface UserStats {
   }[];
 }
 
-export type Theme = "classic" | "Coffee" | "Dracula" | "Sakura";
+export type Theme = "classic" | "coffee" | "dracula" | "sakura";
+
+export interface Settings {
+  language: Language;
+  theme: Theme;
+  highContrastMode: boolean;
+  onScreenOnly: boolean;
+  swapEnterBackspace: boolean;
+  reduceMotion: boolean;
+}
