@@ -17,6 +17,7 @@ import ColorsGrid from "@/components/ui/colors-grid";
 import { Language, Theme } from "@/types";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const themes: {
   name: Theme;
@@ -34,6 +35,8 @@ function Settings() {
   const settings = useStore((s) => s.settings);
   const setSettings = useStore((s) => s.setSettings);
 
+  const router = useRouter();
+
   // Persist settings to localStorage whenever they change
   useEffect(() => {
     try {
@@ -44,6 +47,8 @@ function Settings() {
       // ignore storage errors
     }
   }, [settings]);
+
+  if (!settings) return;
 
   return (
     <div className="settings relative flex h-full flex-col gap-4">
@@ -57,9 +62,11 @@ function Settings() {
               languagesList.find((l) => l.name === settings.defaultLanguage)
                 ?.name
             }
-            onValueChange={(value) =>
-              setSettings({ ...settings, defaultLanguage: value as Language })
-            }
+            onValueChange={(value) => {
+              setSettings({ ...settings, defaultLanguage: value as Language });
+              const link = languagesList.find((l) => l.name === value)?.link;
+              if (link) router.push(link);
+            }}
           >
             <SelectTrigger
               id="default-language"

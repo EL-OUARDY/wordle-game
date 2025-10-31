@@ -7,6 +7,7 @@ import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { getTimeDifference, share } from "@/lib/utils";
 import WordService from "@/services/word";
+import { Language } from "@/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -44,7 +45,7 @@ function GameOver() {
     if (isLoading) return;
     setIsLoading(true);
 
-    const word = await WordService.getNewWord(language);
+    const word = await WordService.getNewWord(language as Language);
     if (word && word !== solution) {
       setSolution(word);
       // Reset state

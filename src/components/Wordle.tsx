@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Board from "@/components/board";
-import { Language } from "@/types";
+import { Language, Settings } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
@@ -18,10 +18,21 @@ interface Props {
   className?: string;
 }
 
-function Wordle({ language = "English", className }: Props) {
+const defaultSettings: Settings = {
+  defaultLanguage: "English",
+  theme: "classic",
+  highContrastMode: false,
+  onScreenOnly: false,
+  swapEnterBackspace: false,
+  reduceMotion: false,
+};
+
+function Wordle({ language, className }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const storeLanguage = useStore((s) => s.language);
   const setLanguage = useStore((s) => s.setLanguage);
   const setSolution = useStore((s) => s.setSolution);
+  const settings = useStore((s) => s.settings);
   const setSettings = useStore((s) => s.setSettings);
   const solution = useStore((s) => s.solution);
   const isGameOver = useStore((s) => s.isGameOver);
@@ -30,10 +41,23 @@ function Wordle({ language = "English", className }: Props) {
   const searchParams = useSearchParams();
   const wordId = searchParams.get("w");
 
+  // Reset solution word on first mount
+  useEffect(() => {
+    setSolution(null);
+  }, [setSolution]);
+
   // Set language
   useEffect(() => {
-    setLanguage(language);
-  }, [language, setLanguage]);
+    // From language prop
+    if (language) {
+      setLanguage(language);
+      return;
+    }
+    // From user's settings if prop is not defined
+    if (settings) {
+      setLanguage(settings.defaultLanguage);
+    }
+  }, [language, setLanguage, settings]);
 
   // Load saved settings from localStorage on mount
   useEffect(() => {
@@ -45,22 +69,27 @@ function Wordle({ language = "English", className }: Props) {
         if (parsed && typeof parsed === "object") {
           // parsed is expected to be a full Settings object saved by Settings component
           setSettings(parsed);
+          return;
         }
       }
     } catch {
       // ignore storage / parse errors
     }
+
+    // fallback to default settings
+    setSettings(defaultSettings);
   }, [setSettings]);
 
   // Get initial word when app loads
   useEffect(() => {
+    if (!storeLanguage) return;
+
     if (solution) {
-      setIsLoading(false);
       return;
     }
 
     const getWord = async () => {
-      const word = await WordService.getNewWord(language);
+      const word = await WordService.getNewWord(storeLanguage);
       if (word) {
         setSolution(word);
       }
@@ -81,7 +110,7 @@ function Wordle({ language = "English", className }: Props) {
     } else {
       getWord();
     }
-  }, [language, setSolution, setWordCreator, solution, wordId]);
+  }, [language, setSolution, setWordCreator, solution, storeLanguage, wordId]);
 
   return (
     <div
@@ -116,7 +145,9 @@ function Wordle({ language = "English", className }: Props) {
           <Button
             onClick={async () => {
               setIsLoading(true);
-              const word = await WordService.getNewWord(language);
+              const word = await WordService.getNewWord(
+                storeLanguage as Language,
+              );
               if (word) {
                 setSolution(word);
               }

@@ -27,6 +27,7 @@ import FlagIcon from "@/components/ui/icons/flag";
 import WordService from "@/services/word";
 import LoaderIcon from "@/components/ui/icons/loader";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Language } from "@/types";
 interface Props {
   className?: string;
 }
@@ -124,7 +125,7 @@ function Header({ className }: Props) {
     if (isLoading) return;
     setIsLoading(true);
 
-    const word = await WordService.getNewWord(language);
+    const word = await WordService.getNewWord(language as Language);
     if (word && word !== solution) {
       setSolution(word);
       // Reset state
@@ -249,10 +250,10 @@ function Header({ className }: Props) {
               className="size-12 sm:size-14"
               aria-label="Choose Language"
             >
-              {language !== "English" ? (
-                languagesList.find((l) => l.name === language)?.icon
-              ) : (
+              {!language || language === "English" ? (
                 <GlobeIcon className="size-[1.35rem] sm:size-6" />
+              ) : (
+                languagesList.find((l) => l.name === language)?.icon
               )}
             </Button>
 

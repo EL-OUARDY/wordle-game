@@ -25,8 +25,8 @@ interface IState {
   setLettersStatusMap: (
     updater: LettersStateMap | ((prev: LettersStateMap) => LettersStateMap),
   ) => void;
-  language: Language;
-  setLanguage: (language: Language) => void;
+  language: Language | null;
+  setLanguage: (language: Language | null) => void;
   startTime: Date;
   setStartTime: (date: Date) => void;
   animationVariant: AnimationVariant;
@@ -35,8 +35,8 @@ interface IState {
   setUserStats: (stats: UserStats | null) => void;
   wordCreator: string | null;
   setWordCreator: (creator: string | null) => void;
-  settings: Settings;
-  setSettings: (settings: Settings) => void;
+  settings: Settings | null;
+  setSettings: (settings: Settings | null) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -62,7 +62,7 @@ const useStore = create<IState>((set) => ({
             )
           : updater,
     })),
-  language: "English",
+  language: null,
   setLanguage: (language) => set({ language: language }),
   startTime: new Date(),
   setStartTime: (date) => set({ startTime: date }),
@@ -72,14 +72,7 @@ const useStore = create<IState>((set) => ({
   setUserStats: (stats) => set({ userStats: stats }),
   wordCreator: null,
   setWordCreator: (creator) => set({ wordCreator: creator }),
-  settings: {
-    defaultLanguage: "English",
-    theme: "classic",
-    highContrastMode: false,
-    onScreenOnly: false,
-    swapEnterBackspace: false,
-    reduceMotion: false,
-  },
+  settings: null,
   setSettings: (settings) => set({ settings: settings }),
 }));
 

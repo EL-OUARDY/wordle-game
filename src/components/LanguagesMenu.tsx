@@ -26,7 +26,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "English",
     displayName: "English",
-    link: "/",
+    link: "english",
     icon: <UKFlagIcon className="size-5" />,
   },
   {
