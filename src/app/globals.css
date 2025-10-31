@@ -116,12 +116,16 @@
   --sb-size: 5px;
 }
 
-
 .high-contrast {
   --correct: #f5793a;
   --present: #85c0f9;
-  --absent: #787c7e;
-  --tile-fourground: #181818;
+}
+
+.high-contrast .tile.bg-correct,
+.high-contrast .tile.bg-present,
+.high-contrast .key.bg-correct,
+.high-contrast .key.bg-present {
+  --tile-foreground: #181818;
 }
 
 @theme inline {

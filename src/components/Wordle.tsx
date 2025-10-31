@@ -137,6 +137,7 @@ function Wordle({ language, className }: Props) {
       className={clsx(
         className,
         "flex size-full flex-1 flex-col items-center justify-between gap-[10px]",
+        settings?.highContrastMode && "high-contrast",
       )}
     >
       {/* Game is loaded */}

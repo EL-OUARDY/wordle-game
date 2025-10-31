@@ -297,7 +297,7 @@ function Keyboard({ className }: Props) {
               }}
               className={clsx(
                 keyClasses,
-                "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               role="button"
               aria-label={`add ${key}`}
@@ -332,7 +332,7 @@ function Keyboard({ className }: Props) {
               }}
               className={clsx(
                 keyClasses,
-                "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               role="button"
               aria-label={`add ${key}`}
@@ -353,7 +353,7 @@ function Keyboard({ className }: Props) {
           key={"enter" + pressedKey || ""}
           tabIndex={-1}
           onClick={submiGuess}
-          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
+          className="key bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
           role="button"
           aria-label={englishKeys.controls.enter}
           whileTap={{ scale: 0.9 }}
@@ -380,7 +380,7 @@ function Keyboard({ className }: Props) {
               }}
               className={clsx(
                 keyClasses,
-                "flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
               )}
               role="button"
               aria-label={`add ${key}`}
@@ -401,7 +401,7 @@ function Keyboard({ className }: Props) {
             setCurrentGuess(currentGuess.slice(0, -1));
             setAnimationVariant("delete");
           }}
-          className="bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
+          className="key bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
           role="button"
           aria-label={englishKeys.controls.delete}
           whileTap={{ scale: 0.9 }}
