@@ -189,6 +189,9 @@ function Keyboard({ className }: Props) {
     const handleTyping = async (e: KeyboardEvent) => {
       const char = e.key;
 
+      // OnScreen only setting option is turned on
+      if (settings?.onScreenOnly) return;
+
       // Typing is turned off
       if (blockTypingRef.current) return;
 
@@ -248,6 +251,7 @@ function Keyboard({ className }: Props) {
     isSubmitting,
     setAnimationVariant,
     setCurrentGuess,
+    settings?.onScreenOnly,
     submiGuess,
     updatePressedKey,
   ]);
