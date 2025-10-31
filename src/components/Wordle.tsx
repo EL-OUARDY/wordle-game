@@ -10,7 +10,7 @@ import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import GamepadIcon from "@/components/ui/icons/gamepad";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CreateService from "@/services/create";
 
 interface Props {
@@ -38,6 +38,7 @@ function Wordle({ language, className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setWordCreator = useStore((s) => s.setWordCreator);
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const wordId = searchParams.get("w");
 
@@ -120,6 +121,16 @@ function Wordle({ language, className }: Props) {
     storeLanguage,
     wordId,
   ]);
+
+  // Remove wordId from the URL if exists (In case of custom wordle)
+  useEffect(() => {
+    if (!isGameOver) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("w");
+    router.replace(`${window.location.pathname}?${params.toString()}`, {
+      scroll: false,
+    });
+  }, [isGameOver, router, searchParams]);
 
   return (
     <div

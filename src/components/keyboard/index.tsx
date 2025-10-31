@@ -8,7 +8,7 @@ import clsx from "clsx";
 import WordService from "@/services/word";
 import { motion } from "motion/react";
 import { isValidLetter, sleep } from "@/lib/utils";
-import { LettersStateMap } from "@/types";
+import { Language, LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
 import useAuth from "@/hooks/useAuth";
 
@@ -131,7 +131,7 @@ function Keyboard({ className }: Props) {
     // and exists in the dictionary
     const isValid =
       previousSubmittedWrongGuess.current !== currentGuess &&
-      (await WordService.isValidWord(currentGuess, language));
+      (await WordService.isValidWord(currentGuess, language as Language));
     if (!isValid) {
       setIsSubmitting(false);
       // Shake line animation
