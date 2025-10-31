@@ -10,7 +10,7 @@ import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
 import LoaderIcon from "@/components/ui/icons/loader";
 import GamepadIcon from "@/components/ui/icons/gamepad";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import CreateService from "@/services/create";
 
 interface Props {
@@ -27,7 +27,6 @@ function Wordle({ language = "English", className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setWordCreator = useStore((s) => s.setWordCreator);
 
-  const router = useRouter();
   const searchParams = useSearchParams();
   const wordId = searchParams.get("w");
 
@@ -75,12 +74,6 @@ function Wordle({ language = "English", className }: Props) {
         setWordCreator(result.creator || null);
       }
       setIsLoading(false);
-      // Remove wordId from the URL
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete("w");
-      router.replace(`${window.location.pathname}?${params.toString()}`, {
-        scroll: false,
-      });
     };
 
     if (wordId) {
@@ -88,15 +81,7 @@ function Wordle({ language = "English", className }: Props) {
     } else {
       getWord();
     }
-  }, [
-    language,
-    router,
-    searchParams,
-    setSolution,
-    setWordCreator,
-    solution,
-    wordId,
-  ]);
+  }, [language, setSolution, setWordCreator, solution, wordId]);
 
   return (
     <div

@@ -9,6 +9,7 @@ import { getTimeDifference, share } from "@/lib/utils";
 import WordService from "@/services/word";
 import clsx from "clsx";
 import { motion } from "motion/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 function GameOver() {
@@ -36,6 +37,9 @@ function GameOver() {
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const newGame = useCallback(async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -55,9 +59,18 @@ function GameOver() {
       setWordCreator(null);
     }
     setIsLoading(false);
+
+    // In case of custom wordle: remove wordId from the URL
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("w");
+    router.replace(`${window.location.pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }, [
     isLoading,
     language,
+    router,
+    searchParams,
     setAnimationVariant,
     setCurrentGuess,
     setCurrentGuessIndex,

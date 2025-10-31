@@ -26,6 +26,7 @@ import PlusIcon from "@/components/ui/icons/plus";
 import FlagIcon from "@/components/ui/icons/flag";
 import WordService from "@/services/word";
 import LoaderIcon from "@/components/ui/icons/loader";
+import { useRouter, useSearchParams } from "next/navigation";
 interface Props {
   className?: string;
 }
@@ -63,6 +64,9 @@ function Header({ className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { user } = useAuth();
 
@@ -135,9 +139,18 @@ function Header({ className }: Props) {
       setWordCreator(null);
     }
     setIsLoading(false);
+
+    // In case of custom wordle: remove wordId from the URL
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("w");
+    router.replace(`${window.location.pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   }, [
     isLoading,
     language,
+    router,
+    searchParams,
     setAnimationVariant,
     setCurrentGuess,
     setCurrentGuessIndex,
