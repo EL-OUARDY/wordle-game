@@ -16,7 +16,7 @@ interface IState {
   currentGuessIndex: number;
   setCurrentGuessIndex: (index: number) => void;
   solution: string | null;
-  setSolution: (solution: string) => void;
+  setSolution: (solution: string | null) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
   isSubmitting: boolean;
