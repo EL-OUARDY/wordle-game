@@ -73,7 +73,7 @@ const useStore = create<IState>((set) => ({
   wordCreator: null,
   setWordCreator: (creator) => set({ wordCreator: creator }),
   settings: {
-    language: "English",
+    defaultLanguage: "English",
     theme: "classic",
     highContrastMode: false,
     onScreenOnly: false,

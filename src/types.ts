@@ -32,7 +32,7 @@ export interface UserStats {
 export type Theme = "classic" | "coffee" | "dracula" | "sakura";
 
 export interface Settings {
-  language: Language;
+  defaultLanguage: Language;
   theme: Theme;
   highContrastMode: boolean;
   onScreenOnly: boolean;

@@ -54,10 +54,11 @@ function Settings() {
           </label>
           <Select
             value={
-              languagesList.find((l) => l.name === settings.language)?.name
+              languagesList.find((l) => l.name === settings.defaultLanguage)
+                ?.name
             }
             onValueChange={(value) =>
-              setSettings({ ...settings, language: value as Language })
+              setSettings({ ...settings, defaultLanguage: value as Language })
             }
           >
             <SelectTrigger
