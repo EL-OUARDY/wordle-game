@@ -37,6 +37,7 @@ function Keyboard({ className }: Props) {
     absent: [],
   });
   const setUserStats = useStore((s) => s.setUserStats);
+  const settings = useStore((s) => s.settings);
 
   const { user } = useAuth();
 
@@ -346,14 +347,20 @@ function Keyboard({ className }: Props) {
         })}
         <div className="flex-[0.5]"></div>
       </div>
+
       {/* Third row */}
-      <div className="row flex w-full [touch-action:manipulation] gap-1">
+      <div
+        className={clsx(
+          "row flex w-full [touch-action:manipulation] gap-1",
+          settings?.swapEnterBackspace && "flex-row-reverse",
+        )}
+      >
         {/* Enter button */}
         <motion.div
           key={"enter" + pressedKey || ""}
           tabIndex={-1}
           onClick={submiGuess}
-          className="key bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
+          className="key bg-key-background flex h-[58px] flex-[1.4] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
           role="button"
           aria-label={englishKeys.controls.enter}
           whileTap={{ scale: 0.9 }}
@@ -362,36 +369,40 @@ function Keyboard({ className }: Props) {
         >
           {englishKeys.controls.enter}
         </motion.div>
-        {englishKeys.row3.map((key, i) => {
-          let keyClasses = "";
-          if (lettersStatusMap.correct.includes(key))
-            keyClasses = "bg-correct text-tile-foreground";
-          else if (lettersStatusMap.absent.includes(key))
-            keyClasses = "bg-absent text-tile-foreground";
-          else if (lettersStatusMap.present.includes(key))
-            keyClasses = "bg-present text-tile-foreground";
-          else keyClasses = "bg-key-background";
-          return (
-            <motion.div
-              key={i + (pressedKey || "")}
-              tabIndex={-1}
-              onClick={() => {
-                onScreenKeyClick(key);
-              }}
-              className={clsx(
-                keyClasses,
-                "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
-              )}
-              role="button"
-              aria-label={`add ${key}`}
-              whileTap={{ scale: 0.9 }}
-              animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              {key}
-            </motion.div>
-          );
-        })}
+
+        <div className="flex flex-7 gap-1">
+          {englishKeys.row3.map((key, i) => {
+            let keyClasses = "";
+            if (lettersStatusMap.correct.includes(key))
+              keyClasses = "bg-correct text-tile-foreground";
+            else if (lettersStatusMap.absent.includes(key))
+              keyClasses = "bg-absent text-tile-foreground";
+            else if (lettersStatusMap.present.includes(key))
+              keyClasses = "bg-present text-tile-foreground";
+            else keyClasses = "bg-key-background";
+            return (
+              <motion.div
+                key={i + (pressedKey || "")}
+                tabIndex={-1}
+                onClick={() => {
+                  onScreenKeyClick(key);
+                }}
+                className={clsx(
+                  keyClasses,
+                  "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                )}
+                role="button"
+                aria-label={`add ${key}`}
+                whileTap={{ scale: 0.9 }}
+                animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {key}
+              </motion.div>
+            );
+          })}
+        </div>
+
         {/* Backspace button */}
         <motion.div
           key={"backspace" + pressedKey || ""}
@@ -401,14 +412,19 @@ function Keyboard({ className }: Props) {
             setCurrentGuess(currentGuess.slice(0, -1));
             setAnimationVariant("delete");
           }}
-          className="key bg-key-background flex h-[58px] flex-[1.5] cursor-pointer items-center justify-center rounded-sm text-xs"
+          className="key bg-key-background flex h-[58px] flex-[1.4] cursor-pointer items-center justify-center rounded-sm text-xs"
           role="button"
           aria-label={englishKeys.controls.delete}
           whileTap={{ scale: 0.9 }}
           animate={{ scale: pressedKey === "Backspace" ? [0.9, 1] : 1 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <BackspaceIcon className="size-[1.4rem]" />
+          <BackspaceIcon
+            className={clsx(
+              "size-[1.4rem]",
+              language === "Arabic" && "scale-x-[-1]", // RTL
+            )}
+          />
         </motion.div>
       </div>
     </motion.div>
