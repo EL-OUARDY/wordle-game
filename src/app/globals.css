@@ -21,6 +21,102 @@
   --sb-size: 5px;
 }
 
+.night {
+  --background: #181818;
+  --foreground: #f5f5f5;
+  --tile-background: #242424;
+  --tile-foreground: #ffffff;
+  --present: #c9b458;
+  --correct: #6aaa64;
+  --absent: #787c7e;
+  --muted-background: #1f1f1f;
+  --muted-foreground: #a0a0a0;
+  --key-background: #3a3a3c;
+  --button-background: #f5f5f5;
+  --button-foreground: #181818;
+
+  --sb-track-color: #2a2a2a;
+  --sb-thumb-color: #787c7e;
+  --sb-size: 5px;
+}
+
+.coffee {
+  --background: #f7f3ef;
+  --foreground: #3b2f2f;
+  --tile-background: #e0d3c0;
+  --tile-foreground: #ffffff;
+  --present: #d6b857;
+  --correct: #72965f;
+  --absent: #8b8078;
+  --muted-background: #ede4da;
+  --muted-foreground: #6b5c4b;
+  --key-background: #d0bfae;
+  --button-background: #6b4f4f;
+  --button-foreground: #ffffff;
+
+  --sb-track-color: #d0bfae;
+  --sb-thumb-color: #8b5e34;
+  --sb-size: 5px;
+}
+
+.sakura {
+  --background: #fff5f7;
+  --foreground: #2b2b2b;
+  --tile-background: #ffe4ec;
+  --tile-foreground: #fff5f7;
+  --present: #d7b85c;
+  --correct: #62ac62;
+  --absent: #8a8f99;
+  --muted-background: #ffe4ec;
+  --muted-foreground: #6d6d6d;
+  --key-background: #f5c2cb;
+  --button-background: #ff5c8a;
+  --button-foreground: #ffffff;
+
+  --sb-track-color: #f8cdd7;
+  --sb-thumb-color: #b95873;
+  --sb-size: 5px;
+}
+
+.dracula {
+  --background: #282a36;
+  --foreground: #f8f8f2;
+  --tile-background: #44475a;
+  --tile-foreground: #f8f8f2;
+  --present: #c9b458;
+  --correct: #6aaa64;
+  --absent: #4b4f58;
+  --muted-background: #343746;
+  --muted-foreground: #bfbfbf;
+  --key-background: #6272a4;
+  --button-background: #8d5fcd;
+  --button-foreground: #f8f8f2;
+
+  --sb-track-color: #44475a;
+  --sb-thumb-color: #bd93f9;
+  --sb-size: 5px;
+}
+
+.slate {
+  --background: #2e3440;
+  --foreground: #eceff4;
+  --tile-background: #3b4252;
+  --tile-foreground: #eceff4;
+  --present: #c9b458;
+  --correct: #6aaa64;
+  --absent: #787c7e;
+  --muted-background: #3b4252;
+  --muted-foreground: #d8dee9;
+  --key-background: #434c5e;
+  --button-background: #4c566a;
+  --button-foreground: #eceff4;
+
+  --sb-track-color: #434c5e;
+  --sb-thumb-color: #88c0d0;
+  --sb-size: 5px;
+}
+
+
 .high-contrast {
   --correct: #f5793a;
   --present: #85c0f9;

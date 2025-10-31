@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StoreDebug from "@/components/StoreDebug";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -38,10 +37,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Theme script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  let theme = "classic"
+                  const raw = localStorage.getItem("wordle_settings");
+                  if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed === "object") {
+                      theme = parsed.theme;
+                    }
+                  }
+                  document.documentElement.classList.add(theme);
+                } catch (_) {}
+              })()
+            `,
+          }}
+        />
+      </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
-          <StoreDebug property="language" />
           <Header />
           {children}
           <Footer />

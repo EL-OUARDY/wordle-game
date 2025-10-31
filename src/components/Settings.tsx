@@ -26,9 +26,16 @@ const themes: {
   color3: string;
 }[] = [
   { name: "classic", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
-  { name: "coffee", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
-  { name: "sakura", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
-  { name: "dracula", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+  { name: "night", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
+  { name: "coffee", color1: "#6b5c4b", color2: "#d0bfae", color3: "#8b8078" },
+  { name: "sakura", color1: "#ff5c8a", color2: "#f5c2cb", color3: "#8a8f99" },
+  {
+    name: "slate",
+    color1: "#2e3440",
+    color2: "#434c5e",
+    color3: "#787c7e",
+  },
+  { name: "dracula", color1: "#8d5fcd", color2: "#6272a4", color3: "#bfbfbf" },
 ];
 
 function Settings() {
@@ -47,6 +54,11 @@ function Settings() {
       // ignore storage errors
     }
   }, [settings]);
+
+  const applyTheme = (theme: Theme) => {
+    document.documentElement.classList.remove(...themes.map((t) => t.name));
+    document.documentElement.classList.add(theme);
+  };
 
   if (!settings) return;
 
@@ -101,11 +113,14 @@ function Settings() {
           <div className="grid grid-cols-2 gap-2">
             {themes.map((theme, index) => (
               <motion.div
-                onClick={() => setSettings({ ...settings, theme: theme.name })}
+                onClick={() => {
+                  setSettings({ ...settings, theme: theme.name });
+                  applyTheme(theme.name);
+                }}
                 key={index}
                 className={cn(
                   "theme border-key-background hover:bg-tile-background cursor-pointer border py-1",
-                  settings.theme === theme.name && "border-foreground",
+                  settings.theme === theme.name && "bg-tile-background",
                 )}
                 whileTap={{ scale: 0.95 }}
               >
@@ -187,9 +202,6 @@ function Settings() {
               <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
             </Switch.Root>
           </div>
-          <p className="text-muted-foreground">
-            Turn off animations for a simpler, distraction-free experience.
-          </p>
         </div>
       </div>
 

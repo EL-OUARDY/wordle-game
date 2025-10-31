@@ -29,7 +29,13 @@ export interface UserStats {
   }[];
 }
 
-export type Theme = "classic" | "coffee" | "dracula" | "sakura";
+export type Theme =
+  | "classic"
+  | "night"
+  | "coffee"
+  | "sakura"
+  | "dracula"
+  | "slate";
 
 export interface Settings {
   defaultLanguage: Language;

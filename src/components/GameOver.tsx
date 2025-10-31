@@ -131,10 +131,7 @@ function GameOver() {
             <Button
               onClick={newGame}
               variant="default"
-              className={clsx(
-                isLoading && "text-key-background",
-                "flex items-center gap-2",
-              )}
+              className={clsx("flex items-center gap-2")}
               aria-label="New game"
               whileTap={{ scale: 0.95 }}
             >
@@ -191,10 +188,7 @@ function GameOver() {
             <Button
               onClick={newGame}
               variant="default"
-              className={clsx(
-                isLoading && "text-key-background",
-                "flex items-center gap-2",
-              )}
+              className={clsx("flex items-center gap-2")}
               aria-label="New game"
               whileTap={{ scale: 0.95 }}
             >

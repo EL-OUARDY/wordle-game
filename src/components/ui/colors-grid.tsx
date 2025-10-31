@@ -10,16 +10,10 @@ interface Props {
 
 function ColorsGrid({ className, color1, color2, color3 }: Props) {
   return (
-    <div className={cn("grid size-4 grid-cols-3 gap-0.5", className)}>
+    <div className={cn("grid size-4 grid-rows-3 gap-0.5", className)}>
       <div className="rounded-full" style={{ backgroundColor: color1 }} />
       <div className="rounded-full" style={{ backgroundColor: color2 }} />
       <div className="rounded-full" style={{ backgroundColor: color3 }} />
-      <div className="rounded-full" style={{ backgroundColor: color1 }} />
-      <div className="rounded-full" style={{ backgroundColor: color1 }} />
-      <div className="rounded-full" style={{ backgroundColor: color3 }} />
-      <div className="rounded-full" style={{ backgroundColor: color1 }} />
-      <div className="rounded-full" style={{ backgroundColor: color1 }} />
-      <div className="rounded-full" style={{ backgroundColor: color1 }} />
     </div>
   );
 }
