@@ -13,7 +13,7 @@ import Settings from "@/components/Settings";
 import HowToPlay from "@/components/HowToPlay";
 import UserStats from "@/components/UserStats";
 import SideBar from "@/components/Sidebar";
-import { APP_NAME, NUMBER_OF_GUESSES } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import LanguagesMenu, { languagesList } from "@/components/LanguagesMenu";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import StatsService from "@/services/stats";
@@ -24,9 +24,6 @@ import LogoIcon from "@/components/ui/icons/logo";
 import Create from "@/components/Create";
 import PlusIcon from "@/components/ui/icons/plus";
 import FlagIcon from "@/components/ui/icons/flag";
-import WordService from "@/services/word";
-import LoaderIcon from "@/components/ui/icons/loader";
-import { Language } from "@/types";
 interface Props {
   className?: string;
 }
@@ -51,19 +48,7 @@ function Header({ className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const language = useStore((s) => s.language);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
-  const setCurrentGuess = useStore((s) => s.setCurrentGuess);
-  const setGuesses = useStore((s) => s.setGuesses);
-  const solution = useStore((s) => s.solution);
-  const setSolution = useStore((s) => s.setSolution);
-  const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
-  const setStartTime = useStore((s) => s.setStartTime);
-  const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
-  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
-  const setIsSubmitting = useStore((s) => s.setIsSubmitting);
-  const setWordCreator = useStore((s) => s.setWordCreator);
   const isGameOver = useStore((s) => s.isGameOver);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -116,41 +101,6 @@ function Header({ className }: Props) {
       window.dispatchEvent(new CustomEvent("blockTyping", { detail: false }));
     };
   }, [isMenuOpen]);
-
-  const newGame = useCallback(async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const word = await WordService.getNewWord(language as Language);
-    if (word && word !== solution) {
-      setSolution(word);
-      // Reset state
-      setIsGameOver(false);
-      setGuesses(Array(NUMBER_OF_GUESSES).fill(null));
-      setCurrentGuess("");
-      setCurrentGuessIndex(0);
-      setLettersStatusMap({ correct: [], present: [], absent: [] });
-      setStartTime(new Date());
-      setAnimationVariant("new_game");
-      setIsSubmitting(false);
-      setWordCreator(null);
-    }
-    setIsLoading(false);
-  }, [
-    isLoading,
-    language,
-    setAnimationVariant,
-    setCurrentGuess,
-    setCurrentGuessIndex,
-    setGuesses,
-    setIsGameOver,
-    setIsSubmitting,
-    setLettersStatusMap,
-    setSolution,
-    setStartTime,
-    setWordCreator,
-    solution,
-  ]);
 
   return (
     <motion.header
@@ -216,16 +166,12 @@ function Header({ className }: Props) {
           {/* Give up */}
           {currentGuessIndex > 0 && !isGameOver && (
             <Button
-              onClick={newGame}
+              onClick={() => setIsGameOver(true)}
               variant="icon"
               className="size-12 sm:size-14"
               aria-label="Give up"
             >
-              {isLoading ? (
-                <LoaderIcon className="size-[1.35rem] sm:size-6" />
-              ) : (
-                <FlagIcon className="size-[1.35rem] sm:size-6" />
-              )}
+              <FlagIcon className="size-[1.35rem] sm:size-6" />
             </Button>
           )}
 
