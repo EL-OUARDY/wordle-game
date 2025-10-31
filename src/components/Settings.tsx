@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
 import * as Switch from "@radix-ui/react-switch";
 import Button from "@/components/ui/button";
 import GamepadIcon from "@/components/ui/icons/gamepad";
@@ -35,7 +35,7 @@ function Settings() {
   const setSettings = useStore((s) => s.setSettings);
 
   // Persist settings to localStorage whenever they change
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       if (typeof window !== "undefined") {
         localStorage.setItem("wordle_settings", JSON.stringify(settings));
@@ -44,6 +44,7 @@ function Settings() {
       // ignore storage errors
     }
   }, [settings]);
+
   return (
     <div className="settings relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">

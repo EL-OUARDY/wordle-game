@@ -22,6 +22,7 @@ function Wordle({ language = "English", className }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const setLanguage = useStore((s) => s.setLanguage);
   const setSolution = useStore((s) => s.setSolution);
+  const setSettings = useStore((s) => s.setSettings);
   const solution = useStore((s) => s.solution);
   const isGameOver = useStore((s) => s.isGameOver);
   const setWordCreator = useStore((s) => s.setWordCreator);
@@ -34,6 +35,23 @@ function Wordle({ language = "English", className }: Props) {
   useEffect(() => {
     setLanguage(language);
   }, [language, setLanguage]);
+
+  // Load saved settings from localStorage on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem("wordle_settings");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          // parsed is expected to be a full Settings object saved by Settings component
+          setSettings(parsed);
+        }
+      }
+    } catch {
+      // ignore storage / parse errors
+    }
+  }, [setSettings]);
 
   // Get initial word when app loads
   useEffect(() => {

@@ -7,7 +7,7 @@ const WordService = {
     // ];
     // console.log("📌 ", word);
     // return word;
-    const res = await fetch(`/api/word?language${language}`);
+    const res = await fetch(`/api/word?language=${language}`);
 
     const data = await res.json();
     console.log("📌 ", data.word); //////
