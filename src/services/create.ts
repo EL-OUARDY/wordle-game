@@ -1,18 +1,25 @@
 import { db } from "@/lib/firebase";
+import { Language } from "@/types";
 import { collection, addDoc, doc, getDoc, Timestamp } from "firebase/firestore";
 
 const customWordsRef = collection(db, "customWordles");
 
 export interface CustomWord {
   word: string;
+  language: Language;
   creator?: string | null;
   createdAt: Timestamp;
 }
 
 const CreateService = {
-  createCustomWord: async (word: string, creator?: string) => {
+  createCustomWord: async (
+    word: string,
+    language: Language,
+    creator?: string,
+  ) => {
     const docData: CustomWord = {
       word: word.toLowerCase(),
+      language: language,
       creator: creator || null,
       createdAt: Timestamp.now(),
     };

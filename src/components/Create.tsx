@@ -4,14 +4,17 @@ import Check from "@/components/ui/icons/check";
 import Copy from "@/components/ui/icons/copy";
 import LoaderIcon from "@/components/ui/icons/loader";
 import LogoIcon from "@/components/ui/icons/logo";
+import useStore from "@/hooks/useStore";
 import { WORD_LENGTH } from "@/lib/constants";
 import { isValidWord, sleep } from "@/lib/utils";
 import CreateService from "@/services/create";
+import { Language } from "@/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import React, { useState } from "react";
 
 function Create() {
+  const language = useStore((s) => s.language);
   const [word, setWord] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [wordId, setWordId] = useState<string>("");
@@ -34,6 +37,7 @@ function Create() {
 
     const wordId = await CreateService.createCustomWord(
       word.toLowerCase(),
+      language as Language,
       name,
     );
     if (wordId) {

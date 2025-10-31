@@ -100,6 +100,7 @@ function Wordle({ language, className }: Props) {
       const result = await CreateService.getCustomWord(wordId);
       if (result) {
         setSolution(result.word.toLowerCase());
+        setLanguage(result.language);
         setWordCreator(result.creator || null);
       }
       setIsLoading(false);
@@ -110,7 +111,15 @@ function Wordle({ language, className }: Props) {
     } else {
       getWord();
     }
-  }, [language, setSolution, setWordCreator, solution, storeLanguage, wordId]);
+  }, [
+    language,
+    setLanguage,
+    setSolution,
+    setWordCreator,
+    solution,
+    storeLanguage,
+    wordId,
+  ]);
 
   return (
     <div
