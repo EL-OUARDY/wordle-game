@@ -1,6 +1,9 @@
 import { Language } from "@/types";
 
 export const APP_NAME = "Wordle";
+export const APP_LINK = "https://poly-wordle.vercel.app/";
+export const EMAIL = "contact@wadi3.codes";
+export const BMC_LINK = "";
 
 export const WORD_LENGTH = 5;
 export const NUMBER_OF_GUESSES = 6;
@@ -11,6 +14,3 @@ export const LANGUAGES: Language[] = [
   "German",
   "Arabic",
 ];
-
-export const EMAIL = "contact@wadi3.codes";
-export const BMC_LINK = "";

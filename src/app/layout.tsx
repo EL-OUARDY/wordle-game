@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StoreDebug from "@/components/StoreDebug";
+import { APP_LINK, APP_NAME } from "@/lib/constants";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -28,8 +29,34 @@ export const futuraFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Wordle Game",
-  description: "Multi language Wordle game",
+  title: `${APP_NAME} - Play Wordle in Any Language`,
+  description:
+    "Play Wordle for free, in your language, with no ads — unlimited fun, no limits! Track stats, compete, and enjoy multilingual word guessing.",
+  keywords: ["Wordle", APP_NAME, "Game", "Languages", "Multilingual Wordle"],
+  openGraph: {
+    title: `${APP_NAME} - Multilingual Wordle Game`,
+    description:
+      "Play Wordle for free in English, French, Arabic, and more. No ads, just fun!",
+    url: APP_LINK,
+    siteName: APP_NAME,
+    images: [
+      {
+        url: "/img/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${APP_NAME} preview`,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${APP_NAME} - Play Wordle in Any Language`,
+    description:
+      "Free, ad-free Wordle in multiple languages. Play now and test your vocabulary!",
+    images: ["/img/og-image.png"],
+  },
 };
 
 export default function RootLayout({
