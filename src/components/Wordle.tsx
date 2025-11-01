@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Board from "@/components/board";
-import { Language, Settings } from "@/types";
+import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import WordService from "@/services/word";
@@ -13,20 +13,12 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 import { useRouter, useSearchParams } from "next/navigation";
 import CreateService from "@/services/create";
 import { MotionConfig } from "motion/react";
+import { defaultSettings } from "@/components/Settings";
 
 interface Props {
   language?: Language;
   className?: string;
 }
-
-const defaultSettings: Settings = {
-  defaultLanguage: "English",
-  theme: "classic",
-  highContrastMode: false,
-  onScreenOnly: false,
-  swapEnterBackspace: false,
-  reduceMotion: false,
-};
 
 function Wordle({ language, className }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,6 +56,7 @@ function Wordle({ language, className }: Props) {
 
   // Load saved settings from localStorage on mount
   useEffect(() => {
+    if (settings) return;
     if (typeof window === "undefined") return;
     try {
       const raw = localStorage.getItem("wordle_settings");
@@ -81,7 +74,7 @@ function Wordle({ language, className }: Props) {
 
     // fallback to default settings
     setSettings(defaultSettings);
-  }, [setSettings]);
+  }, [setSettings, settings]);
 
   // Get initial word when app loads
   useEffect(() => {

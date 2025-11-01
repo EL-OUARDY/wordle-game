@@ -14,7 +14,7 @@ import {
 import { languagesList } from "@/components/LanguagesMenu";
 import useStore from "@/hooks/useStore";
 import ColorsGrid from "@/components/ui/colors-grid";
-import { Language, Theme } from "@/types";
+import { GameSettings, Language, Theme } from "@/types";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -38,14 +38,46 @@ const themes: {
   { name: "dracula", color1: "#8d5fcd", color2: "#6272a4", color3: "#bfbfbf" },
 ];
 
+export const defaultSettings: GameSettings = {
+  defaultLanguage: "English",
+  theme: "classic",
+  highContrastMode: false,
+  onScreenOnly: false,
+  swapEnterBackspace: false,
+  reduceMotion: false,
+};
+
 function Settings() {
   const settings = useStore((s) => s.settings);
   const setSettings = useStore((s) => s.setSettings);
 
   const router = useRouter();
 
+  // Load saved settings from localStorage on mount
+  useEffect(() => {
+    if (settings) return;
+    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem("wordle_settings");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          // parsed is expected to be a full Settings object saved by Settings component
+          setSettings(parsed);
+          return;
+        }
+      }
+    } catch {
+      // ignore storage / parse errors
+    }
+
+    // fallback to default settings
+    setSettings(defaultSettings);
+  }, [setSettings, settings]);
+
   // Persist settings to localStorage whenever they change
   useEffect(() => {
+    if (!settings) return;
     try {
       if (typeof window !== "undefined") {
         localStorage.setItem("wordle_settings", JSON.stringify(settings));

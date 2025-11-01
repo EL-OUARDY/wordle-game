@@ -37,7 +37,7 @@ export type Theme =
   | "dracula"
   | "slate";
 
-export interface Settings {
+export interface GameSettings {
   defaultLanguage: Language;
   theme: Theme;
   highContrastMode: boolean;

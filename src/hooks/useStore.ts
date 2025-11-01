@@ -4,7 +4,7 @@ import {
   Language,
   LettersStateMap,
   LetterStatus,
-  Settings,
+  GameSettings,
   UserStats,
 } from "@/types";
 import { create } from "zustand";
@@ -42,8 +42,8 @@ interface IState {
   setUserStats: (stats: UserStats | null) => void;
   wordCreator: string | null;
   setWordCreator: (creator: string | null) => void;
-  settings: Settings | null;
-  setSettings: (settings: Settings | null) => void;
+  settings: GameSettings | null;
+  setSettings: (settings: GameSettings | null) => void;
   resetGame: () => void;
 }
 
