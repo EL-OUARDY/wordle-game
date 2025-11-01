@@ -62,6 +62,7 @@ function Header({ className }: Props) {
       title: APP_NAME,
       content: <SideBar onClose={() => setIsMenuOpen(false)} />,
       direction: "left",
+      showTitle: false,
     },
     statistics: {
       title: "Statistics",

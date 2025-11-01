@@ -31,6 +31,10 @@ function SideBar({ onClose }: Props) {
   return (
     <div className="sidebar relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
+        <div className="border-key-background flex items-center gap-2 border-b pb-4">
+          <LogoIcon className="size-[1.35rem] sm:size-6" />
+          <h2 className="text-2xl font-semibold">{APP_NAME}</h2>
+        </div>
         <p className="text-lg">
           Play Wordle for free, in your language, with no ads — unlimited fun,
           no limits!
