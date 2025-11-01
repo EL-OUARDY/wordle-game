@@ -154,6 +154,7 @@ function Keyboard({ className }: Props) {
       setAnimationVariant("reveal");
       // Wait (1.25 second) for reveal animation to finish
       if (!settings?.reduceMotion) await sleep(1500);
+      else await sleep(0);
 
       // Check if out of guesses
       if (currentGuessIndex === NUMBER_OF_GUESSES - 1) {
