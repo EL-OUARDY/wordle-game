@@ -22,6 +22,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
+  const settings = useStore((s) => s.settings);
 
   const controls = useAnimation();
 
@@ -103,7 +104,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         resetAnimationVariant();
       }
 
-      if (animationVariant === "new_game") {
+      if (!settings?.reduceMotion && animationVariant === "new_game") {
         await controls.start(animationVariant);
         resetAnimationVariant();
       }
@@ -127,6 +128,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
     currentGuessIndex,
     lineIndex,
     setAnimationVariant,
+    settings?.reduceMotion,
     updateLetterStatus,
   ]);
 

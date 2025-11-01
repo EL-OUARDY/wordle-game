@@ -12,6 +12,7 @@ import LoaderIcon from "@/components/ui/icons/loader";
 import GamepadIcon from "@/components/ui/icons/gamepad";
 import { useRouter, useSearchParams } from "next/navigation";
 import CreateService from "@/services/create";
+import { MotionConfig } from "motion/react";
 
 interface Props {
   language?: Language;
@@ -133,69 +134,64 @@ function Wordle({ language, className }: Props) {
     });
   }, [isGameOver, router, searchParams]);
 
-  const [uniqueId, setUniqueId] = useState(Math.floor(Math.random() * 10));
-
   return (
-    <div
-      key={uniqueId}
-      className={clsx(
-        className,
-        "flex size-full flex-1 flex-col items-center justify-between gap-[10px]",
-        settings?.highContrastMode && "high-contrast",
-      )}
+    <MotionConfig
+      key={settings?.reduceMotion ? "reduce" : "normal"}
+      reducedMotion={settings?.reduceMotion ? "always" : "never"}
     >
-      <Button
-        onClick={() => setUniqueId(Math.floor(Math.random() * 10))}
-        whileTap={{ scale: 0.95 }}
+      <div
+        className={clsx(
+          className,
+          "flex size-full flex-1 flex-col items-center justify-between gap-[10px]",
+          settings?.highContrastMode && "high-contrast",
+        )}
       >
-        Re-Render
-      </Button>
+        {/* Game is loaded */}
+        {!isLoading && solution && (
+          <>
+            <Board />
+            <div className="flex w-full items-center justify-center">
+              {isGameOver ? <GameOver /> : <Keyboard />}
+            </div>
+          </>
+        )}
 
-      {/* Game is loaded */}
-      {!isLoading && solution && (
-        <>
-          <Board />
-          <div className="flex w-full items-center justify-center">
-            {isGameOver ? <GameOver /> : <Keyboard />}
-          </div>
-        </>
-      )}
-
-      {/* Loading solution word */}
-      {isLoading && !solution && (
-        <div
-          aria-label="Loading"
-          className="flex w-full flex-1 items-center justify-center"
-        >
-          <LoaderIcon className="text-key-background size-8" />
-        </div>
-      )}
-
-      {/* Fails to load word */}
-      {!isLoading && !solution && (
-        <div className="flex w-full flex-1 items-center justify-center">
-          <Button
-            onClick={async () => {
-              setIsLoading(true);
-              const word = await WordService.getNewWord(
-                storeLanguage as Language,
-              );
-              if (word) {
-                setSolution(word);
-              }
-              setIsLoading(false);
-            }}
-            variant="default"
-            className="flex items-center gap-2"
-            aria-label="Play"
-            whileTap={{ scale: 0.95 }}
+        {/* Loading solution word */}
+        {isLoading && !solution && (
+          <div
+            aria-label="Loading"
+            className="flex w-full flex-1 items-center justify-center"
           >
-            <GamepadIcon className="size-4" />
-            Play
-          </Button>
-        </div>
-      )}
-    </div>
+            <LoaderIcon className="text-key-background size-8" />
+          </div>
+        )}
+
+        {/* Fails to load word */}
+        {!isLoading && !solution && (
+          <div className="flex w-full flex-1 items-center justify-center">
+            <Button
+              onClick={async () => {
+                setIsLoading(true);
+                const word = await WordService.getNewWord(
+                  storeLanguage as Language,
+                );
+                if (word) {
+                  setSolution(word);
+                }
+                setIsLoading(false);
+              }}
+              variant="default"
+              className="flex items-center gap-2"
+              aria-label="Play"
+              whileTap={{ scale: 0.95 }}
+            >
+              <GamepadIcon className="size-4" />
+              Play
+            </Button>
+          </div>
+        )}
+      </div>
+    </MotionConfig>
   );
 }
 

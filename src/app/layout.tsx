@@ -63,7 +63,7 @@ export default function RootLayout({
       </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
-          <StoreDebug />
+          <StoreDebug property="solution" />
           <Header />
           {children}
           <Footer />
