@@ -10,16 +10,9 @@ interface Props {
   charIndex: number;
   lineIndex: number;
   className?: string;
-  animated?: boolean;
 }
 
-function Tile({
-  char,
-  charIndex,
-  lineIndex,
-  className,
-  animated = true,
-}: Props) {
+function Tile({ char, charIndex, lineIndex, className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
@@ -92,41 +85,29 @@ function Tile({
         animationVariant === "reveal" &&
         currentGuessIndex - 1 === lineIndex
       ) {
-        if (animated) {
-          await controls.start("flip_in");
-          updateLetterStatus();
-          await controls.start("flip_out");
-          resetAnimationVariant();
-        } else {
-          updateLetterStatus();
-          resetAnimationVariant();
-        }
+        await controls.start("flip_in");
+        updateLetterStatus();
+        await controls.start("flip_out");
+        resetAnimationVariant();
       }
 
-      if (
-        animated &&
-        animationVariant === "type" &&
-        isCurrent &&
-        char &&
-        char !== " "
-      ) {
+      if (animationVariant === "type" && isCurrent && char && char !== " ") {
         await controls.start(animationVariant);
         resetAnimationVariant();
       }
 
-      if (animated && animationVariant === "delete") {
+      if (animationVariant === "delete") {
         await controls.start(animationVariant);
         resetAnimationVariant();
       }
 
-      if (animated && animationVariant === "new_game") {
+      if (animationVariant === "new_game") {
         await controls.start(animationVariant);
         updateLetterStatus();
         resetAnimationVariant();
       }
 
       if (
-        animated &&
         animationVariant === "bounce" &&
         lineIndex === currentGuessIndex - 1
       ) {
@@ -137,7 +118,6 @@ function Tile({
 
     runAnimation();
   }, [
-    animated,
     animationVariant,
     char,
     charIndex,

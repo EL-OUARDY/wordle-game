@@ -9,18 +9,17 @@ interface Props {
   guess: string;
   lineIndex: number;
   className?: string;
-  animated?: boolean;
 }
 
-function Line({ guess, lineIndex, className, animated = true }: Props) {
+function Line({ guess, lineIndex, className }: Props) {
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
   const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const controls = useAnimation();
+
   // Apply current animation variant
   useEffect(() => {
-    if (!animated) return;
     const runAnimation = async () => {
       const isCurrent = lineIndex === currentGuessIndex;
 
@@ -34,7 +33,6 @@ function Line({ guess, lineIndex, className, animated = true }: Props) {
 
     runAnimation();
   }, [
-    animated,
     animationVariant,
     controls,
     currentGuessIndex,
@@ -55,7 +53,6 @@ function Line({ guess, lineIndex, className, animated = true }: Props) {
             char={char}
             charIndex={charIndex}
             lineIndex={lineIndex}
-            animated={animated}
           />
         );
       })}
