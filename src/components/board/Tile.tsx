@@ -46,17 +46,23 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
     if (charStatus === "correct") {
       setLettersStatusMap((prev) => ({
         ...prev,
-        correct: [...prev.correct, char],
+        correct: prev.correct.includes(char)
+          ? prev.correct
+          : [...prev.correct, char],
       }));
     } else if (charStatus === "present") {
       setLettersStatusMap((prev) => ({
         ...prev,
-        present: [...prev.present, char],
+        present: prev.present.includes(char)
+          ? prev.present
+          : [...prev.present, char],
       }));
     } else {
       setLettersStatusMap((prev) => ({
         ...prev,
-        absent: [...prev.absent, char],
+        absent: prev.absent.includes(char)
+          ? prev.absent
+          : [...prev.absent, char],
       }));
     }
   }, [
