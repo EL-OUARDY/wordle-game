@@ -1,8 +1,9 @@
-import { NUMBER_OF_GUESSES } from "@/lib/constants";
+import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import {
   AnimationVariant,
   Language,
   LettersStateMap,
+  LetterStatus,
   Settings,
   UserStats,
 } from "@/types";
@@ -17,6 +18,12 @@ interface IState {
   setCurrentGuessIndex: (index: number) => void;
   solution: string | null;
   setSolution: (solution: string | null) => void;
+  guessesState: (LetterStatus | null)[][];
+  setGuessesState: (
+    updater:
+      | (LetterStatus | null)[][]
+      | ((prev: (LetterStatus | null)[][]) => (LetterStatus | null)[][]),
+  ) => void;
   isGameOver: boolean;
   setIsGameOver: (state: boolean) => void;
   isSubmitting: boolean;
@@ -37,6 +44,7 @@ interface IState {
   setWordCreator: (creator: string | null) => void;
   settings: Settings | null;
   setSettings: (settings: Settings | null) => void;
+  resetGame: () => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -48,6 +56,20 @@ const useStore = create<IState>((set) => ({
   setCurrentGuessIndex: (index) => set({ currentGuessIndex: index }),
   solution: null,
   setSolution: (solution) => set({ solution: solution }),
+  guessesState: Array(NUMBER_OF_GUESSES)
+    .fill(null)
+    .map(() => Array(WORD_LENGTH).fill(null)),
+  setGuessesState: (updater) =>
+    set((state) => ({
+      guessesState:
+        typeof updater === "function"
+          ? (
+              updater as (
+                prev: (LetterStatus | null)[][],
+              ) => (LetterStatus | null)[][]
+            )(state.guessesState)
+          : updater,
+    })),
   isGameOver: false,
   setIsGameOver: (state) => set({ isGameOver: state }),
   isSubmitting: false,
@@ -74,6 +96,22 @@ const useStore = create<IState>((set) => ({
   setWordCreator: (creator) => set({ wordCreator: creator }),
   settings: null,
   setSettings: (settings) => set({ settings: settings }),
+  resetGame: () =>
+    set({
+      isGameOver: false,
+      solution: null,
+      guesses: Array(NUMBER_OF_GUESSES).fill(null),
+      currentGuess: "",
+      currentGuessIndex: 0,
+      guessesState: Array(NUMBER_OF_GUESSES)
+        .fill(null)
+        .map(() => Array(WORD_LENGTH).fill(null)),
+      lettersStatusMap: { correct: [], present: [], absent: [] },
+      startTime: new Date(),
+      animationVariant: "idle",
+      isSubmitting: false,
+      wordCreator: null,
+    }),
 }));
 
 export default useStore;

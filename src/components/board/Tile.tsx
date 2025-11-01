@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
-import { LetterStatus } from "@/types";
 import { motion, useAnimation } from "motion/react";
 import { tileVariants } from "@/components/board/animations";
 import { getGuessStatuses } from "@/lib/utils";
+import { WORD_LENGTH } from "@/lib/constants";
 interface Props {
   char: string;
   charIndex: number;
@@ -16,30 +16,31 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
+  const guessesState = useStore((s) => s.guessesState);
+  const setGuessesState = useStore((s) => s.setGuessesState);
   const solution = useStore((s) => s.solution);
-  const [status, setStatus] = useState<LetterStatus | null>(null);
   const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const animationVariant = useStore((s) => s.animationVariant);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const controls = useAnimation();
 
-  // Reset status when game restarts
-  useEffect(() => {
-    setStatus(null);
-  }, [solution]);
-
   const updateLetterStatus = useCallback(() => {
     if (!char || char === " ") return;
     if (!solution) return;
+    if (!guesses[lineIndex] || guesses[lineIndex].length !== WORD_LENGTH)
+      return;
 
-    const wordStatus = getGuessStatuses(
-      solution,
-      guesses[currentGuessIndex - 1],
-    );
+    const wordStatus = getGuessStatuses(solution, guesses[lineIndex]);
     const charStatus = wordStatus[charIndex];
 
-    setStatus(charStatus);
+    setGuessesState((prev) =>
+      prev.map((w, wi) =>
+        wi === lineIndex
+          ? w.map((c, ci) => (ci === charIndex ? charStatus : c))
+          : w,
+      ),
+    );
 
     if (charStatus === "correct") {
       setLettersStatusMap((prev) => ({
@@ -60,8 +61,9 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
   }, [
     char,
     charIndex,
-    currentGuessIndex,
     guesses,
+    lineIndex,
+    setGuessesState,
     setLettersStatusMap,
     solution,
   ]);
@@ -103,7 +105,6 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
 
       if (animationVariant === "new_game") {
         await controls.start(animationVariant);
-        updateLetterStatus();
         resetAnimationVariant();
       }
 
@@ -134,8 +135,9 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
       className={clsx(
         className,
         char && char !== " " ? "border-foreground" : "border-key-background",
-        status && "text-tile-foreground !border-0",
-        status ? `bg-${status}` : "bg-tile-background",
+        guessesState[lineIndex][charIndex]
+          ? `bg-${guessesState[lineIndex][charIndex]} text-tile-foreground !border-0`
+          : "bg-tile-background",
         "tile flex aspect-square items-center justify-center self-center border-2 text-center font-black uppercase",
       )}
       animate={controls}

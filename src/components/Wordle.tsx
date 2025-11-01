@@ -37,15 +37,16 @@ function Wordle({ language, className }: Props) {
   const solution = useStore((s) => s.solution);
   const isGameOver = useStore((s) => s.isGameOver);
   const setWordCreator = useStore((s) => s.setWordCreator);
+  const resetGame = useStore((s) => s.resetGame);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const wordId = searchParams.get("w");
 
-  // Reset solution word on first mount
+  // Reset game state on first mount
   useEffect(() => {
-    setSolution(null);
-  }, [setSolution]);
+    resetGame();
+  }, [resetGame]);
 
   // Set language
   useEffect(() => {
@@ -132,14 +133,24 @@ function Wordle({ language, className }: Props) {
     });
   }, [isGameOver, router, searchParams]);
 
+  const [uniqueId, setUniqueId] = useState(Math.floor(Math.random() * 10));
+
   return (
     <div
+      key={uniqueId}
       className={clsx(
         className,
         "flex size-full flex-1 flex-col items-center justify-between gap-[10px]",
         settings?.highContrastMode && "high-contrast",
       )}
     >
+      <Button
+        onClick={() => setUniqueId(Math.floor(Math.random() * 10))}
+        whileTap={{ scale: 0.95 }}
+      >
+        Re-Render
+      </Button>
+
       {/* Game is loaded */}
       {!isLoading && solution && (
         <>

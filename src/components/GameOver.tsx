@@ -4,7 +4,6 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
-import { NUMBER_OF_GUESSES } from "@/lib/constants";
 import { getTimeDifference, share } from "@/lib/utils";
 import WordService from "@/services/word";
 import { Language } from "@/types";
@@ -18,19 +17,12 @@ function GameOver() {
   const solution = useStore((s) => s.solution);
   const setSolution = useStore((s) => s.setSolution);
   const guesses = useStore((s) => s.guesses);
-  const setGuesses = useStore((s) => s.setGuesses);
-  const setCurrentGuess = useStore((s) => s.setCurrentGuess);
   const currentGuessIndex = useStore((s) => s.currentGuessIndex);
-  const setCurrentGuessIndex = useStore((s) => s.setCurrentGuessIndex);
   const isGameOver = useStore((s) => s.isGameOver);
-  const setIsGameOver = useStore((s) => s.setIsGameOver);
-  const setLettersStatusMap = useStore((s) => s.setLettersStatusMap);
   const startTime = useStore((s) => s.startTime);
-  const setStartTime = useStore((s) => s.setStartTime);
-  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
-  const setIsSubmitting = useStore((s) => s.setIsSubmitting);
   const wordCreator = useStore((s) => s.wordCreator);
-  const setWordCreator = useStore((s) => s.setWordCreator);
+  const resetGame = useStore((s) => s.resetGame);
+  const setAnimationVariant = useStore((s) => s.setAnimationVariant);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [endTime, setEndTime] = useState<string>("");
@@ -43,33 +35,20 @@ function GameOver() {
 
     const word = await WordService.getNewWord(language as Language);
     if (word && word !== solution) {
-      setSolution(word);
       // Reset state
-      setIsGameOver(false);
-      setGuesses(Array(NUMBER_OF_GUESSES).fill(null));
-      setCurrentGuess("");
-      setCurrentGuessIndex(0);
-      setLettersStatusMap({ correct: [], present: [], absent: [] });
-      setStartTime(new Date());
+      resetGame();
+      // Set solution
+      setSolution(word);
       setAnimationVariant("new_game");
-      setIsSubmitting(false);
-      setWordCreator(null);
     }
     setIsLoading(false);
   }, [
     isLoading,
     language,
-    setAnimationVariant,
-    setCurrentGuess,
-    setCurrentGuessIndex,
-    setGuesses,
-    setIsGameOver,
-    setIsSubmitting,
-    setLettersStatusMap,
     setSolution,
-    setStartTime,
-    setWordCreator,
     solution,
+    resetGame,
+    setAnimationVariant,
   ]);
 
   // Start new game when hitting enter
