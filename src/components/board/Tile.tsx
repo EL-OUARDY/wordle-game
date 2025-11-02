@@ -84,12 +84,6 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         lineIndex === currentGuessIndex &&
         charIndex === currentGuess.length - 1;
 
-      // Reset after animation completes
-      const resetAnimationVariant = () => {
-        controls.start("idle");
-        setAnimationVariant("idle");
-      };
-
       if (
         animationVariant === "reveal" &&
         currentGuessIndex - 1 === lineIndex
@@ -97,22 +91,18 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         await controls.start("flip_in");
         updateLetterStatus();
         await controls.start("flip_out");
-        resetAnimationVariant();
       }
 
       if (animationVariant === "type" && isCurrent && char && char !== " ") {
         await controls.start(animationVariant);
-        resetAnimationVariant();
       }
 
       if (animationVariant === "delete") {
         await controls.start(animationVariant);
-        resetAnimationVariant();
       }
 
       if (!settings?.reduceMotion && animationVariant === "new_game") {
         await controls.start(animationVariant);
-        resetAnimationVariant();
       }
 
       if (
@@ -120,7 +110,6 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
         lineIndex === currentGuessIndex - 1
       ) {
         await controls.start(animationVariant);
-        resetAnimationVariant();
       }
     };
 
