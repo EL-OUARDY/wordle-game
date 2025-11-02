@@ -204,7 +204,7 @@ function Settings() {
 
         <div className="swap-enter-backspace flex items-center justify-between">
           <label className="font-semibold" htmlFor="swap-enter-backspace">
-            Swap Enter/Backspace
+            Swap Enter & Backspace
           </label>
           <Switch.Root
             checked={settings.swapEnterBackspace}
