@@ -117,7 +117,11 @@ export const share = async () => {
 
   if (navigator.share) {
     try {
-      await navigator.share({ title, url });
+      await navigator.share({
+        title,
+        url,
+        text: `${title} 🧩\nPlay here: ${url}`,
+      });
     } catch (err: unknown) {
       if (err instanceof DOMException && err.name !== "AbortError") {
         console.error("Error sharing:", err);
@@ -193,7 +197,7 @@ export async function captureAndShare() {
     await navigator.share({
       files: [file],
       title: "My Wordle Result",
-      text: "",
+      text: `Check out my Wordle result! 🧩\nPlay here: ${window.location.href}`,
     });
   } else {
     const link = document.createElement("a");
