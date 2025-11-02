@@ -4,7 +4,7 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
-import { getTimeDifference, share } from "@/lib/utils";
+import { captureAndShare, getTimeDifference } from "@/lib/utils";
 import WordService from "@/services/word";
 import { Language } from "@/types";
 import clsx from "clsx";
@@ -98,7 +98,7 @@ function GameOver() {
 
           <div className="controls flex gap-3">
             <Button
-              onClick={share}
+              onClick={captureAndShare}
               variant="outline"
               className="flex items-center gap-2"
               aria-label="Share"
@@ -155,7 +155,7 @@ function GameOver() {
 
           <div className="controls flex gap-3">
             <Button
-              onClick={share}
+              onClick={captureAndShare}
               variant="outline"
               className="flex items-center gap-2"
               aria-label="Share"

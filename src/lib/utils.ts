@@ -4,6 +4,7 @@ import clsx, { ClassValue } from "clsx";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 import { twMerge } from "tailwind-merge";
+import * as htmlToImage from "html-to-image";
 
 export const ranks = [
   { name: "Novice", min: 0, color: "#10B981" }, // teal/green
@@ -162,4 +163,42 @@ export function removeArabicDiacritics(word: string) {
     /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E8\u06EA-\u06ED]/g,
     "",
   );
+}
+
+export async function captureAndShare() {
+  const el = document.getElementById("board");
+  if (!el) return;
+
+  await document.fonts.ready; // ensure custom fonts are loaded
+
+  const scale = 4; // 4x resolution
+
+  const dataUrl = await htmlToImage.toPng(el, {
+    cacheBust: true,
+    backgroundColor: "#ffffff",
+    width: el.offsetWidth * scale,
+    height: el.offsetHeight * scale,
+    style: {
+      transform: `scale(${scale})`,
+      transformOrigin: "top left",
+      width: `${el.offsetWidth}px`,
+      height: `${el.offsetHeight}px`,
+    },
+  });
+
+  const blob = await (await fetch(dataUrl)).blob();
+  const file = new File([blob], "wordle-share.png", { type: blob.type });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    await navigator.share({
+      files: [file],
+      title: "My Wordle Result",
+      text: "",
+    });
+  } else {
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "wordle-share.png";
+    link.click();
+  }
 }

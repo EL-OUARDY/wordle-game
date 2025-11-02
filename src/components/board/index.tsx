@@ -43,6 +43,7 @@ function Board({ className }: Props) {
     >
       {size && (
         <motion.div
+          id="board"
           className={clsx(className, "board flex flex-col gap-[5px] p-[10px]")}
           style={{
             width: size.w,
