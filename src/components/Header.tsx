@@ -24,6 +24,8 @@ import LogoIcon from "@/components/ui/icons/logo";
 import Create from "@/components/Create";
 import PlusIcon from "@/components/ui/icons/plus";
 import FlagIcon from "@/components/ui/icons/flag";
+import BackIcon from "@/components/ui/icons/back";
+import { usePathname, useRouter } from "next/navigation";
 interface Props {
   className?: string;
 }
@@ -51,6 +53,12 @@ function Header({ className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
 
   const { user } = useAuth();
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Only show on login and privacy pages
+  const showBackBtn = pathname === "/login" || pathname === "/privacy-policy";
 
   const menus: Record<Menu, MenuContent> = {
     settings: {
@@ -111,42 +119,58 @@ function Header({ className }: Props) {
     >
       <nav className="flex h-12 sm:h-14 sm:px-[8px]">
         {/* Sidebar btn */}
-        <Button
-          onClick={() => {
-            setActiveMenu("sidebar");
-            setIsMenuOpen(true);
-          }}
-          variant="icon"
-          className="size-12 sm:size-14"
-          aria-label="Open Menu"
-        >
-          {!user ? (
-            <MenuIcon className="size-[1.35rem] sm:size-6" />
-          ) : (
-            <div className="user-avatar">
-              {user.photoURL ? (
-                <Image
-                  src={user.photoURL}
-                  alt="User avatar"
-                  width={40}
-                  height={40}
-                  className="size-[1.35rem] rounded-full sm:size-6"
-                />
-              ) : user.displayName ? (
-                <span className="flex size-full items-center justify-center text-lg">
-                  {user.displayName
-                    ?.split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .toUpperCase()
-                    .slice(0, 2)}
-                </span>
-              ) : (
-                <LogoIcon className="size-[1.35rem] sm:size-6" />
-              )}
-            </div>
-          )}
-        </Button>
+        {!showBackBtn && (
+          <Button
+            onClick={() => {
+              setActiveMenu("sidebar");
+              setIsMenuOpen(true);
+            }}
+            variant="icon"
+            className="size-12 sm:size-14"
+            aria-label="Open Menu"
+          >
+            {!user ? (
+              <MenuIcon className="size-[1.35rem] sm:size-6" />
+            ) : (
+              <div className="user-avatar">
+                {user.photoURL ? (
+                  <Image
+                    src={user.photoURL}
+                    alt="User avatar"
+                    width={40}
+                    height={40}
+                    className="size-[1.35rem] rounded-full sm:size-6"
+                  />
+                ) : user.displayName ? (
+                  <span className="flex size-full items-center justify-center text-lg">
+                    {user.displayName
+                      ?.split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()
+                      .slice(0, 2)}
+                  </span>
+                ) : (
+                  <LogoIcon className="size-[1.35rem] sm:size-6" />
+                )}
+              </div>
+            )}
+          </Button>
+        )}
+
+        {/* Back btn */}
+        {showBackBtn && (
+          <Button
+            onClick={() => {
+              router.back();
+            }}
+            variant="icon"
+            className="size-12 sm:size-14"
+            aria-label="Go back"
+          >
+            <BackIcon className="size-[1.35rem] sm:size-6" />
+          </Button>
+        )}
 
         <div className="ml-auto flex">
           {/* Create btn */}
