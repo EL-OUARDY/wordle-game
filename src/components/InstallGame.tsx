@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/button";
 import GamepadIcon from "@/components/ui/icons/gamepad";
+import ShareIcon from "@/components/ui/icons/share";
 
 export default function InstallGame() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
+  const [showIOSGuide, setShowIOSGuide] = useState(false);
 
   useEffect(() => {
     // Detect iOS
@@ -37,9 +39,7 @@ export default function InstallGame() {
       });
     } else if (isIOS) {
       // iOS
-      alert(
-        "To install this app on your iPhone/iPad, tap the Share button and then 'Add to Home Screen'.",
-      );
+      setShowIOSGuide(true);
     }
   };
 
@@ -53,18 +53,33 @@ export default function InstallGame() {
 
   return (
     <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
-      <p className="text-lg">
-        Install the game on your device to play offline and access it instantly.
-      </p>
-      <Button
-        onClick={handleInstallClick}
-        className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
-        aria-label="Install"
-        whileTap={{ scale: 0.95 }}
-      >
-        <GamepadIcon className="size-4" />
-        Install
-      </Button>
+      {!showIOSGuide ? (
+        <>
+          <p className="text-lg">
+            Install the game on your device to play offline and access it
+            instantly.
+          </p>
+          <Button
+            onClick={handleInstallClick}
+            className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
+            aria-label="Install"
+            whileTap={{ scale: 0.95 }}
+          >
+            <GamepadIcon className="size-4" />
+            Install
+          </Button>
+        </>
+      ) : (
+        <p className="text-lg">
+          To install this app on your iOS device, tap the share button
+          <span role="img" aria-label="share icon">
+            <ShareIcon className="mx-2 inline size-4" />
+          </span>
+          and then &quot;
+          <span className="font-semibold">Add to Home Screen</span>
+          &quot;.
+        </p>
+      )}
     </div>
   );
 }
