@@ -117,16 +117,18 @@ function Keyboard({ className }: Props) {
       setCurrentGuessIndex(currentGuessIndex + 1);
       // Reveal word animation
       setAnimationVariant("reveal");
-      // Bounce animation
-      if (!settings?.reduceMotion)
-        await sleep(1250); // wait 1.25 second
+
+      // Wait (1.25 second) for reveal animation to finish
+      if (!settings?.reduceMotion) await sleep(1250);
       else await sleep(0);
-      setIsSubmitting(false);
+
+      // Bounce animation
       setAnimationVariant("bounce");
       if (!settings?.reduceMotion) await sleep(1600); // wait 1.6 second
       setIsGameOver(true);
       updateUserStats("won");
       previousSubmittedWrongGuess.current = "";
+      setIsSubmitting(false);
       return;
     }
 
@@ -152,7 +154,8 @@ function Keyboard({ className }: Props) {
       setCurrentGuessIndex(currentGuessIndex + 1);
       // Reveal word animation
       setAnimationVariant("reveal");
-      // Wait (1.25 second) for reveal animation to finish
+
+      // Wait (1.5 second) for reveal animation to finish
       if (!settings?.reduceMotion) await sleep(1500);
       else await sleep(0);
 
