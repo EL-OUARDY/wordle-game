@@ -1,8 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import * as Switch from "@radix-ui/react-switch";
-import Button from "@/components/ui/button";
-import GamepadIcon from "@/components/ui/icons/gamepad";
 import {
   Select,
   SelectContent,
@@ -18,6 +16,7 @@ import { GameSettings, Language, Theme } from "@/types";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import InstallGame from "@/components/InstallGame";
 
 const themes: {
   name: Theme;
@@ -237,21 +236,7 @@ function Settings() {
         </div>
       </div>
 
-      <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
-        <p className="text-lg">
-          Install the game on your device to play offline and access it
-          instantly.
-        </p>
-        <Button
-          onClick={() => alert("Install")}
-          className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
-          aria-label="Install"
-          whileTap={{ scale: 0.95 }}
-        >
-          <GamepadIcon className="size-4" />
-          Install
-        </Button>
-      </div>
+      <InstallGame />
     </div>
   );
 }

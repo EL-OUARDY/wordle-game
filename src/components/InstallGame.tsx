@@ -1,0 +1,60 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useEffect, useState } from "react";
+import Button from "@/components/ui/button";
+import GamepadIcon from "@/components/ui/icons/gamepad";
+
+export default function InstallGame() {
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    // Detect iOS
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    setIsIOS(/iphone|ipad|ipod/.test(userAgent));
+
+    // Listen for Android PWA install event
+    const handler = (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      // Android
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult: any) => {
+        console.log("User choice:", choiceResult.outcome);
+        setDeferredPrompt(null);
+      });
+    } else if (isIOS) {
+      // iOS
+      alert(
+        "To install this app on your iPhone/iPad, tap the Share button and then 'Add to Home Screen'.",
+      );
+    }
+  };
+
+  // Show button if install is possible on Android or iOSs
+  if (!deferredPrompt && !isIOS) return null;
+
+  return (
+    <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
+      <p className="text-lg">
+        Install the game on your device to play offline and access it instantly.
+      </p>
+      <Button
+        onClick={handleInstallClick}
+        className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
+        aria-label="Install"
+        whileTap={{ scale: 0.95 }}
+      >
+        <GamepadIcon className="size-4" />
+        Install
+      </Button>
+    </div>
+  );
+}
