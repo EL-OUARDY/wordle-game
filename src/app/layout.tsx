@@ -29,6 +29,7 @@ export const futuraFont = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(APP_LINK),
   title: `${APP_NAME} - Play Wordle in Any Language`,
   description:
     "Play Wordle for free, in your language, with no ads — unlimited fun, no limits! Track stats, compete, and enjoy multilingual word guessing.",
