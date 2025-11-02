@@ -7,11 +7,16 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 export default function InstallGame() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isIOS, setIsIOS] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
     // Detect iOS
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    setIsIOS(/iphone|ipad|ipod/.test(userAgent));
+    setIsIOS(
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream,
+    );
+
+    // Detect if PWA
+    setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
 
     // Listen for Android PWA install event
     const handler = (e: { preventDefault: () => void }) => {
@@ -38,8 +43,13 @@ export default function InstallGame() {
     }
   };
 
-  // Show button if install is possible on Android or iOSs
+  // Show only if install is possible on Android or iOSs
   if (!deferredPrompt && !isIOS) return null;
+
+  // Don't show install button if already installed
+  if (isStandalone) {
+    return null;
+  }
 
   return (
     <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
