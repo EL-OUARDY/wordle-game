@@ -17,7 +17,9 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">1. Information We Collect</h2>
+        <h2 id="information-we-collect" className="text-2xl font-semibold">
+          1. Information We Collect
+        </h2>
         <ul className="text-lg">
           <li>
             <span className="underline">Anonymous Players:</span> No personal
@@ -32,7 +34,9 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">2. How We Store Data</h2>
+        <h2 id="how-we-store-data" className="text-2xl font-semibold">
+          2. How We Store Data
+        </h2>
         <ul className="text-lg">
           <li>
             <span className="underline">Game Settings:</span> Saved locally on
@@ -52,12 +56,16 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">3. Cookies</h2>
+        <h2 id="cookies" className="text-2xl font-semibold">
+          3. Cookies
+        </h2>
         <p className="text-lg">We do not use cookies.</p>
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">4. Playing the Game</h2>
+        <h2 id="playing-the-game" className="text-2xl font-semibold">
+          4. Playing the Game
+        </h2>
         <ul className="text-lg">
           <li>
             <span className="font-semibold">- </span>You can play anonymously
@@ -71,7 +79,9 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">5. Safety & Security</h2>
+        <h2 id="safety-security" className="text-2xl font-semibold">
+          5. Safety & Security
+        </h2>
         <ul className="text-lg">
           <li>
             <span className="font-semibold">- </span>We do not sell or share
@@ -85,7 +95,9 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">6. Children</h2>
+        <h2 id="children" className="text-2xl font-semibold">
+          6. Children
+        </h2>
         <p className="text-lg">
           {APP_NAME} can be played by any age. No personal data collection from
           children is required unless they log in with an account.
@@ -93,7 +105,9 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">7. Changes to This Policy</h2>
+        <h2 id="changes-to-this-policy" className="text-2xl font-semibold">
+          7. Changes to This Policy
+        </h2>
         <p className="text-lg">
           We may update this policy from time to time. Any changes will be
           posted here.
@@ -101,7 +115,24 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h2 className="text-2xl font-semibold">Contact Us</h2>
+        <h2 id="user-data-deletion" className="text-2xl font-semibold">
+          8. User data deletion
+        </h2>
+        <p className="text-lg">
+          If you would like us to delete your account and any personal data we
+          hold about you, please contact us at:{" "}
+          <a href={"mailto:" + EMAIL} className="underline">
+            {EMAIL}
+          </a>
+          . We will respond and take steps to remove your account and associated
+          data upon request.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <h2 id="contact-us" className="text-2xl font-semibold">
+          Contact Us
+        </h2>
         <p className="text-lg">
           If you have any questions about this privacy policy or how we handle
           your data, feel free to contact us at:{" "}
