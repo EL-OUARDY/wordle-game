@@ -20,21 +20,53 @@ import InstallGame from "@/components/InstallGame";
 
 const themes: {
   name: Theme;
+  bgColor: string;
   color1: string;
   color2: string;
   color3: string;
 }[] = [
-  { name: "classic", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
-  { name: "night", color1: "#22c55e", color2: "#eab308", color3: "#9ca3af" },
-  { name: "coffee", color1: "#6b5c4b", color2: "#d0bfae", color3: "#8b8078" },
-  { name: "sakura", color1: "#ff5c8a", color2: "#f5c2cb", color3: "#8a8f99" },
+  {
+    name: "classic",
+    bgColor: "#ffffff",
+    color1: "#22c55e",
+    color2: "#eab308",
+    color3: "#9ca3af",
+  },
+  {
+    name: "night",
+    bgColor: "#181818",
+    color1: "#22c55e",
+    color2: "#eab308",
+    color3: "#9ca3af",
+  },
+  {
+    name: "coffee",
+    bgColor: "#f7f3ef",
+    color1: "#6b5c4b",
+    color2: "#d0bfae",
+    color3: "#8b8078",
+  },
+  {
+    name: "sakura",
+    bgColor: "#fff5f7",
+    color1: "#ff5c8a",
+    color2: "#f5c2cb",
+    color3: "#8a8f99",
+  },
   {
     name: "slate",
+    bgColor: "#2e3440",
     color1: "#2e3440",
     color2: "#434c5e",
     color3: "#787c7e",
   },
-  { name: "dracula", color1: "#8d5fcd", color2: "#6272a4", color3: "#bfbfbf" },
+  {
+    name: "dracula",
+    bgColor: "#282a36",
+    color1: "#8d5fcd",
+    color2: "#6272a4",
+    color3: "#bfbfbf",
+  },
 ];
 
 export const defaultSettings: GameSettings = {
@@ -86,9 +118,12 @@ function Settings() {
     }
   }, [settings]);
 
-  const applyTheme = (theme: Theme) => {
+  const applyTheme = (theme: Theme, bgColor: string) => {
     document.documentElement.classList.remove(...themes.map((t) => t.name));
     document.documentElement.classList.add(theme);
+    // Update meta tag
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute("content", bgColor);
   };
 
   if (!settings) return;
@@ -146,12 +181,13 @@ function Settings() {
               <motion.div
                 onClick={() => {
                   setSettings({ ...settings, theme: theme.name });
-                  applyTheme(theme.name);
+                  applyTheme(theme.name, theme.bgColor);
                 }}
                 key={index}
                 className={cn(
                   "theme border-key-background hover:bg-tile-background cursor-pointer border py-1",
-                  settings.theme === theme.name && "bg-tile-background",
+                  settings.theme === theme.name &&
+                    "bg-tile-background border-foreground border",
                 )}
                 whileTap={{ scale: 0.95 }}
               >

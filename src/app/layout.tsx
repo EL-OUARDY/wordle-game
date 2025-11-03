@@ -68,6 +68,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Meta tags */}
+        <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-title" content={APP_NAME} />
 
         {/* Theme script */}
@@ -76,16 +77,31 @@ export default function RootLayout({
             __html: `
               (function () {
                 try {
+                  const themes = [
+                    { name: "classic", bgColor: "#ffffff" },
+                    { name: "night", bgColor: "#181818" },
+                    { name: "coffee", bgColor: "#f7f3ef" },
+                    { name: "sakura", bgColor: "#fff5f7" },
+                    { name: "slate", bgColor: "#2e3440" },
+                    { name: "dracula", bgColor: "#282a36" },
+                  ];
                   let theme = "classic"
+                  let themeColor = "#ffffff"
                   const raw = localStorage.getItem("wordle_settings");
                   if (raw) {
                     const parsed = JSON.parse(raw);
                     if (parsed && typeof parsed === "object") {
                       theme = parsed.theme;
+                      // update themeColor
+                      const themeObject = themes.find(x => x.name === theme)
+                      if (themeObject)
+                        themeColor = themeObject.bgColor
                     }
                   }
                   document.documentElement.classList.add(theme);
-                } catch (_) {}
+                  const themeMeta = document.querySelector('meta[name="theme-color"]');
+                  if (themeMeta) themeMeta.setAttribute("content", themeColor);
+                } catch (_) { }
               })()
             `,
           }}
