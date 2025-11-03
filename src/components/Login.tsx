@@ -71,7 +71,7 @@ function Login({ className }: Props) {
           </span>
         </Button>
 
-        <Button
+        {/* <Button
           onClick={() => login("facebook")}
           variant="outline"
           className="w-64 rounded-none"
@@ -120,9 +120,9 @@ function Login({ className }: Props) {
               Facebook
             </span>
           </span>
-        </Button>
+        </Button> */}
 
-        <Button
+        {/* <Button
           onClick={() => login("microsoft")}
           variant="outline"
           className="w-64 rounded-none"
@@ -159,7 +159,7 @@ function Login({ className }: Props) {
               Microsoft
             </span>
           </span>
-        </Button>
+        </Button> */}
       </div>
       <hr className="separator border-key-background" />
     </div>
