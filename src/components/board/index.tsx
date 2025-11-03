@@ -10,6 +10,12 @@ interface Props {
   className?: string;
 }
 
+declare global {
+  interface Navigator {
+    standalone?: boolean;
+  }
+}
+
 function Board({ className }: Props) {
   const guesses = useStore((s) => s.guesses);
   const currentGuess = useStore((s) => s.currentGuess);
@@ -23,9 +29,14 @@ function Board({ className }: Props) {
       const containerH = containerRef.current.offsetHeight;
       const windowWidth = window.innerWidth;
       let size = { w: 300, h: 357 };
+      const isStandalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true;
 
-      if (containerH <= 420 && windowWidth < 400) size = { w: 240, h: 285 };
-      else if (containerH >= 450 && windowWidth < 768)
+      if (containerH <= 420 && windowWidth < 400) {
+        if (isStandalone) size = { w: 300, h: 357 };
+        else size = { w: 240, h: 285 };
+      } else if (containerH >= 450 && windowWidth < 768)
         size = { w: 350, h: 417 };
       else size = { w: 300, h: 357 };
 
