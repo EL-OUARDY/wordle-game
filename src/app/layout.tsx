@@ -30,7 +30,7 @@ export const futuraFont = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_LINK),
-  title: `${APP_NAME} - Play Wordle in Any Language`,
+  title: `${APP_NAME} - Play Wordle in Your Language`,
   description:
     "Play Wordle for free, in your language, with no ads — unlimited fun, no limits! Track stats, compete, and enjoy multilingual word guessing.",
   keywords: ["Wordle", APP_NAME, "Game", "Languages", "Multilingual Wordle"],
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${APP_NAME} - Play Wordle in Any Language`,
+    title: `${APP_NAME} - Play Wordle in Your Language`,
     description:
       "Free, ad-free Wordle in multiple languages. Play now and test your vocabulary!",
     images: ["/img/og-image.png"],
@@ -68,6 +68,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Meta tags */}
+        <meta name="apple-mobile-web-app-title" content={APP_NAME} />
+
         {/* Theme script */}
         <script
           dangerouslySetInnerHTML={{
