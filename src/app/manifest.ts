@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: "/",
     name: `${APP_NAME} - Play Wordle in Your Language`,
     short_name: APP_NAME,
     description:
