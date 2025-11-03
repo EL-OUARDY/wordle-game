@@ -34,7 +34,7 @@ const serwist = new Serwist({
   fallbacks: {
     entries: [
       {
-        url: "/offline", // Page to show if user is offline
+        url: "/", // Page to show if user is offline and there is no cached version available for the desired page.
         matcher({ request }) {
           // Only show offline page for navigation requests (HTML pages)
           return request.destination === "document";
