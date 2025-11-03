@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import ChartIcon from "@/components/ui/icons/chart";
@@ -111,6 +111,25 @@ function Header({ className }: Props) {
     };
   }, [isMenuOpen]);
 
+  const giveUp = useCallback(async () => {
+    setIsGameOver(true);
+
+    // User is not logged in
+    if (!user) return;
+
+    const serverStats = await StatsService.get(user.uid);
+
+    if (!serverStats) return;
+
+    const newStats = {
+      ...serverStats,
+      played: serverStats.played + 1,
+      streak: 0,
+    };
+    setUserStats(newStats);
+    StatsService.save(user.uid, newStats);
+  }, [setIsGameOver, setUserStats, user]);
+
   return (
     <motion.header
       className={clsx(className, "border-key-background border-b")}
@@ -191,7 +210,7 @@ function Header({ className }: Props) {
           {/* Give up */}
           {currentGuessIndex > 0 && !isGameOver && (
             <Button
-              onClick={() => setIsGameOver(true)}
+              onClick={giveUp}
               variant="icon"
               className="size-12 sm:size-14"
               aria-label="Give up"
