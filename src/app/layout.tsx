@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StoreDebug from "@/components/StoreDebug";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
 
 export const futuraFont = localFont({
@@ -94,7 +93,6 @@ export default function RootLayout({
       </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
-          <StoreDebug property="solution" />
           <Header />
           {children}
           <Footer />

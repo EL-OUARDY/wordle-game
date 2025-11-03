@@ -19,10 +19,35 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "maskable",
       },
       {
+        src: "/icons/web-app-manifest-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
         src: "/icons/web-app-manifest-512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
+      },
+      {
+        src: "/icons/web-app-manifest-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+    ],
+    screenshots: [
+      {
+        src: "/screenshots/desktop.png",
+        sizes: "1280x720",
+        type: "image/png",
+        form_factor: "wide", // for desktop
+      },
+      {
+        src: "/screenshots/mobile.png",
+        sizes: "1125x2436",
+        type: "image/png", // no form_factor = mobile
       },
     ],
   };
