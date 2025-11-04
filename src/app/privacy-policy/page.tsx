@@ -1,7 +1,10 @@
 "use client";
 import { motion } from "motion/react";
 import { APP_NAME, EMAIL } from "../../lib/constants";
+import { useTranslations } from "next-intl";
 export default function Page() {
+  const t = useTranslations("PrivacyPolicy");
+
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -9,136 +12,133 @@ export default function Page() {
       className="mx-auto mt-4 flex w-full max-w-[520px] flex-1 flex-col gap-4 p-4"
     >
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold">Privacy Policy – {APP_NAME}</h1>
-        <p className="text-lg">
-          At {APP_NAME}, your privacy matters. This page explains how we handle
-          your information when you play our game.
-        </p>
+        <h1 className="text-2xl font-semibold">
+          {t("title", { appName: APP_NAME })}
+        </h1>
+        <p className="text-lg">{t("intro", { appName: APP_NAME })}</p>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="information-we-collect" className="text-2xl font-semibold">
-          1. Information We Collect
+          {t("section1.title")}
         </h2>
         <ul className="text-lg">
           <li>
-            <span className="underline">Anonymous Players:</span> No personal
-            data is collected.
+            {t.rich("section1.anonymous", {
+              underline: (chunks) => (
+                <span className="underline">{chunks}</span>
+              ),
+            })}
           </li>
           <li>
-            <span className="underline">Logged-in Users:</span> Only game
-            statistics are collected. Authentication is via Firebase (Google,
-            Facebook, or Microsoft), and passwords are never stored.
+            {t.rich("section1.loggedIn", {
+              underline: (chunks) => (
+                <span className="underline">{chunks}</span>
+              ),
+            })}
           </li>
         </ul>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="how-we-store-data" className="text-2xl font-semibold">
-          2. How We Store Data
+          {t("section2.title")}
         </h2>
         <ul className="text-lg">
           <li>
-            <span className="underline">Game Settings:</span> Saved locally on
-            your device using local storage.
+            {t.rich("section2.gameSettings", {
+              underline: (chunks) => (
+                <span className="underline">{chunks}</span>
+              ),
+            })}
           </li>
           <li>
-            <span className="underline">User Stats:</span> If you’re logged in,
-            your game statistics are saved securely in the cloud via Google
-            Firebase.
+            {t.rich("section2.userStats", {
+              underline: (chunks) => (
+                <span className="underline">{chunks}</span>
+              ),
+            })}
           </li>
           <li>
-            <span className="underline">Analytics:</span> We use Google
-            Analytics to understand game usage and improve your experience. No
-            personal data is shared.
+            {t.rich("section2.analytics", {
+              underline: (chunks) => (
+                <span className="underline">{chunks}</span>
+              ),
+            })}
           </li>
         </ul>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="cookies" className="text-2xl font-semibold">
-          3. Cookies
+          {t("section3.title")}
         </h2>
-        <p className="text-lg">We do not use cookies.</p>
+        <p className="text-lg">{t("section3.content")}</p>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="playing-the-game" className="text-2xl font-semibold">
-          4. Playing the Game
+          {t("section4.title")}
         </h2>
         <ul className="text-lg">
-          <li>
-            <span className="font-semibold">- </span>You can play anonymously
-            without creating an account.
-          </li>
-          <li>
-            <span className="font-semibold">- </span>Creating an account lets
-            you save stats across devices.
-          </li>
+          <li>{t("section4.anonPlay")}</li>
+          <li>{t("section4.createAccount")}</li>
         </ul>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="safety-security" className="text-2xl font-semibold">
-          5. Safety & Security
+          {t("section5.title")}
         </h2>
         <ul className="text-lg">
-          <li>
-            <span className="font-semibold">- </span>We do not sell or share
-            your personal information.
-          </li>
-          <li>
-            <span className="font-semibold">- </span>Your data is stored
-            securely and used only to enhance your gameplay experience.
-          </li>
+          <li>{t("section5.noShare")}</li>
+          <li>{t("section5.secureData")}</li>
         </ul>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="children" className="text-2xl font-semibold">
-          6. Children
+          {t("section6.title")}
         </h2>
         <p className="text-lg">
-          {APP_NAME} can be played by any age. No personal data collection from
-          children is required unless they log in with an account.
+          {t("section6.content", { appName: APP_NAME })}
         </p>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="changes-to-this-policy" className="text-2xl font-semibold">
-          7. Changes to This Policy
+          {t("section7.title")}
         </h2>
-        <p className="text-lg">
-          We may update this policy from time to time. Any changes will be
-          posted here.
-        </p>
+        <p className="text-lg">{t("section7.content")}</p>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="user-data-deletion" className="text-2xl font-semibold">
-          8. User data deletion
+          {t("section8.title")}
         </h2>
         <p className="text-lg">
-          If you would like us to delete your account and any personal data we
-          hold about you, please contact us at:{" "}
-          <a href={"mailto:" + EMAIL} className="underline">
-            {EMAIL}
-          </a>
-          . We will respond and take steps to remove your account and associated
-          data upon request.
+          {t.rich("section8.content", {
+            email: () => (
+              <a href={"mailto:" + EMAIL} className="underline">
+                {EMAIL}
+              </a>
+            ),
+          })}
         </p>
       </div>
 
       <div className="flex flex-col gap-1">
         <h2 id="contact-us" className="text-2xl font-semibold">
-          Contact Us
+          {t("contact.title")}
         </h2>
         <p className="text-lg">
-          If you have any questions about this privacy policy or how we handle
-          your data, feel free to contact us at:{" "}
-          <a href={"mailto:" + EMAIL} className="underline">
-            {EMAIL}
-          </a>
+          {t.rich("contact.content", {
+            email: () => (
+              <a href={"mailto:" + EMAIL} className="underline">
+                {EMAIL}
+              </a>
+            ),
+          })}
         </p>
       </div>
     </motion.main>
