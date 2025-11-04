@@ -1,3 +1,4 @@
+import { create } from "zustand";
 import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import {
   AnimationVariant,
@@ -7,7 +8,7 @@ import {
   GameSettings,
   UserStats,
 } from "@/types";
-import { create } from "zustand";
+import { BeforeInstallPromptEvent } from "@/components/InstallListener";
 
 interface IState {
   guesses: string[];
@@ -45,6 +46,8 @@ interface IState {
   settings: GameSettings | null;
   setSettings: (settings: GameSettings | null) => void;
   resetGame: () => void;
+  installdeferredPrompt: BeforeInstallPromptEvent | null;
+  setInstallDeferredPrompt: (e: BeforeInstallPromptEvent | null) => void;
 }
 
 const useStore = create<IState>((set) => ({
@@ -112,6 +115,8 @@ const useStore = create<IState>((set) => ({
       isSubmitting: false,
       wordCreator: null,
     }),
+  installdeferredPrompt: null,
+  setInstallDeferredPrompt: (e) => set({ installdeferredPrompt: e }),
 }));
 
 export default useStore;

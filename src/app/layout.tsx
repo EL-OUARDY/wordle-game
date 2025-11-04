@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
+import InstallListener from "@/components/InstallListener";
+import StoreDebug from "@/components/StoreDebug";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -350,6 +352,8 @@ export default function RootLayout({
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
           <Header />
+          <StoreDebug property="installdeferredPrompt" />
+          <InstallListener />
           {children}
           <Footer />
         </div>
