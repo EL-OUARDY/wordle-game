@@ -1,5 +1,64 @@
 {
-    "HomePage": {
-        "title": "Bonjour Cava!"
+    "HowToPlay": {
+        "title": "Comment jouer",
+        "goal": "Votre objectif est de découvrir le mot caché de 5 lettres en 6 essais.",
+        "rule1": "- Chaque proposition doit être un mot valide de 5 lettres.",
+        "rule2": "- Les couleurs montrent à quel point votre mot est proche de la réponse.",
+        "examples": "Exemples",
+        "correctWord": "sable",
+        "correctExplanation": "<letter>S</letter> est dans le mot et à la bonne position.",
+        "presentWord": "clair",
+        "presentExplanation": "<letter>L</letter> est dans le mot mais à une mauvaise position.",
+        "absentWord": "plage",
+        "absentExplanation": "<letter>A</letter> n'est pas dans le mot."
+    },
+    "PrivacyPolicy": {
+        "title": "Politique de confidentialité – {appName}",
+        "intro": "Chez {appName}, votre vie privée est importante. Cette page explique comment nous traitons vos informations lorsque vous jouez à notre jeu.",
+        "section1": {
+            "title": "1. Informations que nous collectons",
+            "anonymous": "<underline>Joueurs anonymes :</underline> Aucune donnée personnelle n'est collectée.",
+            "loggedIn": "<underline>Utilisateurs connectés :</underline> Seules les statistiques de jeu sont collectées. L'authentification se fait via Firebase (Google, Facebook ou Microsoft) et les mots de passe ne sont jamais stockés."
+        },
+        "section2": {
+            "title": "2. Comment nous stockons les données",
+            "gameSettings": "<underline>Paramètres du jeu :</underline> Enregistrés localement sur votre appareil via le stockage local.",
+            "userStats": "<underline>Statistiques utilisateur :</underline> Si vous êtes connecté, vos statistiques de jeu sont enregistrées de façon sécurisée dans le cloud via Google Firebase.",
+            "analytics": "<underline>Analyses :</underline> Nous utilisons Google Analytics pour comprendre l'utilisation du jeu et améliorer votre expérience. Aucune donnée personnelle n'est partagée."
+        },
+        "section3": {
+            "title": "3. Cookies",
+            "content": "Nous n'utilisons pas de cookies."
+        },
+        "section4": {
+            "title": "4. Jouer au jeu",
+            "anonPlay": "- Vous pouvez jouer anonymement sans créer de compte.",
+            "createAccount": "- Créer un compte vous permet de sauvegarder vos statistiques sur plusieurs appareils."
+        },
+        "section5": {
+            "title": "5. Sécurité",
+            "noShare": "- Nous ne vendons ni ne partageons vos informations personnelles.",
+            "secureData": "- Vos données sont stockées en toute sécurité et utilisées uniquement pour améliorer votre expérience de jeu."
+        },
+        "section6": {
+            "title": "6. Enfants",
+            "content": "{appName} peut être joué par tous les âges. Aucune collecte de données personnelles auprès des enfants n'est effectuée sauf s'ils se connectent avec un compte."
+        },
+        "section7": {
+            "title": "7. Modifications de cette politique",
+            "content": "Nous pouvons mettre à jour cette politique de temps à autre. Toute modification sera publiée ici."
+        },
+        "section8": {
+            "title": "8. Suppression des données utilisateur",
+            "content": "Si vous souhaitez que nous supprimions votre compte et toutes les données personnelles que nous détenons à votre sujet, veuillez nous contacter à : <email></email>. Nous répondrons et prendrons les mesures nécessaires pour supprimer votre compte et les données associées sur demande."
+        },
+        "contact": {
+            "title": "Nous contacter",
+            "content": "Si vous avez des questions concernant cette politique de confidentialité ou la façon dont nous traitons vos données, n'hésitez pas à nous contacter à : <email></email>"
+        }
+    },
+    "Login": {
+        "intro": "Suivez votre progression, gagnez des badges et célébrez vos victoires Wordle.",
+        "cta": "Connectez-vous ou créez un compte gratuit"
     }
 }

@@ -1,5 +1,64 @@
 {
-    "HomePage": {
-        "title": "Hello world!"
+    "HowToPlay": {
+        "title": "How To Play",
+        "goal": "Your goal is to discover the hidden 5-letter word within 6 attempts.",
+        "rule1": "- Each guess you make must be a valid 5-letter word.",
+        "rule2": "- Tile colors show how close your guess is to the answer.",
+        "examples": "Examples",
+        "correctWord": "stone",
+        "correctExplanation": "<letter>S</letter> is in the word and in the correct spot.",
+        "presentWord": "blink",
+        "presentExplanation": "<letter>L</letter> is in the word but in the wrong spot.",
+        "absentWord": "crane",
+        "absentExplanation": "<letter>A</letter> is not in the word in any spot."
+    },
+    "PrivacyPolicy": {
+        "title": "Privacy Policy – {appName}",
+        "intro": "At {appName}, your privacy matters. This page explains how we handle your information when you play our game.",
+        "section1": {
+            "title": "1. Information We Collect",
+            "anonymous": "<underline>Anonymous Players:</underline> No personal data is collected.",
+            "loggedIn": "<underline>Logged-in Users:</underline> Only game statistics are collected. Authentication is via Firebase (Google, Facebook, or Microsoft), and passwords are never stored."
+        },
+        "section2": {
+            "title": "2. How We Store Data",
+            "gameSettings": "<underline>Game Settings:</underline> Saved locally on your device using local storage.",
+            "userStats": "<underline>User Stats:</underline> If you’re logged in, your game statistics are saved securely in the cloud via Google Firebase.",
+            "analytics": "<underline>Analytics:</underline> We use Google Analytics to understand game usage and improve your experience. No personal data is shared."
+        },
+        "section3": {
+            "title": "3. Cookies",
+            "content": "We do not use cookies."
+        },
+        "section4": {
+            "title": "4. Playing the Game",
+            "anonPlay": "- You can play anonymously without creating an account.",
+            "createAccount": "- Creating an account lets you save stats across devices."
+        },
+        "section5": {
+            "title": "5. Safety & Security",
+            "noShare": "- We do not sell or share your personal information.",
+            "secureData": "- Your data is stored securely and used only to enhance your gameplay experience."
+        },
+        "section6": {
+            "title": "6. Children",
+            "content": "{appName} can be played by any age. No personal data collection from children is required unless they log in with an account."
+        },
+        "section7": {
+            "title": "7. Changes to This Policy",
+            "content": "We may update this policy from time to time. Any changes will be posted here."
+        },
+        "section8": {
+            "title": "8. User data deletion",
+            "content": "If you would like us to delete your account and any personal data we hold about you, please contact us at: <email></email>. We will respond and take steps to remove your account and associated data upon request."
+        },
+        "contact": {
+            "title": "Contact Us",
+            "content": "If you have any questions about this privacy policy or how we handle your data, feel free to contact us at: <email></email>"
+        }
+    },
+    "Login": {
+        "intro": "Track your progress, earn badges, and celebrate your Wordle wins.",
+        "cta": "Log in or create a free account"
     }
 }

@@ -3,18 +3,18 @@ import React from "react";
 import useAuth from "@/hooks/useAuth";
 import Button from "@/components/ui/button";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 interface Props {
   className?: string;
 }
 function Login({ className }: Props) {
   const { login } = useAuth();
+  const t = useTranslations("Login");
 
   return (
     <div className={clsx("flex flex-col gap-4", className)}>
-      <h3 className="mx-auto text-center text-2xl">
-        Track your progress, earn badges, and celebrate your Wordle wins.
-      </h3>
+      <h3 className="mx-auto text-center text-2xl">{t("intro")}</h3>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -22,7 +22,7 @@ function Login({ className }: Props) {
         </div>
         <div className="relative flex justify-center text-lg">
           <span className="bg-background text-muted-foreground px-2">
-            Log in or create a free account
+            {t("cta")}
           </span>
         </div>
       </div>
