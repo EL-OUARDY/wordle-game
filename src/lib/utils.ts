@@ -177,9 +177,13 @@ export async function captureAndShare() {
 
   const scale = 4; // 4x resolution
 
+  const bgColor = getComputedStyle(document.documentElement).getPropertyValue(
+    "--background",
+  );
+
   const dataUrl = await htmlToImage.toPng(el, {
     cacheBust: true,
-    backgroundColor: "#ffffff",
+    backgroundColor: bgColor,
     width: el.offsetWidth * scale,
     height: el.offsetHeight * scale,
     style: {
