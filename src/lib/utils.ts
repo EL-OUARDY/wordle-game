@@ -1,10 +1,11 @@
 import { APP_NAME, LANGUAGES, WORD_LENGTH } from "@/lib/constants";
-import { Language, LetterStatus } from "@/types";
+import { Language, LetterStatus, Locale } from "@/types";
 import clsx, { ClassValue } from "clsx";
 import { intervalToDuration } from "date-fns";
 import { Variants } from "motion";
 import { twMerge } from "tailwind-merge";
 import * as htmlToImage from "html-to-image";
+import { languagesList } from "@/components/LanguagesMenu";
 
 export const ranks = [
   { name: "Novice", min: 0, color: "#10B981" }, // teal/green
@@ -211,4 +212,9 @@ export async function captureAndShare() {
     link.download = filename;
     link.click();
   }
+}
+
+export function getLocale(language: Language): Locale {
+  const local = languagesList.find((l) => l.name === language)?.local;
+  return local || "en";
 }

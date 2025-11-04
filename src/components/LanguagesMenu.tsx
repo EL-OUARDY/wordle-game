@@ -1,4 +1,4 @@
-import { Language } from "@/types";
+import { Language, Locale } from "@/types";
 import clsx from "clsx";
 import Link from "next/link";
 import React, { ReactNode } from "react";
@@ -20,6 +20,7 @@ interface LanguagesList {
   displayName: string;
   link: string;
   icon: ReactNode;
+  local: Locale;
 }
 
 export const languagesList: LanguagesList[] = [
@@ -28,30 +29,35 @@ export const languagesList: LanguagesList[] = [
     displayName: "English",
     link: "english",
     icon: <UKFlagIcon className="size-5" />,
+    local: "en",
   },
   {
     name: "French",
     displayName: "Français",
     link: "french",
     icon: <FranceFlagIcon className="size-5" />,
+    local: "fr",
   },
   {
     name: "Spanish",
     displayName: "Español",
     link: "spanish",
     icon: <SpainFlagIcon className="size-5" />,
+    local: "es",
   },
   {
     name: "German",
     displayName: "Deutsch",
     link: "german",
     icon: <GermnayFlagIcon className="size-5" />,
+    local: "de",
   },
   {
     name: "Arabic",
     displayName: "العربية",
     link: "arabic",
     icon: <SaudiArabiaFlagIcon className="size-5" />,
+    local: "ar",
   },
 ];
 

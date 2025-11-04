@@ -51,7 +51,6 @@ function Header({ className }: Props) {
   const language = useStore((s) => s.language);
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const isGameOver = useStore((s) => s.isGameOver);
-  const settings = useStore((s) => s.settings);
 
   const { user } = useAuth();
 
@@ -228,7 +227,7 @@ function Header({ className }: Props) {
               className="size-12 sm:size-14"
               aria-label="Choose Language"
             >
-              {!language || language === settings?.defaultLanguage ? (
+              {!language ? (
                 <GlobeIcon className="size-[1.35rem] sm:size-6" />
               ) : (
                 languagesList.find((l) => l.name === language)?.icon

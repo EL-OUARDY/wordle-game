@@ -1,4 +1,5 @@
 export type Language = "English" | "French" | "Spanish" | "German" | "Arabic";
+export type Locale = "en" | "fr" | "es" | "de" | "ar";
 
 export type LetterStatus = "correct" | "present" | "absent";
 

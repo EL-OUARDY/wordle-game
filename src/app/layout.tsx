@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import localFont from "next/font/local";
+import { NextIntlClientProvider } from "next-intl";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
 import InstallListener from "@/components/InstallListener";
-import StoreDebug from "@/components/StoreDebug";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -351,11 +351,12 @@ export default function RootLayout({
       </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
-          <Header />
-          <StoreDebug property="installdeferredPrompt" />
-          <InstallListener />
-          {children}
-          <Footer />
+          <NextIntlClientProvider>
+            <Header />
+            <InstallListener />
+            {children}
+            <Footer />
+          </NextIntlClientProvider>
         </div>
       </body>
     </html>
