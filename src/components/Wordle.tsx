@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import CreateService from "@/services/create";
 import { MotionConfig } from "motion/react";
 import { defaultSettings } from "@/components/Settings";
+import { languagesList } from "@/components/LanguagesMenu";
 
 interface Props {
   language?: Language;
@@ -50,9 +51,12 @@ function Wordle({ language, className }: Props) {
     }
     // From user's settings if prop is not defined
     if (settings) {
-      setLanguage(settings.defaultLanguage);
+      const link = languagesList.find(
+        (l) => l.name === settings.defaultLanguage,
+      )?.link;
+      if (link) router.push(link);
     }
-  }, [language, setLanguage, settings]);
+  }, [language, router, setLanguage, settings]);
 
   // Load saved settings from localStorage on mount
   useEffect(() => {
