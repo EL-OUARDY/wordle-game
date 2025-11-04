@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import LogoIcon from "@/components/ui/icons/logo";
 import useAuth from "@/hooks/useAuth";
 import { APP_NAME, BMC_LINK } from "@/lib/constants";
@@ -48,13 +48,13 @@ function SideBar({ onClose }: Props) {
 
           <div className="grid grid-cols-2">
             {languagesList.map((language, index) => (
-              <Fragment key={index}>
+              <div className="py-1" key={index}>
                 {language.available ? (
                   <Link
                     onClick={onClose}
                     href={language.link}
                     className={clsx(
-                      "language relative flex items-center gap-3 py-1 text-lg hover:underline",
+                      "language relative flex size-fit items-center gap-3 text-lg hover:underline",
                     )}
                   >
                     {language.icon}
@@ -63,14 +63,14 @@ function SideBar({ onClose }: Props) {
                 ) : (
                   <span
                     className={clsx(
-                      "language relative flex items-center gap-3 py-1 text-lg",
+                      "language relative flex w-fit items-center gap-3 text-lg",
                     )}
                   >
                     <span className="grayscale filter">{language.icon}</span>
                     <span>{language.displayName}</span>
                   </span>
                 )}
-              </Fragment>
+              </div>
             ))}
           </div>
         </div>
