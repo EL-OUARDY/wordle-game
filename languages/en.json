@@ -101,5 +101,20 @@
         "statistics": "Statistics",
         "howToPlay": "How To Play",
         "settings": "Settings"
+    },
+    "CreateWordle": {
+        "creation": {
+            "title": "Create your own Wordle!",
+            "description": "Make a custom Wordle and challenge your friends! Just enter your secret word below and share the link.",
+            "inputWordPlaceholder": "YOUR {wordLength}-LETTER WORD",
+            "inputNamePlaceholder": "Your Name (Optional)",
+            "buttonDefault": "Create & Share",
+            "buttonLoading": "Creating .."
+        },
+        "ready": {
+            "title": "Your Wordle is ready!",
+            "copyButtonDefault": "Copy Link",
+            "copyButtonSuccess": "Copied"
+        }
     }
 }

@@ -11,6 +11,7 @@ import CreateService from "@/services/create";
 import { Language } from "@/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
 function Create() {
@@ -21,6 +22,8 @@ function Create() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
   const [isLinkCopied, setIsLinkCopied] = useState<boolean>(false);
+
+  const t = useTranslations("CreateWordle");
 
   const create = async () => {
     if (isLoading) return;
@@ -52,12 +55,9 @@ function Create() {
       {!wordId ? (
         <div className="create-form flex flex-col gap-4">
           <h3 className="border-key-background border-b pb-4 text-2xl font-semibold">
-            Create your own Wordle!
+            {t("creation.title")}
           </h3>
-          <p className="support text-xl">
-            Make a custom Wordle and challenge your friends! Just enter your
-            secret word below and share the link.
-          </p>
+          <p className="support text-xl">{t("creation.description")}</p>
 
           <div className="bg-tile-background border-key-background flex flex-col gap-4 rounded-xl border p-4">
             <motion.input
@@ -65,7 +65,10 @@ function Create() {
               onChange={(e) => setWord(e.target.value)}
               type="text"
               className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center text-lg font-semibold tracking-wider uppercase placeholder:tracking-normal"
-              placeholder={`Your ${WORD_LENGTH}-letter word`}
+              // placeholder={`Your ${WORD_LENGTH}-letter word`}
+              placeholder={t("creation.inputWordPlaceholder", {
+                wordLength: 5,
+              })}
               maxLength={5}
               animate={
                 isInvalid && {
@@ -82,7 +85,7 @@ function Create() {
               onChange={(e) => setName(e.target.value)}
               type="text"
               className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center text-lg font-semibold tracking-wider capitalize placeholder:tracking-normal"
-              placeholder="Your Name (optional)"
+              placeholder={t("creation.inputNamePlaceholder")}
               disabled={isLoading}
               maxLength={30}
             />
@@ -94,7 +97,7 @@ function Create() {
                 isLoading && "text-key-background",
                 "flex items-center gap-2 !rounded-xl !py-3 !text-lg",
               )}
-              aria-label="Create & Share"
+              aria-label={t("creation.buttonDefault")}
               whileTap={{ scale: 0.95 }}
             >
               {isLoading ? (
@@ -102,7 +105,9 @@ function Create() {
               ) : (
                 <LogoIcon className="size-5" />
               )}
-              {isLoading ? "Creating .." : "Create & Share"}
+              {isLoading
+                ? t("creation.buttonLoading")
+                : t("creation.buttonDefault")}
             </Button>
           </div>
 
@@ -111,7 +116,7 @@ function Create() {
       ) : (
         <div className="word-created flex flex-col gap-4">
           <p className="support mt-4 text-center text-2xl">
-            Your Wordle is ready!
+            {t("ready.title")}
           </p>
           <div className="bg-tile-background border-key-background flex flex-col gap-4 rounded-xl border p-4">
             {/* Word reveal */}
@@ -164,7 +169,9 @@ function Create() {
               ) : (
                 <Check className="size-5" />
               )}
-              {!isLinkCopied ? "Copy Link" : "Copied"}
+              {!isLinkCopied
+                ? t("ready.copyButtonDefault")
+                : t("ready.copyButtonSuccess")}
             </Button>
           </div>
           <hr className="separator border-key-background" />

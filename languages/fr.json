@@ -101,5 +101,20 @@
         "statistics": "Statistiques",
         "howToPlay": "Comment jouer",
         "settings": "Paramètres"
+    },
+    "CreateWordle": {
+        "creation": {
+            "title": "Créez votre Wordle personnalisé !",
+            "description": "Créez un Wordle personnalisé et défiez vos amis ! Saisissez simplement votre mot secret ci-dessous et partagez le lien.",
+            "inputWordPlaceholder": "VOTRE MOT DE {wordLength} LETTRES",
+            "inputNamePlaceholder": "Votre nom (facultatif)",
+            "buttonDefault": "Créer et partager",
+            "buttonLoading": "Création en cours..."
+        },
+        "ready": {
+            "title": "Votre Wordle est prêt !",
+            "copyButtonDefault": "Copier le lien",
+            "copyButtonSuccess": "Copié"
+        }
     }
 }
