@@ -70,20 +70,17 @@ function Header({ className }: Props) {
       title: APP_NAME,
       content: <SideBar onClose={() => setIsMenuOpen(false)} />,
       direction: "left",
-      showTitle: false,
     },
     statistics: {
       title: "Statistics",
       content: <UserStats />,
       direction: isDesktop ? "center" : "bottom",
-      showTitle: false,
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
     create: {
       title: "Create your own Wordle",
       content: <Create />,
       direction: isDesktop ? "center" : "bottom",
-      showTitle: false,
     },
   };
 

@@ -21,7 +21,7 @@ function Drawer({
   direction = "bottom",
   className,
   title = "",
-  showTitle = true,
+  showTitle = false,
 }: Props) {
   // Close when pressing escape
   useEffect(() => {

@@ -23,6 +23,9 @@ function HowToPlay() {
 
   return (
     <div className="flex flex-col gap-4 text-lg">
+      <div className="border-key-background flex items-center gap-2 border-b pb-4">
+        <h2 className="text-2xl font-semibold">How To Play</h2>
+      </div>
       <p className="text-balance">
         Your goal is to discover the hidden 5-letter word within 6 attempts.
       </p>

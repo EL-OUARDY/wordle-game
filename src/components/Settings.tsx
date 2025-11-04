@@ -131,6 +131,10 @@ function Settings() {
   return (
     <div className="settings relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
+        <div className="border-key-background flex items-center gap-2 border-b pb-4">
+          <h2 className="text-2xl font-semibold">Settings</h2>
+        </div>
+
         <div className="default-language flex items-center justify-between">
           <label className="font-semibold" htmlFor="default-language">
             Default Language
