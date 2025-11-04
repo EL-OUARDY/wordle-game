@@ -116,5 +116,37 @@
             "copyButtonDefault": "Copier le lien",
             "copyButtonSuccess": "Copié"
         }
+    },
+    "Ranks": {
+        "Novice": "Novice",
+        "Rookie": "Débutant",
+        "Skilled": "Compétent",
+        "Expert": "Expert",
+        "Master": "Maître",
+        "Knight": "Chevalier",
+        "Wordle King": "Roi du Wordle",
+        "Legend": "Légende",
+        "Elite": "Élite",
+        "Villain": "Vilain",
+        "Hero": "Héros",
+        "Wizard": "Sorcier",
+        "Devil": "Diable",
+        "Angel": "Ange",
+        "GOD": "DIEU"
+    },
+    "Sidebar": {
+        "welcomeText": "Jouez à Wordle gratuitement, dans votre langue, sans publicités — du plaisir illimité !",
+        "languages": "Langues",
+        "support": {
+            "title": "Soutenez le jeu pour qu'il reste gratuit, sans publicités et amusant pour tous !",
+            "button": "Offrez-nous un café"
+        },
+        "userProfile": {
+            "text": "Suivez vos statistiques de jeu en vous connectant ou en créant un compte gratuit.",
+            "rankLabel": "Rang : <rank></rank>",
+            "shareButton": "Partager",
+            "loginButton": "Connexion",
+            "logoutButton": "Déconnexion"
+        }
     }
 }

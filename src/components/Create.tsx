@@ -65,9 +65,8 @@ function Create() {
               onChange={(e) => setWord(e.target.value)}
               type="text"
               className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center text-lg font-semibold tracking-wider uppercase placeholder:tracking-normal"
-              // placeholder={`Your ${WORD_LENGTH}-letter word`}
               placeholder={t("creation.inputWordPlaceholder", {
-                wordLength: 5,
+                wordLength: WORD_LENGTH,
               })}
               maxLength={5}
               animate={

@@ -14,6 +14,7 @@ import BuyMeACofeeIcon from "@/components/ui/icons/bmc";
 import { languagesList } from "@/components/LanguagesMenu";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
+import { useTranslations } from "next-intl";
 
 interface Props {
   onClose?: () => void;
@@ -28,6 +29,9 @@ function SideBar({ onClose }: Props) {
     : 0;
   const rank = getRank(wins);
 
+  const t = useTranslations("Sidebar");
+  const tRanks = useTranslations("Ranks");
+
   return (
     <div className="sidebar relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
@@ -35,14 +39,11 @@ function SideBar({ onClose }: Props) {
           <LogoIcon className="size-[1.35rem] sm:size-6" />
           <h2 className="text-2xl font-semibold">{APP_NAME}</h2>
         </div>
-        <p className="text-lg">
-          Play Wordle for free, in your language, with no ads — unlimited fun,
-          no limits!
-        </p>
+        <p className="text-lg">{t("welcomeText")}</p>
 
         <div className="languages">
           <div className="mb-2 flex items-center gap-2">
-            <h3 className="text-xl font-semibold">Languages</h3>
+            <h3 className="text-xl font-semibold">{t("languages")}</h3>
             <hr className="separator border-key-background flex-1" />
           </div>
 
@@ -77,9 +78,7 @@ function SideBar({ onClose }: Props) {
 
         <hr className="separator border-key-background" />
 
-        <p className="support text-xl text-balance">
-          Support the game and keep it free, ad-free, and fun for everyone!
-        </p>
+        <p className="support text-xl text-balance">{t("support.title")}</p>
 
         <motion.a
           href={BMC_LINK}
@@ -89,7 +88,7 @@ function SideBar({ onClose }: Props) {
           whileTap={{ scale: 0.95 }}
         >
           <BuyMeACofeeIcon className="size-5" />
-          Buy us a coffee
+          {t("support.button")}
         </motion.a>
       </div>
 
@@ -130,19 +129,22 @@ function SideBar({ onClose }: Props) {
                 </div>
 
                 <div className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden px-2">
-                  <span>Rank:</span>
+                  {t.rich("userProfile.rankLabel", {
+                    rank: () => (
+                      <span
+                        className="relative text-base font-normal"
+                        style={{ color: rank.color }}
+                      >
+                        {tRanks(rank.name)}
+                      </span>
+                    ),
+                  })}
                   <div
                     className="absolute inset-0 opacity-10"
                     style={{
                       backgroundColor: rank.color,
                     }}
                   />
-                  <span
-                    className="relative text-base font-normal"
-                    style={{ color: rank.color }}
-                  >
-                    {rank.name}
-                  </span>
                 </div>
               </div>
             </div>
@@ -152,11 +154,11 @@ function SideBar({ onClose }: Props) {
                 variant="outline"
                 onClick={share}
                 className="flex flex-1 items-center gap-2 rounded-xl !px-2 !py-1 normal-case"
-                aria-label="Share"
+                aria-label={t("userProfile.shareButton")}
                 whileTap={{ scale: 0.95 }}
               >
                 <ShareIcon className="size-4" />
-                Share
+                {t("userProfile.shareButton")}
               </Button>
               <Button
                 onClick={() => {
@@ -165,29 +167,27 @@ function SideBar({ onClose }: Props) {
                   window.location.href = window.location.href;
                 }}
                 className="flex flex-1 items-center gap-2 rounded-xl !px-2 !py-1 normal-case"
-                aria-label="Log out"
+                aria-label={t("userProfile.logoutButton")}
                 whileTap={{ scale: 0.95 }}
               >
                 <LogoutIcon className="size-4" />
-                Log out
+                {t("userProfile.logoutButton")}
               </Button>
             </div>
           </>
         ) : (
           <>
-            <p className="text-lg">
-              Track your game stats by logging in or creating a free account.
-            </p>
+            <p className="text-lg">{t("userProfile.text")}</p>
             <div className="controls flex w-full justify-between gap-4">
               <Button
                 variant="outline"
                 onClick={share}
                 className="flex flex-1 items-center gap-2 rounded-xl !px-2 !py-1 normal-case"
-                aria-label="Share"
+                aria-label={t("userProfile.shareButton")}
                 whileTap={{ scale: 0.95 }}
               >
                 <ShareIcon className="size-4" />
-                Share
+                {t("userProfile.shareButton")}
               </Button>
               <motion.span
                 className="bg-button-background text-button-foreground flex-1 cursor-pointer gap-2 rounded-xl !px-2 !py-1 text-center text-[1.06rem] transition-colors duration-300"
@@ -197,10 +197,10 @@ function SideBar({ onClose }: Props) {
                   className="flex items-center justify-center gap-2"
                   href={"/login"}
                   onClick={onClose}
-                  aria-label="Log in"
+                  aria-label={t("userProfile.loginButton")}
                 >
                   <UserIcon className="size-4" />
-                  Log in
+                  {t("userProfile.loginButton")}
                 </Link>
               </motion.span>
             </div>

@@ -116,5 +116,37 @@
             "copyButtonDefault": "Copy Link",
             "copyButtonSuccess": "Copied"
         }
+    },
+    "Ranks": {
+        "Novice": "Novice",
+        "Rookie": "Rookie",
+        "Skilled": "Skilled",
+        "Expert": "Expert",
+        "Master": "Master",
+        "Knight": "Knight",
+        "Wordle King": "Wordle King",
+        "Legend": "Legend",
+        "Elite": "Elite",
+        "Villain": "Villain",
+        "Hero": "Hero",
+        "Wizard": "Wizard",
+        "Devil": "Devil",
+        "Angel": "Angel",
+        "GOD": "GOD"
+    },
+    "Sidebar": {
+        "welcomeText": "Play Wordle for free, in your language, with no ads — unlimited fun, no limits!",
+        "languages": "Languages",
+        "support": {
+            "title": "Support the game and keep it free, ad-free, and fun for everyone!",
+            "button": "Buy us a coffee"
+        },
+        "userProfile": {
+            "text": "Track your game stats by logging in or creating a free account.",
+            "rankLabel": "Rank: <rank></rank>",
+            "shareButton": "Share",
+            "loginButton": "Log in",
+            "logoutButton": "Log out"
+        }
     }
 }
