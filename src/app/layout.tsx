@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
 import InstallListener from "@/components/InstallListener";
+import { getUserLocale } from "@/services/locale";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -302,13 +303,19 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getUserLocale();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
+      suppressHydrationWarning
+    >
       <head>
         {/* Meta tags */}
         <meta name="theme-color" content="#ffffff" />
