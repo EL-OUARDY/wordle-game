@@ -15,7 +15,6 @@ import CreateService from "@/services/create";
 import { MotionConfig } from "motion/react";
 import { defaultSettings } from "@/components/Settings";
 import { languagesList } from "@/components/LanguagesMenu";
-import { useTranslations } from "next-intl";
 import { setUserLocale } from "@/services/locale";
 import { getLocale } from "@/lib/utils";
 
@@ -135,15 +134,11 @@ function Wordle({ language, className }: Props) {
     });
   }, [isGameOver, router, searchParams]);
 
-  const t = useTranslations("HomePage");
-
   return (
     <MotionConfig
       key={settings?.reduceMotion ? "reduce" : "normal"}
       reducedMotion={settings?.reduceMotion ? "always" : "never"}
     >
-      <h1 className="text-3xl">{t("title")}</h1>
-
       <div
         className={clsx(
           className,

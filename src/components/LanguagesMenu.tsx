@@ -21,6 +21,7 @@ interface LanguagesList {
   link: string;
   icon: ReactNode;
   local: Locale;
+  available: boolean;
 }
 
 export const languagesList: LanguagesList[] = [
@@ -30,6 +31,7 @@ export const languagesList: LanguagesList[] = [
     link: "english",
     icon: <UKFlagIcon className="size-5" />,
     local: "en",
+    available: true,
   },
   {
     name: "French",
@@ -37,6 +39,7 @@ export const languagesList: LanguagesList[] = [
     link: "french",
     icon: <FranceFlagIcon className="size-5" />,
     local: "fr",
+    available: true,
   },
   {
     name: "Spanish",
@@ -44,6 +47,7 @@ export const languagesList: LanguagesList[] = [
     link: "spanish",
     icon: <SpainFlagIcon className="size-5" />,
     local: "es",
+    available: false,
   },
   {
     name: "German",
@@ -51,6 +55,7 @@ export const languagesList: LanguagesList[] = [
     link: "german",
     icon: <GermnayFlagIcon className="size-5" />,
     local: "de",
+    available: false,
   },
   {
     name: "Arabic",
@@ -58,6 +63,7 @@ export const languagesList: LanguagesList[] = [
     link: "arabic",
     icon: <SaudiArabiaFlagIcon className="size-5" />,
     local: "ar",
+    available: false,
   },
 ];
 
@@ -73,20 +79,32 @@ function LanguagesMenu({ className, onClick }: Props) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05, duration: 0.2 }}
         >
-          <Link
-            onClick={onClick}
-            href={language.link}
-            className={clsx(
-              index < languagesList.length - 1 && "border-b",
-              "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2 text-lg",
-            )}
-          >
-            {language.icon}
-            <span>{language.displayName}</span>
-            {siteLanguage === language.name && (
-              <span className="bg-key-background absolute top-0 left-0 h-full w-1"></span>
-            )}
-          </Link>
+          {language.available ? (
+            <Link
+              onClick={onClick}
+              href={language.link}
+              className={clsx(
+                index < languagesList.length - 1 && "border-b",
+                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2 text-lg",
+              )}
+            >
+              {language.icon}
+              <span>{language.displayName}</span>
+              {siteLanguage === language.name && (
+                <span className="bg-key-background absolute top-0 left-0 h-full w-1"></span>
+              )}
+            </Link>
+          ) : (
+            <span
+              className={clsx(
+                index < languagesList.length - 1 && "border-b",
+                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2 text-lg",
+              )}
+            >
+              <span className="grayscale filter">{language.icon}</span>
+              <span>{language.displayName}</span>
+            </span>
+          )}
         </motion.div>
       ))}
     </div>
