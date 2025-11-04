@@ -138,7 +138,7 @@ function Create() {
             </div>
 
             <input
-              value={`${window.location.origin}/?w=${wordId}`}
+              value={`${window.location.origin}/${language?.toLowerCase()}?w=${wordId}`}
               type="text"
               className="border-key-background bg-background rounded-xl border px-4 py-2 text-lg tracking-wider"
               readOnly
@@ -146,7 +146,7 @@ function Create() {
 
             <Button
               onClick={() => {
-                const link = `${window.location.origin}?w=${wordId}`;
+                const link = `${window.location.origin}/${language?.toLowerCase()}?w=${wordId}`;
                 navigator.clipboard.writeText(link as string);
                 setIsLinkCopied(true);
                 setTimeout(() => setIsLinkCopied(false), 2000);
