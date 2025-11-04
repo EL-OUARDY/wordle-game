@@ -14,10 +14,18 @@ import Login from "@/components/Login";
 import Image from "next/image";
 import LogoIcon from "@/components/ui/icons/logo";
 import { APP_NAME } from "@/lib/constants";
-import { getRank, wordlesToNextRank } from "@/lib/utils";
+import {
+  captureStatsAndShare,
+  getLocale,
+  getRank,
+  wordlesToNextRank,
+} from "@/lib/utils";
+import Button from "@/components/ui/button";
+import ShareIcon from "@/components/ui/icons/share";
 
 function UserStats() {
   const stats = useStore((s) => s.userStats);
+  const language = useStore((s) => s.language);
   const { user } = useAuth();
 
   const wins = stats
@@ -49,7 +57,7 @@ function UserStats() {
       {!user || !stats ? (
         <Login className="mx-auto max-w-xs sm:mt-2" />
       ) : (
-        <div className="user-stats flex flex-col gap-4 px-4">
+        <div id="user-stats" className="user-stats flex flex-col gap-4 px-4">
           <hr className="separator border-key-background" />
 
           <div className="user-info flex items-center gap-2 py-2">
@@ -211,16 +219,28 @@ function UserStats() {
 
           <hr className="separator border-key-background" />
 
-          <div className="text-muted-foreground ml-auto">
-            Playing since{" "}
-            {new Date(user.metadata.creationTime!).toLocaleDateString(
-              undefined,
-              {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              },
-            )}
+          <div className="flex items-center justify-between">
+            <div className="text-muted-foreground">
+              Playing since{" "}
+              {new Date(user.metadata.creationTime!).toLocaleDateString(
+                getLocale(language || "English"),
+                {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                },
+              )}
+            </div>
+            <Button
+              variant="outline"
+              onClick={captureStatsAndShare}
+              className="share-btn flex items-center gap-2 rounded-xl border-0 px-0 !py-0 normal-case"
+              aria-label="Share"
+              whileTap={{ scale: 0.95 }}
+            >
+              <ShareIcon className="size-4" />
+              Share
+            </Button>
           </div>
         </div>
       )}

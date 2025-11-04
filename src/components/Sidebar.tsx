@@ -149,7 +149,7 @@ function SideBar({ onClose }: Props) {
               </div>
             </div>
 
-            <div className="controls flex w-full justify-between gap-4">
+            <div className="controls flex w-full justify-between gap-2">
               <Button
                 variant="outline"
                 onClick={share}
@@ -178,7 +178,7 @@ function SideBar({ onClose }: Props) {
         ) : (
           <>
             <p className="text-lg">{t("userProfile.text")}</p>
-            <div className="controls flex w-full justify-between gap-4">
+            <div className="controls flex w-full justify-between gap-2">
               <Button
                 variant="outline"
                 onClick={share}

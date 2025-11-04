@@ -170,7 +170,7 @@ export function removeArabicDiacritics(word: string) {
   );
 }
 
-export async function captureAndShare() {
+export async function captureBoardAndShare() {
   const el = document.getElementById("board");
   if (!el) return;
 
@@ -196,6 +196,61 @@ export async function captureAndShare() {
   });
 
   const filename = `${APP_NAME}.png`;
+
+  const blob = await (await fetch(dataUrl)).blob();
+  const file = new File([blob], filename, { type: blob.type });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    await navigator.share({
+      files: [file],
+      title: APP_NAME,
+      text: `${APP_NAME} 🧩\n${window.location.href}`,
+    });
+  } else {
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = filename;
+    link.click();
+  }
+}
+
+export async function captureStatsAndShare() {
+  const el = document.getElementById("user-stats");
+  if (!el) return;
+
+  await document.fonts.ready; // ensure custom fonts are loaded
+
+  const scale = 4; // 4x resolution
+
+  const bgColor = getComputedStyle(document.documentElement).getPropertyValue(
+    "--background",
+  );
+
+  // Hide share button and add padding temporarily
+  const shareBtn: HTMLButtonElement | null = document.querySelector(
+    "#user-stats .share-btn",
+  );
+  if (shareBtn) shareBtn.style.visibility = "hidden";
+  el.style.paddingBottom = "1rem";
+
+  const dataUrl = await htmlToImage.toPng(el, {
+    cacheBust: true,
+    backgroundColor: bgColor,
+    width: el.offsetWidth * scale,
+    height: el.offsetHeight * scale,
+    style: {
+      transform: `scale(${scale})`,
+      transformOrigin: "top left",
+      width: `${el.offsetWidth}px`,
+      height: `${el.offsetHeight}px`,
+    },
+  });
+
+  // Reset styles
+  if (shareBtn) shareBtn.style.visibility = "visible";
+  el.style.paddingBottom = "0";
+
+  const filename = `${APP_NAME}-stats.png`;
 
   const blob = await (await fetch(dataUrl)).blob();
   const file = new File([blob], filename, { type: blob.type });

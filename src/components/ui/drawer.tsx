@@ -106,7 +106,7 @@ function Drawer({
               >
                 {title}
               </VaulDrawer.Title>
-              <div className="w.full flex-1">{children}</div>
+              <div className="w-full flex-1">{children}</div>
             </div>
           </div>
         </VaulDrawer.Content>
