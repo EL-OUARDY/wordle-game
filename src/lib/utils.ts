@@ -1,4 +1,4 @@
-import { LANGUAGES, WORD_LENGTH } from "@/lib/constants";
+import { APP_NAME, LANGUAGES, WORD_LENGTH } from "@/lib/constants";
 import { Language, LetterStatus } from "@/types";
 import clsx, { ClassValue } from "clsx";
 import { intervalToDuration } from "date-fns";
@@ -120,7 +120,7 @@ export const share = async () => {
       await navigator.share({
         title,
         url,
-        text: `${title} 🧩\nPlay here: ${url}`,
+        text: `${title} 🧩\n${url}`,
       });
     } catch (err: unknown) {
       if (err instanceof DOMException && err.name !== "AbortError") {
@@ -194,19 +194,21 @@ export async function captureAndShare() {
     },
   });
 
+  const filename = `${APP_NAME}.png`;
+
   const blob = await (await fetch(dataUrl)).blob();
-  const file = new File([blob], "wordle-share.png", { type: blob.type });
+  const file = new File([blob], filename, { type: blob.type });
 
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     await navigator.share({
       files: [file],
-      title: "My Wordle Result",
-      text: `Check out my Wordle result! 🧩\nPlay here: ${window.location.href}`,
+      title: APP_NAME,
+      text: `${APP_NAME} 🧩\n${window.location.href}`,
     });
   } else {
     const link = document.createElement("a");
     link.href = dataUrl;
-    link.download = "wordle-share.png";
+    link.download = filename;
     link.click();
   }
 }
