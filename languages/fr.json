@@ -85,5 +85,11 @@
             "iosInstructions": "Pour installer cette application sur votre appareil iOS, appuyez sur le bouton de partage <shareBtn></shareBtn> puis sur \"<addToHomeScreen>Ajouter à l'écran d'accueil</addToHomeScreen>\"",
             "androidInstructions": "Pour installer, ouvrez le menu du navigateur et appuyez sur l'option \"<addToHomeScreen>Ajouter à l'écran d'accueil</addToHomeScreen>\" ou cliquez sur l'icône d'installation dans la barre d'adresse."
         }
+    },
+    "Footer": {
+        "copyright": "{year} {appName}",
+        "privacyPolicyLink": "Confidentialité",
+        "loginLink": "Connexion",
+        "feedbackLink": "Votre avis"
     }
 }

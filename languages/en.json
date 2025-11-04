@@ -85,5 +85,11 @@
             "iosInstructions": "To install this app on your iOS device, tap the share button <shareBtn></shareBtn> and then \"<addToHomeScreen>Add to Home Screen</addToHomeScreen>\"",
             "androidInstructions": "To install, open the browser menu and tap the option \"<addToHomeScreen>Add to Home Screen</addToHomeScreen>\". or click the install icon in the address bar."
         }
+    },
+    "Footer": {
+        "copyright": "{year} {appName}",
+        "privacyPolicyLink": "Privacy Policy",
+        "loginLink": "Login",
+        "feedbackLink": "Feedback"
     }
 }
