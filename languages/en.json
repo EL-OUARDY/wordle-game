@@ -91,5 +91,15 @@
         "privacyPolicyLink": "Privacy Policy",
         "loginLink": "Login",
         "feedbackLink": "Feedback"
+    },
+    "Header": {
+        "openMenu": "Open Menu",
+        "goBack": "Go back",
+        "createCustomWordle": "Create your own custom wordle",
+        "giveup": "Give up",
+        "chooseLanguage": "Choose Language",
+        "statistics": "Statistics",
+        "howToPlay": "How To Play",
+        "settings": "Settings"
     }
 }

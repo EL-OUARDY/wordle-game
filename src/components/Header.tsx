@@ -26,6 +26,7 @@ import PlusIcon from "@/components/ui/icons/plus";
 import FlagIcon from "@/components/ui/icons/flag";
 import BackIcon from "@/components/ui/icons/back";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 interface Props {
   className?: string;
 }
@@ -56,6 +57,8 @@ function Header({ className }: Props) {
 
   const router = useRouter();
   const pathname = usePathname();
+
+  const t = useTranslations("Header");
 
   // Only show on login and privacy pages
   const showBackBtn = pathname === "/login" || pathname === "/privacy-policy";
@@ -143,7 +146,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
-            aria-label="Open Menu"
+            aria-label={t("openMenu")}
           >
             {!user ? (
               <MenuIcon className="size-[1.35rem] sm:size-6" />
@@ -182,7 +185,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
-            aria-label="Go back"
+            aria-label={t("goBack")}
           >
             <BackIcon className="size-[1.35rem] sm:size-6" />
           </Button>
@@ -198,7 +201,7 @@ function Header({ className }: Props) {
               }}
               variant="icon"
               className="size-12 sm:size-14"
-              aria-label="Create your own custom wordle"
+              aria-label={t("createCustomWordle")}
             >
               <PlusIcon className="size-[1.35rem] sm:size-6" />
             </Button>
@@ -210,7 +213,7 @@ function Header({ className }: Props) {
               onClick={giveUp}
               variant="icon"
               className="size-12 sm:size-14"
-              aria-label="Give up"
+              aria-label={t("giveup")}
             >
               <FlagIcon className="size-[1.35rem] sm:size-6" />
             </Button>
@@ -222,7 +225,7 @@ function Header({ className }: Props) {
               onClick={() => setIsLanguagesListShown((prev) => !prev)}
               variant="icon"
               className="size-12 sm:size-14"
-              aria-label="Choose Language"
+              aria-label={t("chooseLanguage")}
             >
               {!language ? (
                 <GlobeIcon className="size-[1.35rem] sm:size-6" />
@@ -256,7 +259,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
-            aria-label="Statistics"
+            aria-label={t("statistics")}
           >
             <ChartIcon className="size-[1.35rem] sm:size-6" />
           </Button>
@@ -269,7 +272,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
-            aria-label="How To Play"
+            aria-label={t("howToPlay")}
           >
             <InfoIcon className="size-[1.35rem] sm:size-6" />
           </Button>
@@ -282,7 +285,7 @@ function Header({ className }: Props) {
             }}
             variant="icon"
             className="size-12 sm:size-14"
-            aria-label="Settings"
+            aria-label={t("settings")}
           >
             <SettingsIcon className="size-[1.35rem] sm:size-6" />
           </Button>
