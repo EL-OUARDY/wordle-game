@@ -60,5 +60,30 @@
     "Login": {
         "intro": "Track your progress, earn badges, and celebrate your Wordle wins.",
         "cta": "Log in or create a free account"
+    },
+    "Settings": {
+        "title": "Settings",
+        "defaultLanguage": "Default Language",
+        "themes": {
+            "title": "Themes",
+            "classic": "Classic",
+            "night": "Night",
+            "coffee": "Coffee",
+            "sakura": "Sakura",
+            "slate": "Slate",
+            "dracula": "Dracula"
+        },
+        "accessibility": {
+            "highContrast": "High Contrast Mode",
+            "onscreenInput": "Onscreen Input Only",
+            "swapKeys": "Swap Enter & Backspace",
+            "reduceMotion": "Reduce Motion"
+        },
+        "pwaInstall": {
+            "description": "Install the game on your device to play offline and access it instantly.",
+            "button": "Install",
+            "iosInstructions": "To install this app on your iOS device, tap the share button <shareBtn></shareBtn> and then \"<addToHomeScreen>Add to Home Screen</addToHomeScreen>\"",
+            "androidInstructions": "To install, open the browser menu and tap the option \"<addToHomeScreen>Add to Home Screen</addToHomeScreen>\". or click the install icon in the address bar."
+        }
     }
 }

@@ -5,12 +5,15 @@ import Button from "@/components/ui/button";
 import GamepadIcon from "@/components/ui/icons/gamepad";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
+import { useTranslations } from "next-intl";
 
 export default function InstallGame() {
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
   const installdeferredPrompt = useStore((s) => s.installdeferredPrompt);
+
+  const t = useTranslations("Settings");
 
   useEffect(() => {
     // Detect iOS
@@ -41,18 +44,15 @@ export default function InstallGame() {
     <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
       {!showGuide && (
         <>
-          <p className="text-lg">
-            Install the game on your device to play offline and access it
-            instantly.
-          </p>
+          <p className="text-lg">{t("pwaInstall.description")}</p>
           <Button
             onClick={handleInstallClick}
             className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
-            aria-label="Install"
+            aria-label={t("pwaInstall.button")}
             whileTap={{ scale: 0.95 }}
           >
             <GamepadIcon className="size-4" />
-            Install
+            {t("pwaInstall.button")}
           </Button>
         </>
       )}
@@ -60,22 +60,27 @@ export default function InstallGame() {
       {/* iOS guide */}
       {showGuide && isIOS && (
         <p className="text-lg">
-          To install this app on your iOS device, tap the share button
-          <span role="img" aria-label="share icon">
-            <ShareIcon className="mx-2 inline size-4" />
-          </span>
-          and then &quot;
-          <span className="font-semibold">Add to Home Screen</span>
-          &quot;.
+          {t.rich("pwaInstall.iosInstructions", {
+            shareBtn: () => (
+              <span role="img" aria-label="share icon">
+                <ShareIcon className="mx-2 inline size-4" />
+              </span>
+            ),
+            addToHomeScreen: (chunks) => (
+              <span className="font-semibold">{chunks}</span>
+            ),
+          })}
         </p>
       )}
 
       {/* Android/Desktop guide */}
       {showGuide && !isIOS && (
         <p className="text-lg">
-          To install, open the browser menu and tap the option &quot;
-          <span className="font-semibold">Add to Home Screen</span>
-          &quot;. or click the install icon in the address bar.
+          {t.rich("pwaInstall.androidInstructions", {
+            addToHomeScreen: (chunks) => (
+              <span className="font-semibold">{chunks}</span>
+            ),
+          })}
         </p>
       )}
     </div>

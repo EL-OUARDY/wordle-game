@@ -17,6 +17,7 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import InstallGame from "@/components/InstallGame";
+import { useTranslations } from "next-intl";
 
 const themes: {
   name: Theme;
@@ -84,6 +85,8 @@ function Settings() {
 
   const router = useRouter();
 
+  const t = useTranslations("Settings");
+
   // Load saved settings from localStorage on mount
   useEffect(() => {
     if (settings) return;
@@ -132,12 +135,12 @@ function Settings() {
     <div className="settings relative flex h-full flex-col gap-4">
       <div className="flex flex-1 flex-col gap-4 pb-42">
         <div className="border-key-background flex items-center gap-2 border-b pb-4">
-          <h2 className="text-2xl font-semibold">Settings</h2>
+          <h2 className="text-2xl font-semibold">{t("title")}</h2>
         </div>
 
         <div className="default-language flex items-center justify-between">
           <label className="font-semibold" htmlFor="default-language">
-            Default Language
+            {t("defaultLanguage")}
           </label>
           <Select
             value={
@@ -163,6 +166,7 @@ function Settings() {
                     key={index}
                     value={language.name}
                     className="flex justify-center"
+                    disabled={!language.available}
                   >
                     {language.icon}
                   </SelectItem>
@@ -175,7 +179,7 @@ function Settings() {
         <div className="themes flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <div className="flex w-full items-center gap-2">
-              <span className="font-semibold">Themes</span>
+              <span className="font-semibold">{t("themes.title")}</span>
               <hr className="separator border-key-background flex-1" />
             </div>
           </div>
@@ -201,7 +205,9 @@ function Settings() {
                     color2={theme.color2}
                     color3={theme.color3}
                   />
-                  <span className="flex-1 capitalize">{theme.name}</span>
+                  <span className="flex-1 capitalize">
+                    {t(`themes.${theme.name}`)}
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -211,7 +217,7 @@ function Settings() {
 
         <div className="high-contrast-mode flex items-center justify-between">
           <label className="font-semibold" htmlFor="high-contrast-mode">
-            High Contrast Mode
+            {t("accessibility.highContrast")}
           </label>
           <Switch.Root
             checked={settings.highContrastMode}
@@ -227,7 +233,7 @@ function Settings() {
 
         <div className="onscreen-input-only flex items-center justify-between">
           <label className="font-semibold" htmlFor="onscreen-input-only">
-            Onscreen Input Only
+            {t("accessibility.onscreenInput")}
           </label>
           <Switch.Root
             checked={settings.onScreenOnly}
@@ -243,7 +249,7 @@ function Settings() {
 
         <div className="swap-enter-backspace flex items-center justify-between">
           <label className="font-semibold" htmlFor="swap-enter-backspace">
-            Swap Enter & Backspace
+            {t("accessibility.swapKeys")}
           </label>
           <Switch.Root
             checked={settings.swapEnterBackspace}
@@ -260,7 +266,7 @@ function Settings() {
         <div className="reduce-motion flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <label className="font-semibold" htmlFor="reduce-motion">
-              Reduce Motion
+              {t("accessibility.reduceMotion")}
             </label>
             <Switch.Root
               checked={settings.reduceMotion}
