@@ -99,12 +99,14 @@
     "Header": {
         "openMenu": "Ouvrir le menu",
         "goBack": "Retour",
+        "install": "installer",
         "createCustomWordle": "Créer votre Wordle personnalisé",
         "giveup": "Abandonner",
         "chooseLanguage": "Choisir la langue",
         "statistics": "Statistiques",
         "howToPlay": "Comment jouer",
-        "settings": "Paramètres"
+        "settings": "Paramètres",
+        "installPopupTitle": "Installer pour jouer hors ligne"
     },
     "CreateWordle": {
         "creation": {

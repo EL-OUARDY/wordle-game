@@ -283,7 +283,7 @@ function Settings() {
       </div>
 
       {/* Display the PWA install prompt when supported by the browser. */}
-      <InstallGame />
+      <InstallGame className="absolute bottom-0" />
     </div>
   );
 }

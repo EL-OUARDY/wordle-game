@@ -27,11 +27,19 @@ import FlagIcon from "@/components/ui/icons/flag";
 import BackIcon from "@/components/ui/icons/back";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import InstallIcon from "@/components/ui/icons/install";
+import InstallGame from "@/components/InstallGame";
 interface Props {
   className?: string;
 }
 
-type Menu = "settings" | "sidebar" | "statistics" | "info" | "create";
+type Menu =
+  | "settings"
+  | "sidebar"
+  | "statistics"
+  | "info"
+  | "create"
+  | "install";
 
 interface MenuContent {
   title: string;
@@ -65,7 +73,7 @@ function Header({ className }: Props) {
 
   const menus: Record<Menu, MenuContent> = {
     settings: {
-      title: "Settings",
+      title: t("settings"),
       content: <Settings />,
       direction: "right",
     },
@@ -75,15 +83,21 @@ function Header({ className }: Props) {
       direction: "left",
     },
     statistics: {
-      title: "Statistics",
+      title: t("statistics"),
       content: <UserStats />,
       direction: isDesktop ? "center" : "bottom",
     },
     info: { title: "How To Play", content: <HowToPlay />, direction: "right" },
     create: {
-      title: "Create your own Wordle",
+      title: t("createCustomWordle"),
       content: <Create />,
       direction: isDesktop ? "center" : "bottom",
+    },
+    install: {
+      title: t("installPopupTitle"),
+      content: <InstallGame className="" />,
+      direction: isDesktop ? "center" : "bottom",
+      showTitle: true,
     },
   };
 
@@ -190,6 +204,19 @@ function Header({ className }: Props) {
             <BackIcon className="size-[1.35rem] sm:size-6" />
           </Button>
         )}
+
+        {/* Install btn */}
+        <Button
+          onClick={() => {
+            setActiveMenu("install");
+            setIsMenuOpen(true);
+          }}
+          variant="icon"
+          className="standalone:hidden size-12 sm:size-14"
+          aria-label={t("install")}
+        >
+          <InstallIcon className="size-[1.35rem] sm:size-6" />
+        </Button>
 
         <div className="ml-auto flex">
           {/* Create btn */}

@@ -6,8 +6,13 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 import ShareIcon from "@/components/ui/icons/share";
 import useStore from "@/hooks/useStore";
 import { useTranslations } from "next-intl";
+import clsx from "clsx";
 
-export default function InstallGame() {
+interface Props {
+  className?: string;
+}
+
+export default function InstallGame({ className }: Props) {
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
@@ -41,7 +46,12 @@ export default function InstallGame() {
   }
 
   return (
-    <div className="install-app bg-tile-background border-key-background absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl border p-4">
+    <div
+      className={clsx(
+        "install-app bg-tile-background border-key-background flex w-full flex-col gap-4 rounded-2xl border p-4",
+        className,
+      )}
+    >
       {!showGuide && (
         <>
           <p className="text-lg">{t("pwaInstall.description")}</p>
