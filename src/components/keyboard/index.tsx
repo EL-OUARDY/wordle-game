@@ -11,6 +11,7 @@ import { isValidLetter, sleep } from "@/lib/utils";
 import { Language, LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
 import useAuth from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 
 interface Props {
   className?: string;
@@ -46,6 +47,8 @@ function Keyboard({ className }: Props) {
   const previousSubmittedWrongGuess = useRef<string>("");
 
   const blockTypingRef = useRef(false);
+
+  const t = useTranslations("Keyboard");
 
   const updateUserStats = useCallback(
     async (status: "won" | "lost") => {
@@ -289,7 +292,7 @@ function Keyboard({ className }: Props) {
           "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px] font-semibold",
         )}
         role="group"
-        aria-label="Keyboard"
+        aria-label={t("keyboard")}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -316,7 +319,7 @@ function Keyboard({ className }: Props) {
                   "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
                 )}
                 role="button"
-                aria-label={`add ${key}`}
+                aria-label={t("tapKey", { key })}
                 whileTap={!settings?.reduceMotion ? { scale: 0.9 } : {}}
                 animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -351,7 +354,7 @@ function Keyboard({ className }: Props) {
                   "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
                 )}
                 role="button"
-                aria-label={`add ${key}`}
+                aria-label={t("tapKey", { key })}
                 whileTap={!settings?.reduceMotion ? { scale: 0.9 } : {}}
                 animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -375,14 +378,14 @@ function Keyboard({ className }: Props) {
             key={"enter" + pressedKey || ""}
             tabIndex={-1}
             onClick={submiGuess}
-            className="key bg-key-background flex h-[58px] flex-[1.4] cursor-pointer items-center justify-center rounded-sm text-xs font-bold"
+            className="key bg-key-background flex h-[58px] flex-[1.4] cursor-pointer items-center justify-center rounded-sm text-xs font-bold uppercase"
             role="button"
-            aria-label={englishKeys.controls.enter}
+            aria-label={t("enter")}
             whileTap={!settings?.reduceMotion ? { scale: 0.9 } : {}}
             animate={{ scale: pressedKey === "Enter" ? [0.9, 1] : 1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            {englishKeys.controls.enter}
+            {t("enter")}
           </motion.div>
 
           <div className="flex flex-7 gap-1">
@@ -407,7 +410,7 @@ function Keyboard({ className }: Props) {
                     "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
                   )}
                   role="button"
-                  aria-label={`add ${key}`}
+                  aria-label={t("tapKey", { key })}
                   whileTap={!settings?.reduceMotion ? { scale: 0.9 } : {}}
                   animate={{ scale: pressedKey === key ? [0.9, 1] : 1 }}
                   transition={{ type: "spring", stiffness: 300 }}
@@ -429,7 +432,7 @@ function Keyboard({ className }: Props) {
             }}
             className="key bg-key-background flex h-[58px] flex-[1.4] cursor-pointer items-center justify-center rounded-sm text-xs"
             role="button"
-            aria-label={englishKeys.controls.delete}
+            aria-label={t("backspace")}
             whileTap={!settings?.reduceMotion ? { scale: 0.9 } : {}}
             animate={{ scale: pressedKey === "Backspace" ? [0.9, 1] : 1 }}
             transition={{ type: "spring", stiffness: 300 }}

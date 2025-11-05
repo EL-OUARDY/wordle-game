@@ -162,5 +162,11 @@
         "guessDistribution": "Guess Distribution",
         "shareButton": "Share",
         "playingSince": "Playing since {date}"
+    },
+    "Keyboard": {
+        "keyboard": "Keyboard",
+        "tapKey": "tap {key}",
+        "enter": "Enter",
+        "backspace": "Delete"
     }
 }

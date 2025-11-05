@@ -162,5 +162,11 @@
         "guessDistribution": "Répartition des essais",
         "shareButton": "Partager",
         "playingSince": "Joue depuis {date}"
+    },
+    "Keyboard": {
+        "keyboard": "Clavier",
+        "tapKey": "Appuyez sur {key}",
+        "enter": "Entree",
+        "backspace": "Retour arrière"
     }
 }
