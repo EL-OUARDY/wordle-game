@@ -9,7 +9,7 @@ interface Props {
   property?: keyof StoreState;
 }
 
-// Helper to safely serialize anything
+// Helper to safely serialize more types that are not directly serializable
 function serialize(value: any) {
   const seen = new WeakSet();
   return JSON.stringify(

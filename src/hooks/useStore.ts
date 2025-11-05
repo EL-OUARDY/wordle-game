@@ -11,8 +11,8 @@ import {
 import { BeforeInstallPromptEvent } from "@/components/InstallListener";
 
 interface IState {
-  wordlists: Record<string, string[]>;
-  loadWords: () => Promise<string[]>;
+  wordlists: Record<string, Set<string>>;
+  loadWords: () => Promise<Set<string>>;
   getRandomWord: () => Promise<string | null>;
   isWordInDictionary: (guess: string) => Promise<boolean>;
   guesses: string[];
@@ -63,23 +63,24 @@ const useStore = create<IState>((set, get) => ({
 
     // Dynamic import
     const _module = await import(`@/wordlists/${lang.toLowerCase()}`);
-    const list = _module.default;
+    const list = _module.default || [];
 
     set((state) => ({
-      wordlists: { ...state.wordlists, [lang]: list },
+      wordlists: { ...state.wordlists, [lang]: new Set(list) },
     }));
 
-    return list;
+    return new Set(list);
   },
   getRandomWord: async () => {
     const words = await get().loadWords();
-    if (!words.length) return null;
-    const idx = Math.floor(Math.random() * words.length);
-    return words[idx];
+    const wordsList = Array.from(words);
+    if (!wordsList.length) return null;
+    const idx = Math.floor(Math.random() * wordsList.length);
+    return wordsList[idx];
   },
   isWordInDictionary: async (guess) => {
     const words = await get().loadWords();
-    return words.includes(guess.toLowerCase());
+    return words.has(guess.toLowerCase());
   },
 
   guesses: Array(NUMBER_OF_GUESSES).fill(null),
