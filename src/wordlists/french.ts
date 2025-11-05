@@ -1,2 +1,2 @@
-const words = ["bravo", "livre", "plage", "table", "petit"];
+const words = new Set(["bravo", "livre", "plage", "table", "petit"]);
 export default words;

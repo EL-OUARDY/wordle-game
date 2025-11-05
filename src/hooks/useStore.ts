@@ -12,6 +12,7 @@ import { BeforeInstallPromptEvent } from "@/components/InstallListener";
 
 interface IState {
   wordlists: Record<string, Set<string>>;
+  previousWords: Record<string, Set<string>>;
   loadWords: () => Promise<Set<string>>;
   getRandomWord: () => Promise<string | null>;
   isWordInDictionary: (guess: string) => Promise<boolean>;
@@ -56,27 +57,52 @@ interface IState {
 
 const useStore = create<IState>((set, get) => ({
   wordlists: {},
+  previousWords: {},
   loadWords: async () => {
     const lang = get().language as string;
     const cached = get().wordlists[lang];
     if (cached) return cached;
 
-    // Dynamic import
+    // dynamic import
     const _module = await import(`@/wordlists/${lang.toLowerCase()}`);
-    const list = _module.default || [];
+    const wordlist: Set<string> = _module.default;
 
     set((state) => ({
-      wordlists: { ...state.wordlists, [lang]: new Set(list) },
+      wordlists: { ...state.wordlists, [lang]: wordlist },
     }));
 
-    return new Set(list);
+    return wordlist;
   },
   getRandomWord: async () => {
     const words = await get().loadWords();
     const wordsList = Array.from(words);
     if (!wordsList.length) return null;
-    const idx = Math.floor(Math.random() * wordsList.length);
-    return wordsList[idx];
+
+    const lang = get().language as string;
+    const prev = get().previousWords[lang] ?? new Set<string>();
+    // if all used → reset
+    if (prev.size >= wordsList.length) {
+      set((state) => ({
+        previousWords: { ...state.previousWords, [lang]: new Set() },
+      }));
+      prev.clear();
+    }
+
+    let word: string;
+    do {
+      const idx = Math.floor(Math.random() * wordsList.length);
+      word = wordsList[idx];
+    } while (prev.has(word));
+
+    // mark word as seen
+    const updatedPrev = new Set(prev);
+    updatedPrev.add(word);
+
+    set((state) => ({
+      previousWords: { ...state.previousWords, [lang]: updatedPrev },
+    }));
+
+    return word;
   },
   isWordInDictionary: async (guess) => {
     const words = await get().loadWords();
