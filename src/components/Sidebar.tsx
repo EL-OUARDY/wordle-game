@@ -84,7 +84,7 @@ function SideBar({ onClose }: Props) {
           href={BMC_LINK}
           target="_blank"
           className="flex w-fit items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 py-2 text-lg text-[#181818]"
-          aria-label="Support"
+          aria-label={t("support.button")}
           whileTap={{ scale: 0.95 }}
         >
           <BuyMeACofeeIcon className="size-5" />

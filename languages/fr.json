@@ -1,4 +1,8 @@
 {
+    "Global": {
+        "play": "jouer",
+        "loading": "chargement"
+    },
     "HowToPlay": {
         "title": "Comment jouer",
         "goal": "Votre objectif est de découvrir le mot caché de 5 lettres en 6 essais.",

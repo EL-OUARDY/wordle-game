@@ -1,4 +1,8 @@
 {
+    "Global": {
+        "play": "play",
+        "loading": "loading"
+    },
     "HowToPlay": {
         "title": "How To Play",
         "goal": "Your goal is to discover the hidden 5-letter word within 6 attempts.",

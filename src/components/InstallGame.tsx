@@ -62,7 +62,7 @@ export default function InstallGame() {
         <p className="text-lg">
           {t.rich("pwaInstall.iosInstructions", {
             shareBtn: () => (
-              <span role="img" aria-label="share icon">
+              <span>
                 <ShareIcon className="mx-2 inline size-4" />
               </span>
             ),

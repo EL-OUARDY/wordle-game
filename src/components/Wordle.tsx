@@ -17,6 +17,7 @@ import { defaultSettings } from "@/components/Settings";
 import { languagesList } from "@/components/LanguagesMenu";
 import { setUserLocale } from "@/services/locale";
 import { getLocale } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface Props {
   language?: Language;
@@ -38,6 +39,8 @@ function Wordle({ language, className }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const wordId = searchParams.get("w");
+
+  const t = useTranslations("Global");
 
   // Reset game state on first mount
   useEffect(() => {
@@ -159,7 +162,7 @@ function Wordle({ language, className }: Props) {
         {/* Loading solution word */}
         {isLoading && !solution && (
           <div
-            aria-label="Loading"
+            aria-label={t("loading")}
             className="flex w-full flex-1 items-center justify-center"
           >
             <LoaderIcon className="text-key-background size-8" />
@@ -182,11 +185,11 @@ function Wordle({ language, className }: Props) {
               }}
               variant="default"
               className="flex items-center gap-2"
-              aria-label="Play"
+              aria-label={t("play")}
               whileTap={{ scale: 0.95 }}
             >
               <GamepadIcon className="size-4" />
-              Play
+              {t("play")}
             </Button>
           </div>
         )}

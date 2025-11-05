@@ -160,7 +160,7 @@ function Create() {
                 isLoading && "text-key-background",
                 "flex items-center gap-2 !rounded-xl !py-3 !text-lg tracking-wider",
               )}
-              aria-label="Copy Link"
+              aria-label={t("ready.copyButtonDefault")}
               whileTap={{ scale: 0.95 }}
             >
               {!isLinkCopied ? (
