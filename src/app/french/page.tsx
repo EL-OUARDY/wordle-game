@@ -4,6 +4,7 @@ import Wordle from "@/components/Wordle";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  manifest: "/api/manifest/french",
   title: `${APP_NAME} - Jouez à Wordle en français`,
   description:
     "Jouez à Wordle gratuitement, en français, sans publicités — amusez-vous sans limites ! Suivez vos stats et défiez vos amis.",

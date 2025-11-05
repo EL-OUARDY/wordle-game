@@ -1,13 +1,13 @@
+import { MetadataRoute } from "next";
 import { APP_NAME } from "@/lib/constants";
-import type { MetadataRoute } from "next";
 
-export default function manifest(): MetadataRoute.Manifest {
-  return {
+export async function GET() {
+  const manifest: MetadataRoute.Manifest = {
     id: "/",
-    name: `${APP_NAME} - Play Wordle in Your Language`,
+    name: `${APP_NAME} - Jouez à Wordle en français`,
     short_name: APP_NAME,
     description:
-      "Play Wordle for free, in your language, with no ads — unlimited fun, no limits! Track stats, compete, and enjoy multilingual word guessing.",
+      "Jouez à Wordle gratuitement, en français, sans publicités — amusez-vous sans limites ! Suivez vos stats et défiez vos amis.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
@@ -41,16 +41,22 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     screenshots: [
       {
-        src: "/screenshots/desktop.png",
+        src: "/screenshots/fr/desktop.png",
         sizes: "2560x1440",
         type: "image/png",
-        form_factor: "wide", // for desktop
+        form_factor: "wide", // for desktop 1280x720
       },
       {
-        src: "/screenshots/mobile.png",
+        src: "/screenshots/fr/mobile.png",
         sizes: "750x1334",
-        type: "image/png", // no form_factor = mobile
+        type: "image/png", // no form_factor - mobile 375x667
       },
     ],
   };
+
+  return new Response(JSON.stringify(manifest), {
+    headers: {
+      "Content-Type": "application/manifest+json",
+    },
+  });
 }

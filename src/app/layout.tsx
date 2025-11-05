@@ -31,6 +31,7 @@ export const futuraFont = localFont({
 });
 
 export const metadata: Metadata = {
+  manifest: "/api/manifest",
   metadataBase: new URL(APP_LINK),
   title: `${APP_NAME} - Play Wordle in Your Language`,
   description:
