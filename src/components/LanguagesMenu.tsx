@@ -28,7 +28,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "English",
     displayName: "English",
-    link: "english",
+    link: "/english",
     icon: <UKFlagIcon className="size-5" />,
     local: "en",
     available: true,
@@ -36,7 +36,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "French",
     displayName: "Français",
-    link: "french",
+    link: "/french",
     icon: <FranceFlagIcon className="size-5" />,
     local: "fr",
     available: true,
@@ -44,7 +44,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "Spanish",
     displayName: "Español",
-    link: "spanish",
+    link: "/spanish",
     icon: <SpainFlagIcon className="size-5" />,
     local: "es",
     available: false,
@@ -52,7 +52,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "German",
     displayName: "Deutsch",
-    link: "german",
+    link: "/german",
     icon: <GermnayFlagIcon className="size-5" />,
     local: "de",
     available: false,
@@ -60,7 +60,7 @@ export const languagesList: LanguagesList[] = [
   {
     name: "Arabic",
     displayName: "العربية",
-    link: "arabic",
+    link: "/arabic",
     icon: <SaudiArabiaFlagIcon className="size-5" />,
     local: "ar",
     available: false,

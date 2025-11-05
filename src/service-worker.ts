@@ -1,6 +1,7 @@
 import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
 import { Serwist } from "serwist";
+import { languagesList } from "@/components/LanguagesMenu";
 
 // Extend the global worker scope with Serwist-specific properties
 declare global {
@@ -13,10 +14,18 @@ declare global {
 // Tell TypeScript that `self` is a Service Worker global
 declare const self: ServiceWorkerGlobalScope;
 
+// Pages to precache
+const PAGES = [
+  "/",
+  ...languagesList.map((l) => l.link), // language pages
+  "/login",
+  "/privacy-policy",
+];
+
 // Initialize Serwist with configuration
 const serwist = new Serwist({
   // Files to precache, injected at build time
-  precacheEntries: self.__SW_MANIFEST,
+  precacheEntries: [...(self.__SW_MANIFEST ?? []), ...PAGES],
 
   // Immediately activate the new service worker without waiting
   skipWaiting: true,
