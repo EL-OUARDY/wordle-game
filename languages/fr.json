@@ -124,7 +124,7 @@
         "Expert": "Expert",
         "Master": "Maître",
         "Knight": "Chevalier",
-        "Wordle King": "Roi du Wordle",
+        "King": "Roi",
         "Legend": "Légende",
         "Elite": "Élite",
         "Villain": "Vilain",
@@ -148,5 +148,19 @@
             "loginButton": "Connexion",
             "logoutButton": "Déconnexion"
         }
+    },
+    "Statistics": {
+        "userProfile": {
+            "winsToNextRank": "{count, plural, =1 {1 victoire} other {# victoires}} → rang suivant"
+        },
+        "metrics": {
+            "played": "Parties <break></break> jouées",
+            "winRatio": "Taux de <break></break> victoire",
+            "currentStreak": "Série <break></break> en cours",
+            "maxStreak": "Meilleure <break></break> série"
+        },
+        "guessDistribution": "Répartition des essais",
+        "shareButton": "Partager",
+        "playingSince": "Joue depuis {date}"
     }
 }

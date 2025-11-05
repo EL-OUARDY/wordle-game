@@ -14,7 +14,7 @@ export const ranks = [
   { name: "Expert", min: 30, color: "#FBBF24" }, // yellow
   { name: "Master", min: 50, color: "#60A5FA" }, // blue
   { name: "Knight", min: 75, color: "#EF4444" }, // red
-  { name: "Wordle King", min: 100, color: "#A855F7" }, // purple
+  { name: "King", min: 100, color: "#A855F7" }, // purple
   { name: "Legend", min: 120, color: "#3B82F6" }, // bright blue
   { name: "Elite", min: 150, color: "#F472B6" }, // pink
   { name: "Villain", min: 180, color: "#D97706" }, // orange-brown

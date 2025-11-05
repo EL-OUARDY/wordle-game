@@ -125,7 +125,7 @@ function SideBar({ onClose }: Props) {
               </div>
               <div className="flex flex-1 flex-col justify-between">
                 <div className="user-fullname text-lg font-semibold">
-                  {user.displayName || user.email || `${APP_NAME} Player`}
+                  {user.displayName || user.email || `#${APP_NAME}`}
                 </div>
 
                 <div className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden px-2">

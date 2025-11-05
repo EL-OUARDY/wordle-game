@@ -22,6 +22,7 @@ import {
 } from "@/lib/utils";
 import Button from "@/components/ui/button";
 import ShareIcon from "@/components/ui/icons/share";
+import { useTranslations } from "next-intl";
 
 function UserStats() {
   const stats = useStore((s) => s.userStats);
@@ -51,6 +52,9 @@ function UserStats() {
   const foregroundColor = getComputedStyle(
     document.documentElement,
   ).getPropertyValue("--foreground");
+
+  const t = useTranslations("Statistics");
+  const tRanks = useTranslations("Ranks");
 
   return (
     <>
@@ -90,30 +94,27 @@ function UserStats() {
             </div>
             <div className="flex flex-1 flex-col justify-between">
               <div className="user-fullname text-lg font-semibold">
-                {user.displayName || user.email || `${APP_NAME} Player`}
+                {user.displayName || user.email || `#${APP_NAME}`}
               </div>
 
               <div className="user-rank relative flex w-fit items-center justify-center gap-2 overflow-hidden px-2">
-                <span>Rank:</span>
+                <span
+                  className="relative text-base font-normal"
+                  style={{ color: rank.color }}
+                >
+                  {tRanks(rank.name)}
+                </span>
                 <div
                   className="absolute inset-0 opacity-10"
                   style={{
                     backgroundColor: rank.color,
                   }}
                 />
-                <span
-                  className="relative text-base font-normal"
-                  style={{ color: rank.color }}
-                >
-                  {rank.name}
-                </span>
                 {toNextRank !== -1 && (
                   <>
                     <span className="text-key-background">|</span>
                     <span>
-                      <span className="font-semibold">{toNextRank}</span>{" "}
-                      <span>{toNextRank > 1 ? "wins" : "win"}</span> to next
-                      rank
+                      {t("userProfile.winsToNextRank", { count: toNextRank })}
                     </span>
                   </>
                 )}
@@ -130,7 +131,9 @@ function UserStats() {
                   {stats.played}
                 </div>
                 <div>
-                  Game <br /> Played
+                  {t.rich("metrics.played", {
+                    break: () => <br />,
+                  })}
                 </div>
               </div>
             </div>
@@ -140,7 +143,9 @@ function UserStats() {
                 <span className="text-base font-normal"> %</span>
               </div>
               <div>
-                Win <br /> Ratio
+                {t.rich("metrics.winRatio", {
+                  break: () => <br />,
+                })}
               </div>
             </div>
             <div className="box flex flex-1 flex-col gap-1 text-center">
@@ -148,7 +153,9 @@ function UserStats() {
                 {stats.streak}
               </div>
               <div>
-                Current <br /> Streak
+                {t.rich("metrics.currentStreak", {
+                  break: () => <br />,
+                })}
               </div>
             </div>
             <div className="box flex flex-1 justify-end text-center">
@@ -157,7 +164,9 @@ function UserStats() {
                   {stats.maxStreak}
                 </div>
                 <div>
-                  Max <br /> Streak
+                  {t.rich("metrics.maxStreak", {
+                    break: () => <br />,
+                  })}
                 </div>
               </div>
             </div>
@@ -166,7 +175,7 @@ function UserStats() {
           <hr className="separator border-key-background" />
 
           <div className="guess-distribution flex flex-col gap-2">
-            <h3 className="text-xl font-semibold">Guess Distribution</h3>
+            <h3 className="text-xl font-semibold">{t("guessDistribution")}</h3>
             <div className="chart">
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart
@@ -221,25 +230,26 @@ function UserStats() {
 
           <div className="flex items-center justify-between">
             <div className="text-muted-foreground">
-              Playing since{" "}
-              {new Date(user.metadata.creationTime!).toLocaleDateString(
-                getLocale(language || "English"),
-                {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                },
-              )}
+              {t("playingSince", {
+                date: new Date(user.metadata.creationTime!).toLocaleDateString(
+                  getLocale(language || "English"),
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  },
+                ),
+              })}
             </div>
             <Button
               variant="outline"
               onClick={captureStatsAndShare}
-              className="share-btn flex items-center gap-2 rounded-xl border-0 px-0 !py-0 normal-case"
-              aria-label="Share"
+              className="share-btn hover:bg-background flex items-center gap-2 rounded-xl border-0 px-0 !py-0 normal-case"
+              aria-label={t("shareButton")}
               whileTap={{ scale: 0.95 }}
             >
               <ShareIcon className="size-4" />
-              Share
+              {t("shareButton")}
             </Button>
           </div>
         </div>
