@@ -8,6 +8,7 @@ import { APP_LINK, APP_NAME } from "@/lib/constants";
 import InstallListener from "@/components/InstallListener";
 import { getUserLocale } from "@/services/locale";
 import Script from "next/script";
+import StoreDebug from "@/components/StoreDebug";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -378,6 +379,7 @@ export default async function RootLayout({
       </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
+          <StoreDebug property="wordlists" />
           <NextIntlClientProvider>
             <Header />
             <InstallListener />

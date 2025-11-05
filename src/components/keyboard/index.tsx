@@ -5,10 +5,9 @@ import BackspaceIcon from "@/components/ui/icons/backspace";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
-import WordService from "@/services/word";
 import { motion, MotionConfig } from "motion/react";
 import { isValidLetter, sleep } from "@/lib/utils";
-import { Language, LettersStateMap } from "@/types";
+import { LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
 import useAuth from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
@@ -27,7 +26,6 @@ function Keyboard({ className }: Props) {
   const setIsGameOver = useStore((s) => s.setIsGameOver);
   const setCurrentGuess = useStore((s) => s.setCurrentGuess);
   const solution = useStore((s) => s.solution);
-  const language = useStore((s) => s.language);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
   const isSubmitting = useStore((s) => s.isSubmitting);
   const setIsSubmitting = useStore((s) => s.setIsSubmitting);
@@ -39,6 +37,7 @@ function Keyboard({ className }: Props) {
   });
   const setUserStats = useStore((s) => s.setUserStats);
   const settings = useStore((s) => s.settings);
+  const isWordInDictionary = useStore((s) => s.isWordInDictionary);
 
   const { user } = useAuth();
 
@@ -137,12 +136,10 @@ function Keyboard({ className }: Props) {
 
     // Verify if the word is different from last one
     // and exists in the dictionary
+
+    const inDictionary = await isWordInDictionary(currentGuess);
     const isValid =
-      previousSubmittedWrongGuess.current !== currentGuess &&
-      (await WordService.isWordInDictionary(
-        currentGuess,
-        language as Language,
-      ));
+      previousSubmittedWrongGuess.current !== currentGuess && inDictionary;
     if (!isValid) {
       setIsSubmitting(false);
       // Shake line animation
@@ -180,7 +177,7 @@ function Keyboard({ className }: Props) {
     currentGuessIndex,
     guesses,
     isSubmitting,
-    language,
+    isWordInDictionary,
     setAnimationVariant,
     setCurrentGuess,
     setCurrentGuessIndex,
@@ -440,12 +437,7 @@ function Keyboard({ className }: Props) {
             animate={{ scale: pressedKey === "Backspace" ? [0.9, 1] : 1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <BackspaceIcon
-              className={clsx(
-                "size-[1.4rem]",
-                language === "Arabic" && "scale-x-[-1]", // RTL
-              )}
-            />
+            <BackspaceIcon className={clsx("size-[1.4rem] rtl:scale-x-[-1]")} />
           </motion.div>
         </div>
       </motion.div>

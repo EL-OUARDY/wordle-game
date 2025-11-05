@@ -6,15 +6,12 @@ import GamepadIcon from "@/components/ui/icons/gamepad";
 import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
 import { captureBoardAndShare } from "@/lib/utils";
-import WordService from "@/services/word";
-import { Language } from "@/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { intervalToDuration } from "date-fns";
 
 function GameOver() {
-  const language = useStore((s) => s.language);
   const solution = useStore((s) => s.solution);
   const setSolution = useStore((s) => s.setSolution);
   const guesses = useStore((s) => s.guesses);
@@ -24,6 +21,7 @@ function GameOver() {
   const wordCreator = useStore((s) => s.wordCreator);
   const resetGame = useStore((s) => s.resetGame);
   const setAnimationVariant = useStore((s) => s.setAnimationVariant);
+  const getRandomWord = useStore((s) => s.getRandomWord);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [endTime, setEndTime] = useState<string>("");
@@ -37,7 +35,7 @@ function GameOver() {
     if (isLoading) return;
     setIsLoading(true);
 
-    const word = await WordService.getNewWord(language as Language);
+    const word = await getRandomWord();
     if (word && word !== solution) {
       // Reset state
       resetGame();
@@ -48,10 +46,10 @@ function GameOver() {
     setIsLoading(false);
   }, [
     isLoading,
-    language,
-    setSolution,
+    getRandomWord,
     solution,
     resetGame,
+    setSolution,
     setAnimationVariant,
   ]);
 

@@ -11,6 +11,10 @@ import {
 import { BeforeInstallPromptEvent } from "@/components/InstallListener";
 
 interface IState {
+  wordlists: Record<string, string[]>;
+  loadWords: () => Promise<string[]>;
+  getRandomWord: () => Promise<string | null>;
+  isWordInDictionary: (guess: string) => Promise<boolean>;
   guesses: string[];
   setGuesses: (guesses: string[]) => void;
   currentGuess: string;
@@ -50,7 +54,34 @@ interface IState {
   setInstallDeferredPrompt: (e: BeforeInstallPromptEvent | null) => void;
 }
 
-const useStore = create<IState>((set) => ({
+const useStore = create<IState>((set, get) => ({
+  wordlists: {},
+  loadWords: async () => {
+    const lang = get().language as string;
+    const cached = get().wordlists[lang];
+    if (cached) return cached;
+
+    // Dynamic import
+    const _module = await import(`@/wordlists/${lang.toLowerCase()}`);
+    const list = _module.default;
+
+    set((state) => ({
+      wordlists: { ...state.wordlists, [lang]: list },
+    }));
+
+    return list;
+  },
+  getRandomWord: async () => {
+    const words = await get().loadWords();
+    if (!words.length) return null;
+    const idx = Math.floor(Math.random() * words.length);
+    return words[idx];
+  },
+  isWordInDictionary: async (guess) => {
+    const words = await get().loadWords();
+    return words.includes(guess.toLowerCase());
+  },
+
   guesses: Array(NUMBER_OF_GUESSES).fill(null),
   setGuesses: (guesses) => set({ guesses: guesses }),
   currentGuess: "",

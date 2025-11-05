@@ -4,7 +4,6 @@ import Board from "@/components/board";
 import { Language } from "@/types";
 import clsx from "clsx";
 import useStore from "@/hooks/useStore";
-import WordService from "@/services/word";
 import GameOver from "@/components/GameOver";
 import Keyboard from "@/components/keyboard";
 import Button from "@/components/ui/button";
@@ -35,6 +34,7 @@ function Wordle({ language, className }: Props) {
   const isGameOver = useStore((s) => s.isGameOver);
   const setWordCreator = useStore((s) => s.setWordCreator);
   const resetGame = useStore((s) => s.resetGame);
+  const getRandomWord = useStore((s) => s.getRandomWord);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -95,7 +95,7 @@ function Wordle({ language, className }: Props) {
     }
 
     const getWord = async () => {
-      const word = await WordService.getNewWord(storeLanguage);
+      const word = await getRandomWord();
       if (word) {
         setSolution(word);
       }
@@ -118,6 +118,7 @@ function Wordle({ language, className }: Props) {
       getWord();
     }
   }, [
+    getRandomWord,
     language,
     setLanguage,
     setSolution,
@@ -175,9 +176,7 @@ function Wordle({ language, className }: Props) {
             <Button
               onClick={async () => {
                 setIsLoading(true);
-                const word = await WordService.getNewWord(
-                  storeLanguage as Language,
-                );
+                const word = await getRandomWord();
                 if (word) {
                   setSolution(word);
                 }
