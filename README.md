@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wordle Game (PWA)
 
-## Getting Started
+A web-based Wordle-style game inspired by the NYT Wordle, enhanced with themes, a responsive UI, offline installability (PWA), custom word challenges and multi-language support.
 
-First, run the development server:
+![Screenshot](/public/screenshots/en/desktop.png)
+
+[Play it now](https://poly-wordle.vercel.app/) 🎮
+
+## Table of contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Tech stack](#tech-stack)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Author](#author)
+
+## Overview
+
+This is a playable Wordle-like game built with Next.js and TypeScript. It provides an accessible and polished experience with multiple languages, theme/settings, and offline install support so players can keep playing even without a network connection.
+
+## Features
+
+- 🌐 Multi-language support
+- 📦 Installable as a Progressive Web App (PWA) with offline fallback (service worker caching)
+- 🎨 Themes and accessibility options (high-contrast, reduced motion)
+- 🔗 Create and play custom word challenges (shareable via URL)
+- 📊 Game statistics and share options
+- 📱 Responsive UI
+- ✨ Cool animations and transitions
+- ⌨️ Keyboard and touch support
+
+## Tech stack
+
+- Next.js
+- React 19
+- TypeScript
+- Tailwind CSS
+- Next-intl (i18n)
+- Serwist (service worker / precaching)
+- Zustand (state management)
+- Firebase (optional features / services)
+- Motion (animations)
+- Radix UI primitives
+
+## Installation
+
+Prerequisites: Node.js 18+ and npm.
+
+1. Install dependencies
+
+```bash
+npm install
+```
+
+1. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Build for production
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Notes:
 
-## Learn More
+- The app uses a service worker (via `serwist`) for offline caching and an offline fallback page. Building the app (`npm run build`) will prepare the service worker precache manifest.
+- Language files are under `languages/` (e.g. `languages/en.json`, `languages/fr.json`).
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome. A simple workflow:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork the repository and create a branch for your change
+2. Make changes and keep them focused (one feature / fix per PR)
+3. Open a pull request describing the change
 
-## Deploy on Vercel
+Guidelines:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Keep UI changes responsive and test on mobile and desktop
+- If you add new text, add a translation entry in `languages/*.json`
+- For large changes, open an issue first to discuss the approach
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Author
+
+Repository owner: [EL-OUARDY](https://github.com/EL-OUARDY/)  
+Contact: [contact@wadi3.codes](mailto:contact@wadi3.codes)
+
+If you want to report bugs or suggest features, please open an issue in the repo.
+
+---
+
+Thank you for checking out the project — have fun playing!
