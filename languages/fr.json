@@ -168,5 +168,28 @@
         "tapKey": "Appuyez sur {key}",
         "enter": "Entree",
         "backspace": "Retour arrière"
+    },
+    "GameOver": {
+        "won": {
+            "title": "Félicitations",
+            "message": "Super ! Votre Wordle a pris <break></break><time></time>",
+            "customMessage": "Wordle de <creator></creator> résolu<break></break> en <time></time>",
+            "shareButton": "Partager",
+            "newGameButton": "Nouvelle partie",
+            "buttonLoading": "Chargement .."
+        },
+        "lost": {
+            "title": "Pas cette fois !",
+            "message": "Pas de souci, tu réussiras la prochaine fois.",
+            "shareButton": "Partager",
+            "newGameButton": "Nouvelle partie",
+            "buttonLoading": "Chargement .."
+        }
+    },
+    "Time": {
+        "hours": "{count, plural, =1 {1 heure} other {# heures}}",
+        "minutes": "{count, plural, =1 {1 minute} other {# minutes}}",
+        "seconds": "{count, plural, =1 {1 seconde} other {# secondes}}",
+        "less": "moins d'une seconde"
     }
 }

@@ -1,19 +1,20 @@
 "use client";
+import { useCallback, useEffect, useState } from "react";
+import useStore from "@/hooks/useStore";
 import Button from "@/components/ui/button";
 import GamepadIcon from "@/components/ui/icons/gamepad";
 import LoaderIcon from "@/components/ui/icons/loader";
 import ShareIcon from "@/components/ui/icons/share";
-import useStore from "@/hooks/useStore";
-import { captureBoardAndShare, getTimeDifference } from "@/lib/utils";
+import { captureBoardAndShare } from "@/lib/utils";
 import WordService from "@/services/word";
 import { Language } from "@/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { intervalToDuration } from "date-fns";
 
 function GameOver() {
   const language = useStore((s) => s.language);
-
   const solution = useStore((s) => s.solution);
   const setSolution = useStore((s) => s.setSolution);
   const guesses = useStore((s) => s.guesses);
@@ -28,6 +29,9 @@ function GameOver() {
   const [endTime, setEndTime] = useState<string>("");
 
   const isSolved = solution === guesses[currentGuessIndex - 1];
+
+  const t = useTranslations("GameOver");
+  const tTime = useTranslations("Time");
 
   const newGame = useCallback(async () => {
     if (isLoading) return;
@@ -64,36 +68,60 @@ function GameOver() {
     return () => window.removeEventListener("keydown", handleTyping);
   }, [newGame]);
 
+  const getTimeDifference = useCallback(
+    (start: Date, end: Date): string => {
+      const duration = intervalToDuration({ start, end });
+
+      const parts: string[] = [];
+
+      if (duration.hours) parts.push(tTime("hours", { count: duration.hours }));
+      if (duration.minutes)
+        parts.push(tTime("minutes", { count: duration.minutes }));
+      if (duration.seconds)
+        parts.push(tTime("seconds", { count: duration.seconds }));
+
+      // fallback if all are 0 (like < 1 sec)
+      return parts.length > 0 ? parts.join(" ") : tTime("less");
+    },
+    [tTime],
+  );
+
   // Compute time taken to complete the puzzle
   useEffect(() => {
-    if (isGameOver) setEndTime(getTimeDifference(startTime, new Date()));
-  }, [isGameOver, startTime]);
+    const time = getTimeDifference(startTime, new Date());
+    if (isGameOver) setEndTime(time);
+  }, [getTimeDifference, isGameOver, startTime]);
 
   return (
     <div className="game-over bg-muted-background border-key-background mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
           <h3 className="text-center text-2xl font-semibold">
-            Congratulations
+            {t("won.title")}
           </h3>
 
           <p className="max-w-sm text-center text-xl">
             {wordCreator ? (
               <span>
-                You solved{" "}
-                <span className="font-semibold capitalize">
-                  {wordCreator[0].toUpperCase() + wordCreator.slice(1)}
-                </span>
-                &apos;s <br /> Wordle in{" "}
+                {t.rich("won.customMessage", {
+                  creator: () => (
+                    <span className="font-semibold capitalize">
+                      {wordCreator}
+                    </span>
+                  ),
+                  time: () => <span className="font-semibold">{endTime}</span>,
+                  break: () => <br />,
+                })}
               </span>
             ) : (
               <span>
-                Awesome! Your wordle took
+                {t.rich("won.message", {
+                  time: () => <span className="font-semibold">{endTime}</span>,
+                  break: () => <br />,
+                })}
                 <br />
               </span>
             )}
-
-            <span className="text-lg font-semibold">{endTime}</span>
           </p>
 
           <div className="controls flex gap-3">
@@ -101,17 +129,17 @@ function GameOver() {
               onClick={captureBoardAndShare}
               variant="outline"
               className="flex items-center gap-2"
-              aria-label="Share"
+              aria-label={t("won.shareButton")}
               whileTap={{ scale: 0.95 }}
             >
               <ShareIcon className="size-4" />
-              Share
+              {t("won.shareButton")}
             </Button>
             <Button
               onClick={newGame}
               variant="default"
               className={clsx("flex items-center gap-2")}
-              aria-label="New game"
+              aria-label={t("won.newGameButton")}
               whileTap={{ scale: 0.95 }}
             >
               {isLoading ? (
@@ -119,13 +147,13 @@ function GameOver() {
               ) : (
                 <GamepadIcon className="size-4" />
               )}
-              {isLoading ? "Loading .." : "New Game"}
+              {isLoading ? t("won.buttonLoading") : t("won.newGameButton")}
             </Button>
           </div>
         </>
       ) : (
         <>
-          <h3 className="text-center text-xl">Not this time!</h3>
+          <h3 className="text-center text-xl">{t("lost.title")}</h3>
 
           <div className="w-[240px] overflow-hidden">
             <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-[1.4rem]">
@@ -149,26 +177,24 @@ function GameOver() {
             </div>
           </div>
 
-          <p className="max-w-sm text-center text-lg">
-            {"No worries, you’ll get it next time."} <br />
-          </p>
+          <p className="max-w-sm text-center text-lg">{t("lost.message")}</p>
 
           <div className="controls flex gap-3">
             <Button
               onClick={captureBoardAndShare}
               variant="outline"
               className="flex items-center gap-2"
-              aria-label="Share"
+              aria-label={t("lost.shareButton")}
               whileTap={{ scale: 0.95 }}
             >
               <ShareIcon className="size-4" />
-              Share
+              {t("lost.shareButton")}
             </Button>
             <Button
               onClick={newGame}
               variant="default"
               className={clsx("flex items-center gap-2")}
-              aria-label="New game"
+              aria-label={t("lost.newGameButton")}
               whileTap={{ scale: 0.95 }}
             >
               {isLoading ? (
@@ -176,7 +202,7 @@ function GameOver() {
               ) : (
                 <GamepadIcon className="size-4" />
               )}
-              {isLoading ? "Loading .." : "New Game"}
+              {isLoading ? t("lost.buttonLoading") : t("lost.newGameButton")}
             </Button>
           </div>
         </>

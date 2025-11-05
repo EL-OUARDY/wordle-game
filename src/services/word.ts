@@ -6,7 +6,7 @@ const WordService = {
     //   Math.floor(Math.random() * 5)
     // ];
     // console.log("📌 ", word);
-    // return word;
+    return "handy";
     const res = await fetch(`/api/word?language=${language}`);
 
     const data = await res.json();
