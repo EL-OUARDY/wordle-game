@@ -14,7 +14,7 @@ const WordService = {
     if (res.ok) return data.word;
   },
 
-  isValidWord: async (word: string, language: Language) => {
+  isWordInDictionary: async (word: string, language: Language) => {
     console.log("⛳ Validate");
 
     return true;

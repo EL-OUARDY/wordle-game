@@ -139,7 +139,10 @@ function Keyboard({ className }: Props) {
     // and exists in the dictionary
     const isValid =
       previousSubmittedWrongGuess.current !== currentGuess &&
-      (await WordService.isValidWord(currentGuess, language as Language));
+      (await WordService.isWordInDictionary(
+        currentGuess,
+        language as Language,
+      ));
     if (!isValid) {
       setIsSubmitting(false);
       // Shake line animation
