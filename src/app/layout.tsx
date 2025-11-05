@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { APP_LINK, APP_NAME } from "@/lib/constants";
 import InstallListener from "@/components/InstallListener";
 import { getUserLocale } from "@/services/locale";
+import Script from "next/script";
 
 export const futuraFont = localFont({
   variable: "--font-futura",
@@ -356,6 +357,24 @@ export default async function RootLayout({
             `,
           }}
         />
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <Script id="ga-script" strategy="afterInteractive">
+              {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { page_path: window.location.pathname });
+          `}
+            </Script>
+          </>
+        )}
       </head>
       <body className={`${futuraFont.variable} antialiased`}>
         <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
