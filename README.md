@@ -95,7 +95,8 @@ Quick steps to add a new locale:
    - add your code to the Languages type (e.g. `types.ts`)
    - add an entry to the `LANGUAGES` constant (e.g. `constants.ts`)
    - update LanguagesMenu component.
-4. Test locally (`npm run dev`) and build (`npm run build`).
+4. Add keyboard keys (/src/components/keyboard/keys.ts)
+5. Test locally (`npm run dev`) and build (`npm run build`).
 
 Notes:
 
