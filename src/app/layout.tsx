@@ -14,17 +14,17 @@ export const futuraFont = localFont({
   display: "swap",
   src: [
     {
-      path: "../../public/fonts/FuturaCyrillicBook.ttf",
+      path: "../../public/fonts/futuralt-book.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/FuturaCyrillicDemi.ttf",
+      path: "../../public/fonts/futuralt-semibold.woff2",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../../public/fonts/FuturaCyrillicBold.ttf",
+      path: "../../public/fonts/futuralt-bold.woff2",
       weight: "700",
       style: "normal",
     },
