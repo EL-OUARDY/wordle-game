@@ -25,9 +25,9 @@ function HowToPlay() {
   const t = useTranslations("HowToPlay");
 
   return (
-    <div className="flex flex-col gap-4 text-lg">
+    <div className="flex flex-col gap-4">
       <div className="border-key-background flex items-center gap-2 border-b pb-4">
-        <h2 className="text-2xl font-semibold">{t("title")}</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
       </div>
       <p className="text-balance">{t("goal")}</p>
       <div className="text-muted-foreground">
@@ -37,7 +37,7 @@ function HowToPlay() {
 
       <div className="flex flex-col gap-4">
         <div className="mb-2 flex items-center gap-2">
-          <h3 className="text-xl font-semibold">{t("examples")}</h3>
+          <h3 className="text-lg font-semibold">{t("examples")}</h3>
           <hr className="separator border-key-background flex-1" />
         </div>
         <div className="guess">

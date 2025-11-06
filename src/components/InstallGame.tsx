@@ -54,7 +54,7 @@ export default function InstallGame({ className }: Props) {
     >
       {!showGuide && (
         <>
-          <p className="text-lg">{t("pwaInstall.description")}</p>
+          <p className="">{t("pwaInstall.description")}</p>
           <Button
             onClick={handleInstallClick}
             className="flex w-fit flex-1 items-center gap-2 rounded-xl !py-1 normal-case"
@@ -69,7 +69,7 @@ export default function InstallGame({ className }: Props) {
 
       {/* iOS guide */}
       {showGuide && isIOS && (
-        <p className="text-lg">
+        <p className="">
           {t.rich("pwaInstall.iosInstructions", {
             shareBtn: () => (
               <span>
@@ -85,7 +85,7 @@ export default function InstallGame({ className }: Props) {
 
       {/* Android/Desktop guide */}
       {showGuide && !isIOS && (
-        <p className="text-lg">
+        <p className="">
           {t.rich("pwaInstall.androidInstructions", {
             addToHomeScreen: (chunks) => (
               <span className="font-semibold">{chunks}</span>

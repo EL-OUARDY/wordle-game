@@ -85,7 +85,7 @@ function LanguagesMenu({ className, onClick }: Props) {
               href={language.link}
               className={clsx(
                 index < languagesList.length - 1 && "border-b",
-                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2 text-lg",
+                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2",
               )}
             >
               {language.icon}
@@ -98,7 +98,7 @@ function LanguagesMenu({ className, onClick }: Props) {
             <span
               className={clsx(
                 index < languagesList.length - 1 && "border-b",
-                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2 text-lg",
+                "language border-key-background hover:bg-muted-background relative flex items-center gap-3 px-8 py-2",
               )}
             >
               <span className="grayscale filter">{language.icon}</span>

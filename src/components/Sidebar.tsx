@@ -37,13 +37,13 @@ function SideBar({ onClose }: Props) {
       <div className="flex flex-1 flex-col gap-4 pb-42">
         <div className="border-key-background flex items-center gap-2 border-b pb-4">
           <LogoIcon className="size-[1.35rem] sm:size-6" />
-          <h2 className="text-2xl font-semibold">{APP_NAME}</h2>
+          <h2 className="text-xl font-semibold">{APP_NAME}</h2>
         </div>
         <p className="text-lg">{t("welcomeText")}</p>
 
         <div className="languages">
           <div className="mb-2 flex items-center gap-2">
-            <h3 className="text-xl font-semibold">{t("languages")}</h3>
+            <h3 className="text-lg font-semibold">{t("languages")}</h3>
             <hr className="separator border-key-background flex-1" />
           </div>
 
@@ -55,7 +55,7 @@ function SideBar({ onClose }: Props) {
                     onClick={onClose}
                     href={language.link}
                     className={clsx(
-                      "language relative flex size-fit items-center gap-3 text-lg hover:underline",
+                      "language relative flex size-fit items-center gap-3 hover:underline",
                     )}
                   >
                     {language.icon}
@@ -64,7 +64,7 @@ function SideBar({ onClose }: Props) {
                 ) : (
                   <span
                     className={clsx(
-                      "language relative flex w-fit items-center gap-3 text-lg",
+                      "language relative flex w-fit items-center gap-3",
                     )}
                   >
                     <span className="grayscale filter">{language.icon}</span>
@@ -78,12 +78,12 @@ function SideBar({ onClose }: Props) {
 
         <hr className="separator border-key-background" />
 
-        <p className="support text-xl text-balance">{t("support.title")}</p>
+        <p className="support text-lg text-balance">{t("support.title")}</p>
 
         <motion.a
           href={BMC_LINK}
           target="_blank"
-          className="flex w-fit items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 py-2 text-lg text-[#181818]"
+          className="flex w-fit items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 py-2 text-[#181818]"
           aria-label={t("support.button")}
           whileTap={{ scale: 0.95 }}
         >
@@ -111,7 +111,7 @@ function SideBar({ onClose }: Props) {
                     className="rounded-full"
                   />
                 ) : user.displayName ? (
-                  <span className="flex size-full items-center justify-center text-lg">
+                  <span className="flex size-full items-center justify-center">
                     {user.displayName
                       ?.split(" ")
                       .map((n) => n[0])
@@ -124,7 +124,7 @@ function SideBar({ onClose }: Props) {
                 )}
               </div>
               <div className="flex flex-1 flex-col justify-between">
-                <div className="user-fullname text-lg font-semibold">
+                <div className="user-fullname font-semibold">
                   {user.displayName || user.email || `#${APP_NAME}`}
                 </div>
 
@@ -177,7 +177,7 @@ function SideBar({ onClose }: Props) {
           </>
         ) : (
           <>
-            <p className="text-lg">{t("userProfile.text")}</p>
+            <p className="">{t("userProfile.text")}</p>
             <div className="controls flex w-full justify-between gap-2">
               <Button
                 variant="outline"
@@ -190,7 +190,7 @@ function SideBar({ onClose }: Props) {
                 {t("userProfile.shareButton")}
               </Button>
               <motion.span
-                className="bg-button-background text-button-foreground flex-1 cursor-pointer gap-2 rounded-xl !px-2 !py-1 text-center text-[1.06rem] transition-colors duration-300"
+                className="bg-button-background text-button-foreground flex-1 cursor-pointer gap-2 rounded-xl !px-2 !py-1 text-center transition-colors duration-300"
                 whileTap={{ scale: 0.95 }}
               >
                 <Link

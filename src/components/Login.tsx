@@ -14,13 +14,13 @@ function Login({ className }: Props) {
 
   return (
     <div className={clsx("flex flex-col gap-4", className)}>
-      <h3 className="mx-auto text-center text-2xl">{t("intro")}</h3>
+      <h3 className="mx-auto text-center text-xl">{t("intro")}</h3>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="border-key-background mt-1 w-full border-t" />
         </div>
-        <div className="relative flex justify-center text-lg">
+        <div className="relative flex justify-center">
           <span className="bg-background text-muted-foreground px-2">
             {t("cta")}
           </span>
@@ -67,7 +67,7 @@ function Login({ className }: Props) {
                 ></path>
               </g>
             </svg>
-            <span className="flex-1 text-left text-lg normal-case">Google</span>
+            <span className="flex-1 text-left normal-case">Google</span>
           </span>
         </Button>
 
@@ -116,7 +116,7 @@ function Login({ className }: Props) {
                 </defs>
               </g>
             </svg>
-            <span className="flex-1 text-left text-lg normal-case">
+            <span className="flex-1 text-left  normal-case">
               Facebook
             </span>
           </span>
@@ -155,7 +155,7 @@ function Login({ className }: Props) {
                 <rect x="5" y="5" width="10" height="10" fill="#F25325"></rect>
               </g>
             </svg>
-            <span className="flex-1 text-left text-lg normal-case">
+            <span className="flex-1 text-left  normal-case">
               Microsoft
             </span>
           </span>

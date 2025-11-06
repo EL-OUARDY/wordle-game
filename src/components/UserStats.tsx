@@ -80,7 +80,7 @@ function UserStats() {
                   className="rounded-full"
                 />
               ) : user.displayName ? (
-                <span className="flex size-full items-center justify-center text-lg">
+                <span className="flex size-full items-center justify-center">
                   {user.displayName
                     ?.split(" ")
                     .map((n) => n[0])
@@ -93,7 +93,7 @@ function UserStats() {
               )}
             </div>
             <div className="flex flex-1 flex-col justify-between">
-              <div className="user-fullname text-lg font-semibold">
+              <div className="user-fullname font-semibold">
                 {user.displayName || user.email || `#${APP_NAME}`}
               </div>
 
@@ -175,7 +175,7 @@ function UserStats() {
           <hr className="separator border-key-background" />
 
           <div className="guess-distribution flex flex-col gap-2">
-            <h3 className="text-xl font-semibold">{t("guessDistribution")}</h3>
+            <h3 className="text-lg font-semibold">{t("guessDistribution")}</h3>
             <div className="chart">
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart

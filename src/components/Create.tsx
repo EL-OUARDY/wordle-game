@@ -54,17 +54,17 @@ function Create() {
     <div className="custom-wordle">
       {!wordId ? (
         <div className="create-form flex flex-col gap-4">
-          <h3 className="border-key-background border-b pb-4 text-2xl font-semibold">
+          <h3 className="border-key-background border-b pb-4 text-xl font-semibold">
             {t("creation.title")}
           </h3>
-          <p className="support text-xl">{t("creation.description")}</p>
+          <p className="support text-lg">{t("creation.description")}</p>
 
           <div className="bg-tile-background border-key-background flex flex-col gap-4 rounded-xl border p-4">
             <motion.input
               value={word}
               onChange={(e) => setWord(e.target.value)}
               type="text"
-              className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center text-lg font-semibold tracking-wider uppercase placeholder:tracking-normal"
+              className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center font-semibold tracking-wider uppercase placeholder:tracking-normal"
               placeholder={t("creation.inputWordPlaceholder", {
                 wordLength: WORD_LENGTH,
               })}
@@ -83,7 +83,7 @@ function Create() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               type="text"
-              className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center text-lg font-semibold tracking-wider capitalize placeholder:tracking-normal"
+              className="border-key-background bg-background placeholder:text-key-background rounded-xl border px-2 py-2 text-center font-semibold tracking-wider capitalize placeholder:tracking-normal"
               placeholder={t("creation.inputNamePlaceholder")}
               disabled={isLoading}
               maxLength={30}
@@ -94,7 +94,7 @@ function Create() {
               variant="default"
               className={clsx(
                 isLoading && "text-key-background",
-                "flex items-center gap-2 !rounded-xl !py-3 !text-lg",
+                "flex items-center gap-2 !rounded-xl !py-3",
               )}
               aria-label={t("creation.buttonDefault")}
               whileTap={{ scale: 0.95 }}
@@ -114,13 +114,11 @@ function Create() {
         </div>
       ) : (
         <div className="word-created flex flex-col gap-4">
-          <p className="support mt-4 text-center text-2xl">
-            {t("ready.title")}
-          </p>
+          <p className="support mt-4 text-center text-xl">{t("ready.title")}</p>
           <div className="bg-tile-background border-key-background flex flex-col gap-4 rounded-xl border p-4">
             {/* Word reveal */}
             <div className="mx-auto w-[240px] overflow-hidden">
-              <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-[1.4rem]">
+              <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-xl">
                 {word.split("").map((char, index) => {
                   return (
                     <motion.div
@@ -144,7 +142,7 @@ function Create() {
             <input
               value={`${window.location.origin}/${language?.toLowerCase()}?w=${wordId}`}
               type="text"
-              className="border-key-background bg-background rounded-xl border px-4 py-2 text-lg tracking-wider"
+              className="border-key-background bg-background rounded-xl border px-4 py-2 tracking-wider"
               readOnly
             />
 
@@ -158,7 +156,7 @@ function Create() {
               variant="default"
               className={clsx(
                 isLoading && "text-key-background",
-                "flex items-center gap-2 !rounded-xl !py-3 !text-lg tracking-wider",
+                "flex items-center gap-2 !rounded-xl !py-3 tracking-wider",
               )}
               aria-label={t("ready.copyButtonDefault")}
               whileTap={{ scale: 0.95 }}

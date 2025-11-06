@@ -316,7 +316,7 @@ function Keyboard({ className }: Props) {
                 }}
                 className={clsx(
                   keyClasses,
-                  "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                  "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-lg uppercase",
                 )}
                 role="button"
                 aria-label={t("tapKey", { key })}
@@ -351,7 +351,7 @@ function Keyboard({ className }: Props) {
                 }}
                 className={clsx(
                   keyClasses,
-                  "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                  "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-lg uppercase",
                 )}
                 role="button"
                 aria-label={t("tapKey", { key })}
@@ -407,7 +407,7 @@ function Keyboard({ className }: Props) {
                   }}
                   className={clsx(
                     keyClasses,
-                    "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-xl uppercase",
+                    "key flex h-[58px] flex-1 cursor-pointer items-center justify-center rounded-sm text-lg uppercase",
                   )}
                   role="button"
                   aria-label={t("tapKey", { key })}

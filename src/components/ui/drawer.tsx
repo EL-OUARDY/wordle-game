@@ -100,7 +100,7 @@ function Drawer({
             <div className="mx-auto flex min-h-full w-full flex-col overflow-y-auto">
               <VaulDrawer.Title
                 className={cn(
-                  "border-key-background mb-4 border-b pb-4 text-2xl font-semibold",
+                  "border-key-background mb-4 border-b pb-4 text-xl font-semibold",
                   !showTitle && "sr-only",
                 )}
               >

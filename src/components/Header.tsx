@@ -95,7 +95,7 @@ function Header({ className }: Props) {
     },
     install: {
       title: t("installPopupTitle"),
-      content: <InstallGame className="" />,
+      content: <InstallGame className="text-lg" />,
       direction: isDesktop ? "center" : "bottom",
       showTitle: true,
     },
@@ -175,7 +175,7 @@ function Header({ className }: Props) {
                     className="size-[1.35rem] rounded-full sm:size-6"
                   />
                 ) : user.displayName ? (
-                  <span className="flex size-full items-center justify-center text-lg">
+                  <span className="flex size-full items-center justify-center">
                     {user.displayName
                       ?.split(" ")
                       .map((n) => n[0])

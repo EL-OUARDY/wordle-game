@@ -94,7 +94,7 @@ function GameOver() {
     <div className="game-over bg-muted-background border-key-background mx-2 flex h-[200px] w-full flex-col items-center justify-around rounded-xl border p-2">
       {isSolved ? (
         <>
-          <h3 className="text-center text-2xl font-semibold">
+          <h3 className="text-center text-xl font-semibold">
             {t("won.title")}
           </h3>
 
@@ -154,7 +154,7 @@ function GameOver() {
           <h3 className="text-center text-xl">{t("lost.title")}</h3>
 
           <div className="w-[240px] overflow-hidden">
-            <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-[1.4rem]">
+            <div className="line grid flex-1 grid-cols-5 gap-[5px] px-[10px] text-xl">
               {solution?.split("").map((char, index) => {
                 return (
                   <motion.div
@@ -175,7 +175,7 @@ function GameOver() {
             </div>
           </div>
 
-          <p className="max-w-sm text-center text-lg">{t("lost.message")}</p>
+          <p className="max-w-sm text-center">{t("lost.message")}</p>
 
           <div className="controls flex gap-3">
             <Button
