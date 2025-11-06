@@ -109,7 +109,7 @@ const useStore = create<IState>((set, get) => ({
       previousWords: { ...state.previousWords, [lang]: updatedPrev },
     }));
 
-    return word;
+    return word.toLowerCase();
   },
   isWordInDictionary: async (guess) => {
     const { allowedGuesses } = await get().loadWordList();
