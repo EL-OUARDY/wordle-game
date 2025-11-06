@@ -256,3 +256,23 @@ export function getLocale(language: Language): Locale {
   const local = languagesList.find((l) => l.name === language)?.local;
   return local || "en";
 }
+
+export function normalizeChar(ch: string) {
+  const rules_diacritic_symbols: Record<string, string> = {
+    a: "àáâãäå",
+    c: "ç",
+    e: "èéêë",
+    i: "ìíîï",
+    n: "ñ",
+    o: "òóôõö",
+    u: "ùúûü",
+    y: "ýÿ",
+  };
+  ch = ch.toLowerCase();
+  for (const base in rules_diacritic_symbols) {
+    if (rules_diacritic_symbols[base].includes(ch)) {
+      return base;
+    }
+  }
+  return ch;
+}

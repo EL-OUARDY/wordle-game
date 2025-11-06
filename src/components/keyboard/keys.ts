@@ -1,5 +1,20 @@
-export const englishKeys = {
-  row1: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-  row2: ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-  row3: ["z", "x", "c", "v", "b", "n", "m"],
+import { Language } from "@/types";
+
+interface Keys {
+  row1: string[];
+  row2: string[];
+  row3: string[];
+}
+
+export const KEYS: Partial<Record<Language, Keys>> = {
+  English: {
+    row1: ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    row2: ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    row3: ["z", "x", "c", "v", "b", "n", "m"],
+  },
+  French: {
+    row1: ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
+    row2: ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m"],
+    row3: ["w", "x", "c", "v", "b", "n"],
+  },
 };

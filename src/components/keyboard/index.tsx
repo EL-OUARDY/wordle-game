@@ -1,16 +1,16 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { englishKeys } from "@/components/keyboard/keys";
 import BackspaceIcon from "@/components/ui/icons/backspace";
 import useStore from "@/hooks/useStore";
 import { NUMBER_OF_GUESSES, WORD_LENGTH } from "@/lib/constants";
 import clsx from "clsx";
 import { motion, MotionConfig } from "motion/react";
-import { isValidLetter, sleep } from "@/lib/utils";
+import { isValidLetter, normalizeChar, sleep } from "@/lib/utils";
 import { LettersStateMap } from "@/types";
 import StatsService from "@/services/stats";
 import useAuth from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
+import { KEYS } from "@/components/keyboard/keys";
 
 interface Props {
   className?: string;
@@ -38,6 +38,7 @@ function Keyboard({ className }: Props) {
   const setUserStats = useStore((s) => s.setUserStats);
   const settings = useStore((s) => s.settings);
   const isWordInDictionary = useStore((s) => s.isWordInDictionary);
+  const language = useStore((s) => s.language);
 
   const { user } = useAuth();
 
@@ -197,7 +198,7 @@ function Keyboard({ className }: Props) {
   // Handle device keyboard typing
   useEffect(() => {
     const handleTyping = async (e: KeyboardEvent) => {
-      const char = e.key;
+      let char = e.key;
 
       // OnScreen only setting option is turned on
       if (settings?.onScreenOnly) return;
@@ -216,6 +217,9 @@ function Keyboard({ className }: Props) {
 
       // Check if game is over
       if (isGameOver) return;
+
+      // Normalise char - ex. "é" => "e"
+      if (char !== "Enter" && char !== "Backspace") char = normalizeChar(char);
 
       // Set pressed key
       updatePressedKey(char);
@@ -298,7 +302,7 @@ function Keyboard({ className }: Props) {
       >
         {/* First row */}
         <div className="row flex w-full [touch-action:manipulation] gap-1">
-          {englishKeys.row1.map((key, i) => {
+          {KEYS[language!]?.row1.map((key, i) => {
             let keyClasses = "";
             if (lettersStatusMap.correct.includes(key))
               keyClasses = "bg-correct text-tile-foreground";
@@ -333,7 +337,7 @@ function Keyboard({ className }: Props) {
         {/* Second row */}
         <div className="row flex w-full [touch-action:manipulation] gap-1">
           <div className="flex-[0.5]"></div>
-          {englishKeys.row2.map((key, i) => {
+          {KEYS[language!]?.row2.map((key, i) => {
             let keyClasses = "";
             if (lettersStatusMap.correct.includes(key))
               keyClasses = "bg-correct text-tile-foreground";
@@ -389,7 +393,7 @@ function Keyboard({ className }: Props) {
           </motion.div>
 
           <div className="flex flex-7 gap-1">
-            {englishKeys.row3.map((key, i) => {
+            {KEYS[language!]?.row3.map((key, i) => {
               let keyClasses = "";
               if (lettersStatusMap.correct.includes(key))
                 keyClasses = "bg-correct text-tile-foreground";

@@ -6299,22 +6299,3 @@ export const allowedGuesses = new Set([
   "patin",
   "denim",
 ]);
-
-// Check words length
-console.clear();
-const validSolutionWord = solutionWords.filter((x) => x.length !== 5).length;
-console.log(
-  "solutionWords=",
-  solutionWords.length,
-  " | inValid=",
-  validSolutionWord,
-);
-const validAllowedGuesses = [...allowedGuesses].filter(
-  (x) => x.length !== 5,
-).length;
-console.log(
-  "allowedGuesses=",
-  allowedGuesses.size,
-  " | inValid=",
-  validAllowedGuesses,
-);
