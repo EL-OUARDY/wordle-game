@@ -13,6 +13,7 @@ A web-based Wordle-style game inspired by the NYT Wordle, enhanced with themes, 
 - [Tech stack](#tech-stack)
 - [Installation](#installation)
 - [Contributing](#contributing)
+- [Add your own language to the project](#add-your-own-language-to-the-project)
 - [Author](#author)
 
 ## Overview
@@ -83,6 +84,22 @@ Guidelines:
 - Keep UI changes responsive and test on mobile and desktop
 - If you add new text, add a translation entry in `languages/*.json`
 - For large changes, open an issue first to discuss the approach
+
+### Add your own language to the project
+
+Quick steps to add a new locale:
+
+1. Create a new JSON file in `languages/` (use an existing file as a template like `languages/en.json` -> `languages/xx.json`) and translate all keys.
+2. Add the locale code to the project's types and constants:
+   - add your code to the Languages type (e.g. `types.ts`)
+   - add an entry to the `LANGUAGES` constant (e.g. `constants.ts`)
+3. Ensure the language menu can show the new locale.
+4. Test locally (`npm run dev`) and build (`npm run build`).
+
+Notes:
+
+- Use a consistent locale code (e.g. `es`, `fr`, `de`) and keep translation keys identical across files.
+- Update all language files whenever you add new UI strings.
 
 ## Author
 
