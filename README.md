@@ -89,11 +89,12 @@ Guidelines:
 
 Quick steps to add a new locale:
 
-1. Create a new JSON file in `languages/` (use an existing file as a template like `languages/en.json` -> `languages/xx.json`) and translate all keys.
-2. Add the locale code to the project's types and constants:
+1. Create a new JSON file for text translations in `languages/` (use an existing file as a template like `languages/en.json` -> `languages/xx.json`) and translate all keys.
+2. Add your language wordlist in src/wordlists
+3. Add the languge/locale to the project's types and constants:
    - add your code to the Languages type (e.g. `types.ts`)
    - add an entry to the `LANGUAGES` constant (e.g. `constants.ts`)
-3. Ensure the language menu can show the new locale.
+   - update LanguagesMenu component.
 4. Test locally (`npm run dev`) and build (`npm run build`).
 
 Notes:
