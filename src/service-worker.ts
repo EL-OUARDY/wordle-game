@@ -1,6 +1,6 @@
 import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { Serwist } from "serwist";
+import { CacheFirst, Serwist } from "serwist";
 import { languagesList } from "@/components/LanguagesMenu";
 
 // Extend the global worker scope with Serwist-specific properties
@@ -37,7 +37,13 @@ const serwist = new Serwist({
   navigationPreload: true,
 
   // Runtime caching strategy for network requests
-  runtimeCaching: defaultCache,
+  runtimeCaching: [
+    ...defaultCache,
+    {
+      matcher: ({ request }) => request.destination === "document",
+      handler: new CacheFirst(),
+    },
+  ],
 
   // Fallbacks for offline scenarios
   fallbacks: {
@@ -55,3 +61,9 @@ const serwist = new Serwist({
 
 // Attach all the Serwist event listeners to handle caching, fetch, etc.
 serwist.addEventListeners();
+
+self.addEventListener("fetch", (event) => {
+  if (event.request.url.includes("_rsc")) {
+    return;
+  }
+});
