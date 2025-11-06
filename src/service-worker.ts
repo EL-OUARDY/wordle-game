@@ -14,6 +14,25 @@ declare global {
 // Tell TypeScript that `self` is a Service Worker global
 declare const self: ServiceWorkerGlobalScope;
 
+// Ignore RSC fetches when offline.
+// Next.js tries to re-fetch `?_rsc=` payloads on navigation.
+// Offline, these fail and trigger a full page reload,
+// which resets client state (ex: game-over disappearing).
+// Returning 204 makes Next think "no update" → keeps current UI.
+self.addEventListener("fetch", (event) => {
+  if (event.request.url.includes("_rsc")) {
+    // Do nothing → allow normal failure
+    event.respondWith(
+      (async () => {
+        // return network only; when offline it will reject silently
+        return fetch(event.request).catch(
+          () => new Response(null, { status: 204 }),
+        );
+      })(),
+    );
+  }
+});
+
 // Pages to precache
 const PAGES = [
   "/",
@@ -61,22 +80,3 @@ const serwist = new Serwist({
 
 // Attach all the Serwist event listeners to handle caching, fetch, etc.
 serwist.addEventListeners();
-
-// Ignore RSC fetches when offline.
-// Next.js tries to re-fetch `?_rsc=` payloads on navigation.
-// Offline, these fail and trigger a full page reload,
-// which resets client state (ex: game-over disappearing).
-// Returning 204 makes Next think "no update" → keeps current UI.
-self.addEventListener("fetch", (event) => {
-  if (event.request.url.includes("_rsc")) {
-    // Do nothing → allow normal failure
-    event.respondWith(
-      (async () => {
-        // return network only; when offline it will reject silently
-        return fetch(event.request).catch(
-          () => new Response(null, { status: 204 }),
-        );
-      })(),
-    );
-  }
-});

@@ -133,10 +133,12 @@ function Wordle({ language, className }: Props) {
     if (!isGameOver) return;
     const params = new URLSearchParams(searchParams.toString());
     params.delete("w");
-    router.replace(`${window.location.pathname}?${params.toString()}`, {
-      scroll: false,
-    });
-  }, [isGameOver, router, searchParams]);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params.toString()}`,
+    );
+  }, [isGameOver, searchParams]);
 
   return (
     <MotionConfig
