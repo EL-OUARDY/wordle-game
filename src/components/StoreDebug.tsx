@@ -7,23 +7,27 @@ import clsx from "clsx";
 type StoreState = ReturnType<typeof useStore.getState>;
 interface Props {
   property?: keyof StoreState;
+  exclude?: (keyof StoreState)[];
 }
 
-// Helper to safely serialize more types that are not directly serializable
-function serialize(value: any) {
+// Helper to safely serialize, excluding functions
+function serialize(value: any, exclude: string[] = []) {
   const seen = new WeakSet();
   return JSON.stringify(
     value,
     (_, v) => {
+      if (typeof v === "function") return undefined; // skip functions
       if (v instanceof Set) return [...v];
       if (v instanceof Map) return Object.fromEntries(v);
       if (v instanceof Date) return v.toISOString();
-      if (typeof v === "function") return v.toString();
       if (typeof v === "undefined") return "undefined";
       if (typeof v === "symbol") return v.toString();
       if (v && typeof v === "object") {
         if (seen.has(v)) return "[Circular]";
         seen.add(v);
+        if (!Array.isArray(v)) {
+          exclude.forEach((key) => delete v[key]);
+        }
       }
       return v;
     },
@@ -31,7 +35,7 @@ function serialize(value: any) {
   );
 }
 
-function StoreDebug({ property }: Props) {
+function StoreDebug({ property, exclude = [] }: Props) {
   const [mounted, setMounted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const state = useStore();
@@ -40,10 +44,11 @@ function StoreDebug({ property }: Props) {
     setMounted(true);
   }, []);
 
-  // Do not render on production environment
   if (process.env.NODE_ENV === "production") return null;
+  if (!mounted) return null;
 
-  if (!mounted) return null; // skip SSR render
+  const filteredState = { ...state };
+  exclude.forEach((key) => delete filteredState[key]);
 
   return (
     <div
@@ -54,7 +59,7 @@ function StoreDebug({ property }: Props) {
         isExpanded && "relative inset-0 min-h-screen",
       )}
     >
-      {isExpanded && <pre>{serialize(state)}</pre>}
+      {isExpanded && <pre>{serialize(filteredState)}</pre>}
       {!isExpanded && (
         <div className="flex items-center gap-2 px-4">
           {!property && "Store"}
