@@ -10,10 +10,15 @@ import {
 } from "@/types";
 import { BeforeInstallPromptEvent } from "@/components/InstallListener";
 
+interface WordList {
+  allowedGuesses: Set<string>;
+  solutionWords: string[];
+}
+
 interface IState {
-  wordlists: Record<string, Set<string>>;
+  wordlists: Record<string, WordList>;
   previousWords: Record<string, Set<string>>;
-  loadWords: () => Promise<Set<string>>;
+  loadWordList: () => Promise<WordList>;
   getRandomWord: () => Promise<string | null>;
   isWordInDictionary: (guess: string) => Promise<boolean>;
   guesses: string[];
@@ -58,14 +63,17 @@ interface IState {
 const useStore = create<IState>((set, get) => ({
   wordlists: {},
   previousWords: {},
-  loadWords: async () => {
+  loadWordList: async () => {
     const lang = get().language as string;
     const cached = get().wordlists[lang];
     if (cached) return cached;
 
     // dynamic import
     const _module = await import(`@/wordlists/${lang.toLowerCase()}`);
-    const wordlist: Set<string> = _module.default;
+    const wordlist: WordList = {
+      allowedGuesses: _module.allowedGuesses,
+      solutionWords: _module.solutionWords,
+    };
 
     set((state) => ({
       wordlists: { ...state.wordlists, [lang]: wordlist },
@@ -74,14 +82,13 @@ const useStore = create<IState>((set, get) => ({
     return wordlist;
   },
   getRandomWord: async () => {
-    const words = await get().loadWords();
-    const wordsList = Array.from(words);
-    if (!wordsList.length) return null;
+    const { solutionWords } = await get().loadWordList();
+    if (!solutionWords.length) return null;
 
     const lang = get().language as string;
     const prev = get().previousWords[lang] ?? new Set<string>();
     // if all used → reset
-    if (prev.size >= wordsList.length) {
+    if (prev.size >= solutionWords.length) {
       set((state) => ({
         previousWords: { ...state.previousWords, [lang]: new Set() },
       }));
@@ -90,8 +97,8 @@ const useStore = create<IState>((set, get) => ({
 
     let word: string;
     do {
-      const idx = Math.floor(Math.random() * wordsList.length);
-      word = wordsList[idx];
+      const idx = Math.floor(Math.random() * solutionWords.length);
+      word = solutionWords[idx];
     } while (prev.has(word));
 
     // mark word as seen
@@ -105,8 +112,8 @@ const useStore = create<IState>((set, get) => ({
     return word;
   },
   isWordInDictionary: async (guess) => {
-    const words = await get().loadWords();
-    return words.has(guess.toLowerCase());
+    const { allowedGuesses } = await get().loadWordList();
+    return allowedGuesses.has(guess.toLowerCase());
   },
 
   guesses: Array(NUMBER_OF_GUESSES).fill(null),

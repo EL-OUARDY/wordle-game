@@ -1,2 +1,10 @@
-const words = new Set(["crane", "grape", "peach", "arise", "stone"]);
-export default words;
+export const solutionWords = ["story", "handy"];
+export const allowedGuesses = new Set([
+  "crane",
+  "grape",
+  "peach",
+  "arise",
+  "stone",
+  "story",
+  "handy",
+]);
