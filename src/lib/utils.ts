@@ -28,15 +28,14 @@ export const ranks = [
  * Returns the status of each letter in a guess compared to the solution.
  * Handling edge cases involving duplicate letters
  */
-export function getGuessStatuses(
-  solution: string,
-  guess: string,
-): LetterStatus[] {
-  const statuses: LetterStatus[] = Array(guess.length).fill("absent");
+export function evaluateGuess(solution: string, guess: string): LetterStatus[] {
+  if (!solution || !guess) return [];
+
+  const statuses: LetterStatus[] = Array(solution.length).fill("absent");
 
   // Find correct letters
   const unmatched = new Map<string, number>();
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < solution.length; i++) {
     if (guess[i] === solution[i]) {
       statuses[i] = "correct";
     } else {
@@ -46,7 +45,7 @@ export function getGuessStatuses(
   }
 
   // Find present letters
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < solution.length; i++) {
     if (statuses[i] === "correct") {
       continue;
     }

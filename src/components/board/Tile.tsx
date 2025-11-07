@@ -3,7 +3,7 @@ import clsx from "clsx";
 import useStore from "@/hooks/useStore";
 import { motion, useAnimation } from "motion/react";
 import { tileVariants } from "@/components/board/animations";
-import { getGuessStatuses } from "@/lib/utils";
+import { evaluateGuess } from "@/lib/utils";
 import { WORD_LENGTH } from "@/lib/constants";
 interface Props {
   char: string;
@@ -32,7 +32,7 @@ function Tile({ char, charIndex, lineIndex, className }: Props) {
     if (!guesses[lineIndex] || guesses[lineIndex].length !== WORD_LENGTH)
       return;
 
-    const wordStatus = getGuessStatuses(solution, guesses[lineIndex]);
+    const wordStatus = evaluateGuess(solution, guesses[lineIndex]);
     const charStatus = wordStatus[charIndex];
 
     setGuessesState((prev) =>

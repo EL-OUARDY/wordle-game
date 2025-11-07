@@ -30,6 +30,7 @@ This is a playable Wordle-like game built with Next.js and TypeScript. It provid
 - 📱 Responsive UI
 - ✨ Cool animations and transitions
 - ⌨️ Keyboard and touch support
+- ✅ Unit tests for core game algorithms
 
 ## Tech stack
 
