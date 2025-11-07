@@ -4,7 +4,7 @@ A web-based Wordle-style game inspired by the NYT Wordle, enhanced with themes, 
 
 ![Screenshot](/public/screenshots/en/desktop.png)
 
-[Play it now](https://poly-wordle.vercel.app/) 🎮
+[Play it now](https://wordleful.com/) 🎮
 
 ## Table of contents
 

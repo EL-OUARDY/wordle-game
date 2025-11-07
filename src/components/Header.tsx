@@ -215,7 +215,7 @@ function Header({ className }: Props) {
           className="standalone:hidden size-12 sm:size-14"
           aria-label={t("install")}
         >
-          <InstallIcon className="size-[1.35rem] sm:size-6" />
+          <InstallIcon className="size-[1.2rem] sm:size-[1.4rem]" />
         </Button>
 
         <div className="ml-auto flex">

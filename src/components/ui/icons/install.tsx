@@ -10,12 +10,20 @@ function InstallIcon({ className }: Props) {
     <svg
       className={clsx(className, "")}
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
-      fill="currentColor"
-      viewBox="0 0 256 256"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      <path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12.5 21h-6.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v7" />
+      <path d="M9 18h3" />
+      <path d="M19 16v6" />
+      <path d="M22 19l-3 3l-3 -3" />
     </svg>
   );
 }
