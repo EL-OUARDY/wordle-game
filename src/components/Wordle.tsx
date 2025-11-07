@@ -15,7 +15,7 @@ import { MotionConfig } from "motion/react";
 import { defaultSettings } from "@/components/Settings";
 import { languagesList } from "@/components/LanguagesMenu";
 import { setUserLocale } from "@/services/locale";
-import { getLocale } from "@/lib/utils";
+import { getLocale, logWelcomeMessage } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -140,6 +140,10 @@ function Wordle({ language, className }: Props) {
     );
   }, [isGameOver, searchParams]);
 
+  // Log a friendly welcome message to the console
+  useEffect(() => {
+    logWelcomeMessage();
+  }, []);
   return (
     <MotionConfig
       key={settings?.reduceMotion ? "reduce" : "normal"}

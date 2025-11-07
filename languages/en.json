@@ -197,5 +197,8 @@
         "minutes": "{count, plural, =1 {1 minute} =2 {2 minutes} other {# minutes}}",
         "seconds": "{count, plural, =1 {1 second} =2 {2 seconds} other {# seconds}}",
         "less": "less than a second"
+    },
+    "404": {
+        "title": "Take me home"
     }
 }

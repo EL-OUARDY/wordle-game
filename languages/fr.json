@@ -197,5 +197,8 @@
         "minutes": "{count, plural, =1 {1 minute} other {# minutes}}",
         "seconds": "{count, plural, =1 {1 seconde} other {# secondes}}",
         "less": "moins d'une seconde"
+    },
+    "404": {
+        "title": "Page introuvable"
     }
 }

@@ -1,4 +1,4 @@
-import { APP_NAME, LANGUAGES, WORD_LENGTH } from "@/lib/constants";
+import { APP_NAME, EMAIL, LANGUAGES, WORD_LENGTH } from "@/lib/constants";
 import { Language, LetterStatus, Locale } from "@/types";
 import clsx, { ClassValue } from "clsx";
 import { Variants } from "motion";
@@ -275,4 +275,24 @@ export function normalizeChar(ch: string) {
     }
   }
   return ch;
+}
+
+export function logWelcomeMessage() {
+  if (process.env.NODE_ENV === "development") return;
+
+  console.clear();
+
+  console.log(
+    `%c${APP_NAME} 🧩`,
+    'background-color: #030303;padding: 5px 10px;font-family: "Arial", sans-serif;font-size: 2rem;color: white;',
+  );
+  console.log(
+    `%cHey there! 👋
+Looks like you're peeking under the hood of ${APP_NAME} 👀
+We love curiosity — just try not to cheat… it ruins the fun 😄
+Got ideas, feedback, or wanna help build this game?
+Hit me up: ${EMAIL}
+Enjoy & have fun! 🎉`,
+    "background-color: #030303;padding: 5px 10px;font-size:1rem;color: white;line-height:1.75",
+  );
 }
