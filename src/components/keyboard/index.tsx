@@ -293,7 +293,7 @@ function Keyboard({ className }: Props) {
       <motion.div
         className={clsx(
           className,
-          "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px] font-semibold",
+          "keyboard flex h-[200px] w-full flex-col items-center justify-center gap-[8px] px-[8px] font-semibold [text-shadow:0_0_0.6px_currentColor]",
         )}
         role="group"
         aria-label={t("keyboard")}
