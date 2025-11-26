@@ -50,7 +50,7 @@ function Board({ className }: Props) {
   return (
     <div
       ref={containerRef}
-      className="board-container flex w-full flex-1 items-center justify-center"
+      className="board-container font-inter flex w-full flex-1 items-center justify-center"
     >
       {size && (
         <motion.div

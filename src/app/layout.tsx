@@ -8,8 +8,9 @@ import { APP_LINK, APP_NAME } from "@/lib/constants";
 import InstallListener from "@/components/InstallListener";
 import { getUserLocale } from "@/services/locale";
 import Script from "next/script";
+import { Inter } from "next/font/google";
 
-export const futuraFont = localFont({
+const futuraFont = localFont({
   variable: "--font-futura",
   display: "swap",
   src: [
@@ -29,6 +30,12 @@ export const futuraFont = localFont({
       style: "normal",
     },
   ],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -376,8 +383,8 @@ export default async function RootLayout({
           </>
         )}
       </head>
-      <body className={`${futuraFont.variable} antialiased`}>
-        <div className="page-wrapper font-body flex min-h-screen flex-col select-none">
+      <body className={`${inter.variable} ${futuraFont.className} antialiased`}>
+        <div className="page-wrapper flex min-h-screen flex-col select-none">
           <NextIntlClientProvider>
             <Header />
             <InstallListener />

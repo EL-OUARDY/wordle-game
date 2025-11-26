@@ -39,7 +39,7 @@ function SideBar({ onClose }: Props) {
           <LogoIcon className="size-[1.35rem] sm:size-6" />
           <h2 className="text-xl font-semibold">{APP_NAME}</h2>
         </div>
-        <p className="text-lg">{t("welcomeText")}</p>
+        <p className="">{t("welcomeText")}</p>
 
         <div className="languages">
           <div className="mb-2 flex items-center gap-2">
@@ -78,7 +78,7 @@ function SideBar({ onClose }: Props) {
 
         <hr className="separator border-key-background" />
 
-        <p className="support text-lg text-balance">{t("support.title")}</p>
+        <p className="support text-balance">{t("support.title")}</p>
 
         <motion.a
           href={BMC_LINK}
