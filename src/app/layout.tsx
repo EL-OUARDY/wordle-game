@@ -384,7 +384,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={`${inter.variable} ${futuraFont.className} antialiased`}>
-        <div className="page-wrapper flex min-h-screen flex-col select-none">
+        <div className="page-wrapper flex min-h-dvh flex-col select-none">
           <NextIntlClientProvider>
             <Header />
             <InstallListener />

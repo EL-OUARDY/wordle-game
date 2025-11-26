@@ -215,6 +215,24 @@ function Settings() {
           <hr className="separator border-key-background mt-2" />
         </div>
 
+        <div className="reduce-motion flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <label className="font-semibold" htmlFor="reduce-motion">
+              {t("accessibility.reduceMotion")}
+            </label>
+            <Switch.Root
+              checked={settings.reduceMotion}
+              onCheckedChange={(value) =>
+                setSettings({ ...settings, reduceMotion: value })
+              }
+              id="reduce-motion"
+              className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
+            </Switch.Root>
+          </div>
+        </div>
+
         <div className="high-contrast-mode flex items-center justify-between">
           <label className="font-semibold" htmlFor="high-contrast-mode">
             {t("accessibility.highContrast")}
@@ -261,24 +279,6 @@ function Settings() {
           >
             <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
           </Switch.Root>
-        </div>
-
-        <div className="reduce-motion flex flex-col gap-2">
-          <div className="flex items-center justify-between">
-            <label className="font-semibold" htmlFor="reduce-motion">
-              {t("accessibility.reduceMotion")}
-            </label>
-            <Switch.Root
-              checked={settings.reduceMotion}
-              onCheckedChange={(value) =>
-                setSettings({ ...settings, reduceMotion: value })
-              }
-              id="reduce-motion"
-              className="data-[state=unchecked]:bg-key-background data-[state=checked]:bg-foreground inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <Switch.Thumb className="bg-background pointer-events-none block size-[1.05rem] rounded-full ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
-            </Switch.Root>
-          </div>
         </div>
       </div>
 
