@@ -15,7 +15,7 @@ interface Props {
   onClick?: () => void;
 }
 
-interface LanguagesList {
+interface LanguageOption {
   name: Language;
   displayName: string;
   link: string;
@@ -24,7 +24,7 @@ interface LanguagesList {
   available: boolean;
 }
 
-export const languagesList: LanguagesList[] = [
+export const languagesList: LanguageOption[] = [
   {
     name: "English",
     displayName: "English",
