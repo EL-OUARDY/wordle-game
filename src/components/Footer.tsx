@@ -23,13 +23,13 @@ function Footer({ className }: Props) {
       animate={{ opacity: 1 }}
     >
       <div className="flex size-full items-center justify-center gap-2">
-        <Link href={"/"} className="capitalize hover:underline">
+        <span className="capitalize">
           &copy;{" "}
           {t("copyright", {
             year: new Date().getFullYear(),
             appName: APP_NAME,
           })}
-        </Link>
+        </span>
         <span>|</span>
         <Link href={"/privacy-policy"} className="capitalize hover:underline">
           {t("privacyPolicyLink")}
